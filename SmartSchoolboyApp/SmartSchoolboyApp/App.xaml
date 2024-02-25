@@ -7,11 +7,11 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Color.xaml"/>
                 <ResourceDictionary Source="/Themes/Core.xaml"/>
                 <ResourceDictionary Source="/Themes/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
-        
     </Application.Resources>
 </Application>

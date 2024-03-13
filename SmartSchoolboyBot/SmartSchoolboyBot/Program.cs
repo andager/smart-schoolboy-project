@@ -1,15 +1,18 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
+using Telegram.Bot.Requests;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
-// TOKEN телеграм бота
+// TOKEN Telegram Bot
 const string Telegram_TOKEN = "7045619439:AAH8oEF-3JAD904pCJYIq8VOwpyE20HxhZI";
 bool sentToMode = false;
 
+// клиент для работы с Telegram Bot API
 var botClient = new TelegramBotClient(Telegram_TOKEN);
+// отмена операции
 using var cts = new CancellationTokenSource();
 
 // объект с настройками работы бота (какие типы Update мы будем получать, Timeout бота и так далее)
@@ -22,7 +25,7 @@ var receiverOption = new ReceiverOptions
         UpdateType.CallbackQuery // Inline кнопки
     },
 
-    // Параметр, отвечающий за обработку сообщений, пришедших за то время, когда ваш бот был оффлайн
+    // Параметр, отвечающий за обработку сообщений, пришедших за то время, когда бот был оффлайн
     // True - не обрабатывать, False (стоит по умолчанию) - обрабаывать
     ThrowPendingUpdates = true
 };
@@ -44,6 +47,7 @@ async Task HandleUpdateAsyns(ITelegramBotClient botClient, Update update, Cancel
         // конструкция switch, чтобы обрабатывать приходящие Update
         switch (update.Type)
         {
+            // обработка новых сообщений
             case UpdateType.Message:
                 // эта переменная будет содержать в себе все связанное с сообщениями
                 var message = update.Message;
@@ -57,25 +61,65 @@ async Task HandleUpdateAsyns(ITelegramBotClient botClient, Update update, Cancel
                 {
                     // обработка текстового type сообщения
                     case MessageType.Text:
-                        // обработка команды /start
-                        if (message.Text == "/start")
+                        switch (message.Text)
                         {
-                            
+                            #region [ /start ]
+                            // обработка команды [/start]
+                            case "/start":
+
+                                await botClient.SendTextMessageAsync(
+                                    chat.Id,
+                                    text: $"Приветствую, {user!.FirstName}. Напиши свой номер телефона без пробелов и специальных символов");
+
+                                
+
+
+
+
+
+
+
+
+
+
+                                return;
+                            #endregion
+
+                            #region [ Получить расписание ]
+                            // обработка команды [Получить расписание]
+                            case "Получить расписание":
+
+                                
+                                await botClient.SendTextMessageAsync(
+                                    chat.Id,
+                                    "Выберите вашу группу:");
+                                return;
+                            #endregion
+
+                            #region [ Мои достижения ]
+                            // обработка команды [Мои достижения]
+                            case "Мои достижения":
+                                await botClient.SendTextMessageAsync(
+                                chat.Id,
+                                "Данный функционал в данный момент не работает");
+                                return;
+                            #endregion
+
                         }
                         return;
                     // обработка любых других type сообщений
                     default:
-                        await botClient.SendTextMessageAsync(
-                            chat.Id,
-                            "В данном боте можно использовать только текстовые сообщения",
-                            replyToMessageId: message.MessageId);
+                        await botClient.SendTextMessageAsync(chat.Id, "В данном боте можно использовать только текстовые сообщения", replyToMessageId: message.MessageId);
                         return;
                 }
+            // обработка нажатий на Inline кнопки
+            case UpdateType.CallbackQuery:
+
+                return;
         }    
     }
     catch (Exception)
     {
-
         throw;
     }
 }
@@ -90,3 +134,35 @@ Task HandleErrotAsyns(ITelegramBotClient botClient, Exception exception, Cancell
     };
     return Task.CompletedTask;
 }
+
+/*
+ *                                 // reply кнопки для выбора действия
+                                var actionButton = new ReplyKeyboardMarkup(
+                                    // лист (массив), который содрежит в себе массив из класса кнопок
+                                    new List<KeyboardButton[]>()
+                                    {
+                                        // Каждый новый массив - это дополнительные строки
+                                        // а каждая дополнительная строка (кнопка) в массиве - это добавление ряда
+                                        new KeyboardButton[] // массив кнопок
+                                        {
+                                            new KeyboardButton(text: "Получить расписание")
+                                        },
+                                        new KeyboardButton[] // массив кнопок
+                                        {
+                                            new KeyboardButton(text: "Мои достижения")
+                                        }
+                                    })
+                                {
+                                    // автоматическое изменение размера клавиатуры
+                                    // True - не изменить, False - (по умолчанию) изменять
+                                    ResizeKeyboard = true,
+
+                                    // всегда показывать клавиатуру, когда обычная клавиатура скрыта
+                                    // True - показывать, False (по умолчанию) - не показывать
+                                    IsPersistent = true
+                                };
+
+                                await botClient.SendTextMessageAsync(
+                                    chat.Id,
+                                    text: $"{user!.FirstName}, выбери необходимую операцию:",
+                                    replyMarkup: actionButton);*/

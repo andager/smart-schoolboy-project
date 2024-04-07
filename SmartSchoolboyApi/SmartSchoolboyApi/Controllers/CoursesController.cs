@@ -77,10 +77,9 @@ namespace SmartSchoolboyApi.Controllers
         {
             try
             {
-                var _controlThemePlane = await _context.ControlThemePlanes.FindAsync(course.ControlThemePlaneId);
                 var _teacher = await _context.Teachers.FindAsync(course.TeacherId);
 
-                if (_controlThemePlane is null || _teacher is null)
+                if (_teacher is null)
                     return BadRequest();
 
                 await _context.AddAsync(new Course()
@@ -88,7 +87,6 @@ namespace SmartSchoolboyApi.Controllers
                     Id = course.Id,
                     Name = course.Name,
                     Teacher = _teacher,
-                    ControlThemePlane = _controlThemePlane,
                     IsActive = course.IsActive,
                 });
 

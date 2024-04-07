@@ -16,7 +16,7 @@ namespace SmartSchoolboyApi.Models
         public int Id { get; set; }
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
-        public string Patronymic { get; set; } = null!;
+        public string? Patronymic { get; set; }
         public DateTime DateOfBirch { get; set; }
         public int GenderId { get; set; }
         public string? NumberPhone { get; set; }
@@ -29,7 +29,6 @@ namespace SmartSchoolboyApi.Models
         [JsonIgnore]
         public virtual ICollection<Attendance> Attendances { get; set; }
         [JsonIgnore]
-
         public virtual ICollection<Group> Groups { get; set; }
     }
 }

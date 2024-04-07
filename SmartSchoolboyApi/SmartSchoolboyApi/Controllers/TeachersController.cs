@@ -95,7 +95,7 @@ namespace SmartSchoolboyApi.Controllers
                     DateOfBirtch = teacher.DateOfBirtch,
                     Role = _role,
                     WorkExperience = teacher.WorkExperience,
-                    Photo = teacher.Photo,
+                    TeacherPhoto = teacher.TeacherPhoto,
                     IsActive = teacher.IsActive,
                 });
 

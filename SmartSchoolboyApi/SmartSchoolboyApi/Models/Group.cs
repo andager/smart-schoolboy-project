@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SmartSchoolboyApi.Models
 {
@@ -21,7 +19,6 @@ namespace SmartSchoolboyApi.Models
         [JsonIgnore]
         public virtual ICollection<Schedule> Schedules { get; set; }
         [JsonIgnore]
-
         public virtual ICollection<Student> Students { get; set; }
     }
 }

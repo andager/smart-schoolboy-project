@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartSchoolboyApp"
         mc:Ignorable="d"
-        xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
-        Background="{DynamicResource MaterialDesign.Brush.Background}"
-        TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+      xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+      Background="{DynamicResource MaterialDesign.Brush.Background}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
         
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

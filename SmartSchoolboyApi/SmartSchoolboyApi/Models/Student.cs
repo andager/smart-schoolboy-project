@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SmartSchoolboyApi.Models
 {
@@ -8,7 +6,6 @@ namespace SmartSchoolboyApi.Models
     {
         public Student()
         {
-            AchievementStudents = new HashSet<AchievementStudent>();
             Attendances = new HashSet<Attendance>();
             Groups = new HashSet<Group>();
         }
@@ -24,8 +21,6 @@ namespace SmartSchoolboyApi.Models
         public bool? IsActive { get; set; }
 
         public virtual Gender Gender { get; set; } = null!;
-        [JsonIgnore]
-        public virtual ICollection<AchievementStudent> AchievementStudents { get; set; }
         [JsonIgnore]
         public virtual ICollection<Attendance> Attendances { get; set; }
         [JsonIgnore]

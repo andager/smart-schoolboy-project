@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace SmartSchoolboyApi.Models
 {
@@ -16,7 +13,6 @@ namespace SmartSchoolboyApi.Models
         {
         }
 
-        public virtual DbSet<AchievementStudent> AchievementStudents { get; set; } = null!;
         public virtual DbSet<Attendance> Attendances { get; set; } = null!;
         public virtual DbSet<ControlThemePlane> ControlThemePlanes { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
@@ -29,35 +25,10 @@ namespace SmartSchoolboyApi.Models
         public virtual DbSet<Teacher> Teachers { get; set; } = null!;
         public virtual DbSet<TeacherPhoto> TeacherPhotos { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AchievementStudent>(entity =>
-            {
-                entity.ToTable("AchievementStudent");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.CourseId).HasColumnName("CourseID");
-
-                entity.Property(e => e.Photo).HasComment("");
-
-                entity.Property(e => e.StudentId).HasColumnName("StudentID");
-
-                entity.HasOne(d => d.Course)
-                    .WithMany(p => p.AchievementStudents)
-                    .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK_AchievementStudent_Course");
-
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.AchievementStudents)
-                    .HasForeignKey(d => d.StudentId)
-                    .HasConstraintName("FK_AchievementStudent_Student");
-            });
-
             modelBuilder.Entity<Attendance>(entity =>
             {
                 entity.ToTable("Attendance");

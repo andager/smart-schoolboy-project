@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SmartSchoolboyApi.Models
+﻿namespace SmartSchoolboyApi.Models
 {
     public partial class Attendance
     {

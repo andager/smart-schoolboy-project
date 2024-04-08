@@ -33,9 +33,6 @@ namespace SmartSchoolboyApp.Pages
                 numberPhone = tBoxLogin.Text,
                 password = pBoxPassword.Password
             };
-            var user = await AppiConnection.AuthAsyns(userAutch);
-            var teacher = await AppiConnection.GetSchoolSubjectsAsync();
-            teacher.Where(p => p.numberPhone == userAutch.numberPhone);
         }
     }
 }

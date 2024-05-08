@@ -1,0 +1,29 @@
+﻿<Application x:Class="SmartSchoolboyApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SmartSchoolboyApp"
+             Startup="Application_Startup" ShutdownMode="OnLastWindowClose">
+    
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Thems/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/CheckBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/DataGridStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/DatePickerStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/IconsStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/ListViewStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/MenuStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/PasswordBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/RadioButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/UIColors.xaml"/>
+                <ResourceDictionary Source="/Thems/BorderStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

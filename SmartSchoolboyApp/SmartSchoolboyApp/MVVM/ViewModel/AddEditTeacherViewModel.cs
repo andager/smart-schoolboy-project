@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -128,7 +129,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             {
                 WindowName = "ADD Teachers";
             }
-            AddEditCommand = new RelayCommand(ExecuteAddEditCommand, CanExecuteAddEditCommand);
+            AddEditCommand = new RelayCommand(ExecuteAddEditCommand/*, CanExecuteAddEditCommand*/);
             AddPhotoCommand = new RelayCommand(ExecuteAddPhotoCommand);
         }
 
@@ -179,7 +180,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private void ExecuteAddEditCommand(object obj)
         {
-            throw new NotImplementedException();
+
         }
         #endregion
     }

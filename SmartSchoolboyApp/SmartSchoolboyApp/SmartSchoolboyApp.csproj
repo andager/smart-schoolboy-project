@@ -93,6 +93,7 @@
     <Compile Include="MVVM\ViewModel\AddEditStudentViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditTeacherViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CourseViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GroupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ScheduleViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SchollSubjectViewModel.cs" />
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="MVVM\View\CourseView.xaml.cs">
       <DependentUpon>CourseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\GroupVIew.xaml.cs">
       <DependentUpon>GroupVIew.xaml</DependentUpon>
@@ -141,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

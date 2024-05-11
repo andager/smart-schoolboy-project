@@ -21,5 +21,11 @@
         </Style.Triggers>
         
     </Style>
-    
+
+    <Style x:Key="backBorder" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="{StaticResource brushGradient}"/>
+        <Setter Property="Background" Value="{StaticResource backgroundGradient}"/>
+    </Style>
 </ResourceDictionary>

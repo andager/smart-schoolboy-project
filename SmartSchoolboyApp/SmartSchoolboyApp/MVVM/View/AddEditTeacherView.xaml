@@ -9,9 +9,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:customControls="clr-namespace:SmartSchoolboyApp.Thems.UserControls"
         FontFamily="Montserrat"
-        FontWeight="Medium"
-        FontSize="12"
-        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="Transparent" AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" Style="{StaticResource windowStyle}"
         Title="{Binding Path=WindowName}" Height="450" Width="800" MouseDown="Window_MouseDown">
 
     <!--<Window.DataContext>
@@ -46,22 +44,7 @@
             <ImageBrush ImageSource="/Images/back-image.jpg" Stretch="Fill"/>
         </Border.Background>
 
-        <Border CornerRadius="10" BorderThickness="2">
-
-            <Border.BorderBrush>
-                <LinearGradientBrush>
-                    <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
-                    <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
-                    <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0" Opacity="0.95">
-                    <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
-                    <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border Style="{StaticResource backBorder}">
 
             <Grid>
 

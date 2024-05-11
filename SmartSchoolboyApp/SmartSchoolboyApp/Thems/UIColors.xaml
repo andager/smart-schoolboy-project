@@ -52,10 +52,15 @@
     <Color x:Key="focusBorderColor">#281269</Color>
     <Color x:Key="hoverFocusBorderColor">#FB539B</Color>
 
-    <LinearGradientBrush x:Key="panelGradient">
+    <LinearGradientBrush x:Key="brushGradient">
         <GradientStop Color="{DynamicResource winBorderColor1}" Offset="0.0"/>
         <GradientStop Color="{DynamicResource winBorderColor2}" Offset="0.5"/>
         <GradientStop Color="{DynamicResource winBorderColor3}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="backgroundGradient" StartPoint="0,1" EndPoint="1,0" Opacity="0.95">
+        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
     </LinearGradientBrush>
 
 </ResourceDictionary>

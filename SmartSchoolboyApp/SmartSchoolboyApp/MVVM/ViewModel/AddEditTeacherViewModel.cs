@@ -127,6 +127,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 FirstName = teacher.firstName;
                 Patronymic = teacher.patronymic;
                 Phone = teacher.numberPhone;
+                TeacherPhoto = teacher.teacherPhoto.photo;
                 _addEdit = false;
                 
             }
@@ -179,7 +180,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             if (string.IsNullOrWhiteSpace(Phone)) _error += "\nЗаполните номер телефона";
             if (!Int32.TryParse(Phone, out int resultPhone)) _error += "\nНомер телефона введен не коректно";
             if (string.IsNullOrWhiteSpace(Password)) _error += "\nЗаполните пароль пользователя";
-            if (Password.Length < 4) _error += "\nДлинна пароля должна быть больше 4 символов";
+            //if (Password.Length < 4) _error += "\nДлинна пароля должна быть больше 4 символов";
             if (string.IsNullOrWhiteSpace(WorkExperience)) _error += "\nЗаполните стаж работы";
             if (!Double.TryParse(WorkExperience, out double resultWorkExperience)) _error += "\nСтаж работы заполнен не коректно";
 
@@ -188,28 +189,28 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ErrorView errorView = new ErrorView(_error);
                 errorView.ShowDialog();
             }
-            else
-            {
-                _teacher = new Teacher()
-                {
-                    id = _teacher.id,
-                    lastName = LastName,
-                    firstName = FirstName,
-                    patronymic = Patronymic,
-                    numberPhone = Phone,
-                    password = Password,
-                    //gender
-                    dateOfBirtch = DateOfBirtch,
-                    //role
-                    workExperience = WorkExperience,
-                    //photo
-                    isActive = _teacher.isActive
-                };
-                if (_addEdit)
-                    await App.ApiConnector.PostTAsync(_teacher, "Teachers");
-                else
-                    await App.ApiConnector.PutTAsync(_teacher, "Teachers", _teacher.id);
-            }
+            //else
+            //{
+            //    _teacher = new Teacher()
+            //    {
+            //        id = _teacher.id,
+            //        lastName = LastName,
+            //        firstName = FirstName,
+            //        patronymic = Patronymic,
+            //        numberPhone = Phone,
+            //        password = Password,
+            //        //gender
+            //        dateOfBirtch = DateOfBirtch,
+            //        //role
+            //        workExperience = WorkExperience,
+            //        //photo
+            //        isActive = _teacher.isActive
+            //    };
+            //    if (_addEdit)
+            //        await App.ApiConnector.PostTAsync(_teacher, "Teachers");
+            //    else
+            //        await App.ApiConnector.PutTAsync(_teacher, "Teachers", _teacher.id);
+            //}
         }
         #endregion
     }

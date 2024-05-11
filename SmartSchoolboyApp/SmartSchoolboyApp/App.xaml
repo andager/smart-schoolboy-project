@@ -8,6 +8,7 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Thems/Core.xaml"/>
                 <ResourceDictionary Source="/Thems/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="/Thems/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Thems/ComboBoxStyle.xaml"/>

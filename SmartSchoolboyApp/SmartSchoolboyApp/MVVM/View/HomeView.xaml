@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         FontFamily="Montserrat"
         FontWeight="Medium"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Style="{StaticResource windowStyle}"
         Title="HomeView" MinHeight="450" Height="450" MinWidth="800" Width="800">
     
     <Window.DataContext>

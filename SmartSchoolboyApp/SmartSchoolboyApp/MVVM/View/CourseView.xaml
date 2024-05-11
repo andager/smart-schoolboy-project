@@ -9,7 +9,7 @@
              FontWeight="Medium"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="MainCourseView">
 
     <UserControl.DataContext>
         <viewModel:CourseViewModel/>
@@ -38,11 +38,11 @@
                                 <TextBlock Text="{Binding Path=teacher.fullName}" HorizontalAlignment="Left" FontSize="12"/>
 
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
+                                    <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.EditCourseCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
 
-                                    <Button Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
+                                    <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.DeleteCourseCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
                                 </StackPanel>
@@ -54,6 +54,6 @@
 
             </ListView>
         </Border>
-        
+
     </Grid>
 </UserControl>

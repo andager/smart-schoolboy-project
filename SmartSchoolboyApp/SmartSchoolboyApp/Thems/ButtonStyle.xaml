@@ -403,7 +403,7 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-
+            
         </Style.Triggers>
 
     </Style>

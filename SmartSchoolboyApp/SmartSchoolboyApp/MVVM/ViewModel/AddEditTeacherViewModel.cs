@@ -4,6 +4,7 @@ using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -24,7 +25,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private string _firstName; // имя пользователя
         private string _patronymic; // отчество пользователя
         private string _phone; // номер телефона пользователя
-        private SecureString _password; // пароль пользователя
+        private string _password; // пароль пользователя
         private List<Gender> _gender; // пол пользователя
         private DateTime _dateOfBirtch; // дата рождения пользователя
         private List<Role> _role; // должность пользователя
@@ -65,7 +66,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _phone; }
             set { _phone = value; OnPropertyChanged(nameof(Phone)); }
         }
-        public SecureString Password
+        public string Password
         {
             get { return _password; }
             set { _password = value; OnPropertyChanged(nameof(Password)); }
@@ -113,9 +114,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
+        Teacher _teacher;
+        private bool _addEdit;
         public AddEditTeacherViewModel(Teacher teacher)
         {
             UpdateWindow();
+            _teacher = teacher;
             if (teacher != null)
             {
                 WindowName = "EDIT Teacher";
@@ -123,13 +127,15 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 FirstName = teacher.firstName;
                 Patronymic = teacher.patronymic;
                 Phone = teacher.numberPhone;
+                _addEdit = false;
                 
             }
             else
             {
                 WindowName = "ADD Teachers";
+                _addEdit= true;
             }
-            AddEditCommand = new RelayCommand(ExecuteAddEditCommand/*, CanExecuteAddEditCommand*/);
+            AddEditCommand = new RelayCommand(ExecuteAddEditCommand);
             AddPhotoCommand = new RelayCommand(ExecuteAddPhotoCommand);
         }
 
@@ -165,22 +171,45 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             }
         }
 
-        private bool CanExecuteAddEditCommand(object obj)
+        private async void ExecuteAddEditCommand(object obj)
         {
-            if (string.IsNullOrWhiteSpace(LastName)) return false;
-            if (string.IsNullOrWhiteSpace(FirstName)) return false;
-            if (string.IsNullOrWhiteSpace(Phone)) return false;
-            if (!Int32.TryParse(Phone, out int resultPhone)) return false;
-            if (Password == null || Password.Length < 4) return false;
-            if (string.IsNullOrWhiteSpace(WorkExperience)) return false;
-            if (!Double.TryParse(WorkExperience, out double resultWorkExperience)) return false;
-            
-            return true;
-        }
+            string _error = String.Empty;
+            if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя учителя";
+            if (string.IsNullOrWhiteSpace(FirstName)) _error += "\nЗаполните фамилию учителя";
+            if (string.IsNullOrWhiteSpace(Phone)) _error += "\nЗаполните номер телефона";
+            if (!Int32.TryParse(Phone, out int resultPhone)) _error += "\nНомер телефона введен не коректно";
+            if (string.IsNullOrWhiteSpace(Password)) _error += "\nЗаполните пароль пользователя";
+            if (Password.Length < 4) _error += "\nДлинна пароля должна быть больше 4 символов";
+            if (string.IsNullOrWhiteSpace(WorkExperience)) _error += "\nЗаполните стаж работы";
+            if (!Double.TryParse(WorkExperience, out double resultWorkExperience)) _error += "\nСтаж работы заполнен не коректно";
 
-        private void ExecuteAddEditCommand(object obj)
-        {
-
+            if (!string.IsNullOrWhiteSpace(_error))
+            {
+                ErrorView errorView = new ErrorView(_error);
+                errorView.ShowDialog();
+            }
+            else
+            {
+                _teacher = new Teacher()
+                {
+                    id = _teacher.id,
+                    lastName = LastName,
+                    firstName = FirstName,
+                    patronymic = Patronymic,
+                    numberPhone = Phone,
+                    password = Password,
+                    //gender
+                    dateOfBirtch = DateOfBirtch,
+                    //role
+                    workExperience = WorkExperience,
+                    //photo
+                    isActive = _teacher.isActive
+                };
+                if (_addEdit)
+                    await App.ApiConnector.PostTAsync(_teacher, "Teachers");
+                else
+                    await App.ApiConnector.PutTAsync(_teacher, "Teachers", _teacher.id);
+            }
         }
         #endregion
     }

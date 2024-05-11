@@ -24,6 +24,15 @@
     
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Violet" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" FontSize="26" FontWeight="Bold">!</TextBlock>
+            </StackPanel>
+        </ControlTemplate>
     </Window.Resources>
 
     <Window.Visibility>
@@ -97,7 +106,7 @@
                     <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0 30 0 0">
 
                         <TextBlock Text="Фамилия" Foreground="DarkGray"/>
-                        
+
                         <TextBox Text="{Binding Path=LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxLength="35" ToolTip="Введите фамилию" Style="{StaticResource tBoxAddEdit}">
                             <TextBox.Background>
                                 <ImageBrush ImageSource="/Images/Icons/user.png" Stretch="Uniform" AlignmentX="Left"/>
@@ -149,7 +158,7 @@
                                 <ImageBrush ImageSource="/Images/Icons/book.png" Stretch="Uniform" AlignmentX="Left"/>
                             </TextBox.Background>
                         </TextBox>
-                        
+
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -128,6 +128,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 Patronymic = teacher.patronymic;
                 Phone = teacher.numberPhone;
                 TeacherPhoto = teacher.teacherPhoto.photo;
+                Password = teacher.password;
                 _addEdit = false;
                 
             }

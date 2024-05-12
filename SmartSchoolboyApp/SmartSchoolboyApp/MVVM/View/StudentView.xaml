@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="MainStudentView">
     
     <UserControl.DataContext>
         <viewModel:StudentViewModel/>
@@ -43,7 +43,7 @@
                                 <GridSplitter Width="2" Margin="5 0"/>
 
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewStudentButton}">
+                                    <Button Command="{Binding ElementName=MainStudentView, Path=DataContext.EditStudentCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewStudentButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewStudentButtonIcon}"/>
                                     </Button>
 

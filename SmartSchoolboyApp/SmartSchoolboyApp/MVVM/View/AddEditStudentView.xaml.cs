@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartSchoolboyApp.Classes;
+using SmartSchoolboyApp.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,24 @@ namespace SmartSchoolboyApp.MVVM.View
     /// </summary>
     public partial class AddEditStudentView : Window
     {
-        public AddEditStudentView()
+        public AddEditStudentView(Student student)
         {
             InitializeComponent();
+            DataContext = new AddEditStudentViewModel(student);
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+        private void btnMinimaze_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

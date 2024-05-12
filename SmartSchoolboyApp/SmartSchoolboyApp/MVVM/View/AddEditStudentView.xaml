@@ -80,7 +80,7 @@
                     <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
 
                         <TextBlock Text="Пол ученика"/>
-                        <ComboBox DisplayMemberPath="name" ItemsSource="{Binding Path=Genders, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <ComboBox SelectedItem="{Binding Path=SelectedGender, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="name" ItemsSource="{Binding Path=Genders, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                         <TextBlock Text="Номер телефона"/>
                         <TextBox Text="{Binding Path=NumberPhone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxAddEdit}">

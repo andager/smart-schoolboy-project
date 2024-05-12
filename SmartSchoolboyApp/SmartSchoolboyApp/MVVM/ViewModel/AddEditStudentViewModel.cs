@@ -12,6 +12,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 {
     public class AddEditStudentViewModel : ObservableObject
     {
+        private Gender _selectedGender;
+        public Gender SelectedGender
+        {
+            get { return _selectedGender; }
+            set { _selectedGender = value; OnPropertyChanged(nameof(SelectedGender)); }
+        }
         #region Fields
         private string _lastName;
         private string _firstName;
@@ -77,8 +83,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
+        private Student _student;
         public AddEditStudentViewModel(Student student)
         {
+            _student = student; 
             UpdateList();
             if (student is null)
             {
@@ -101,12 +109,26 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             Genders = await App.ApiConnector.GetTAsync<List<Gender>>("Genders");
         }
 
-        private void ExecuteStudentSaveCommand(object obj)
+        private async void ExecuteStudentSaveCommand(object obj)
         {
             string _error = String.Empty;
             if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя ученика";
             if (string.IsNullOrWhiteSpace(FirstName)) _error += "Заполните фамилию ученика";
-            
+            _student = new Student()
+            {
+                id = _student.id,
+                lastName = LastName,
+                firstName = FirstName,
+                patronymic = Patronymic,
+                dateOfBirch = DateOfBirtch,
+                genderId = SelectedGender.id,
+                gender = SelectedGender,
+                numberPhone = NumberPhone,
+                telegramId = TelegramId,
+                isActive = _student.isActive
+            };
+            await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
+            Console.WriteLine();
         }
         #endregion
     }

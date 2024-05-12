@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,14 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 {
     public class AddEditStudentViewModel : ObservableObject
     {
-        private Gender _selectedGender;
-        public Gender SelectedGender
-        {
-            get { return _selectedGender; }
-            set { _selectedGender = value; OnPropertyChanged(nameof(SelectedGender)); }
-        }
         #region Fields
+        private string _windowName;
         private string _lastName;
         private string _firstName;
         private string _patronymic;
         private DateTime _dateOfBirtch;
         private List<Gender> _genders;
+        private Gender _selectedGender;
         private string _numberPhone;
         private object _telegramId;
         private DateTime _dateStart = DateTime.Today.AddYears(-100);
@@ -31,6 +28,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Properties
+        public string Windowname
+        {
+            get { return _windowName; }
+            set { _windowName = value; OnPropertyChanged(nameof(Windowname)); }
+        }
         public string LastName
         {
             get { return _lastName; }
@@ -55,6 +57,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get { return _genders; }
             set { _genders = value; OnPropertyChanged(nameof(Genders)); }
+        }
+        public Gender SelectedGender
+        {
+            get { return _selectedGender; }
+            set { _selectedGender = value; OnPropertyChanged(nameof(SelectedGender)); }
         }
         public string NumberPhone
         {
@@ -114,21 +121,48 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             string _error = String.Empty;
             if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя ученика";
             if (string.IsNullOrWhiteSpace(FirstName)) _error += "Заполните фамилию ученика";
-            _student = new Student()
+
+            try
             {
-                id = _student.id,
-                lastName = LastName,
-                firstName = FirstName,
-                patronymic = Patronymic,
-                dateOfBirch = DateOfBirtch,
-                genderId = SelectedGender.id,
-                gender = SelectedGender,
-                numberPhone = NumberPhone,
-                telegramId = TelegramId,
-                isActive = _student.isActive
-            };
-            await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
-            Console.WriteLine();
+                if (_student is null)
+                {
+                    _student = new Student()
+                    {
+
+                        lastName = LastName,
+                        firstName = FirstName,
+                        patronymic = Patronymic,
+                        dateOfBirch = DateOfBirtch,
+                        genderId = SelectedGender.id,
+                        gender = SelectedGender,
+                        numberPhone = NumberPhone,
+                        telegramId = TelegramId,
+                    };
+                    await App.ApiConnector.PostTAsync(_student, "Students");
+                }
+                else
+                {
+                    _student = new Student()
+                    {
+                        id = _student.id,
+                        lastName = LastName,
+                        firstName = FirstName,
+                        patronymic = Patronymic,
+                        dateOfBirch = DateOfBirtch,
+                        genderId = SelectedGender.id,
+                        gender = SelectedGender,
+                        numberPhone = NumberPhone,
+                        telegramId = TelegramId,
+                        isActive = _student.isActive
+                    };
+                    await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorView errorView = new ErrorView(ex.Message);
+                errorView.ShowDialog();
+            }
         }
         #endregion
     }

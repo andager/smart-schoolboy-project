@@ -21,7 +21,17 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <fa:IconImage Icon="Search" Width="20" Height="20" Foreground="{StaticResource plainTextColor3}"/>
+                <TextBox Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="13" Height="24" Width="200" Background="Transparent" Foreground="{StaticResource plainTextColor3}" CaretBrush="{StaticResource plainTextColor3}" BorderThickness="0 0 0 1" VerticalAlignment="Center" Margin="5 5 0 0"/>
+                <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
+            </StackPanel>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+                <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
+            </Button>
+
         </Grid>
 
         <Border Grid.Row="1" Style="{StaticResource listViewBorder}">
@@ -43,7 +53,7 @@
                                 <GridSplitter Width="2" Margin="5 0"/>
 
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Command="{Binding ElementName=MainStudentView, Path=DataContext.EditStudentCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewStudentButton}">
+                                    <Button Command="{Binding ElementName=MainStudentView, Path=DataContext.AddEditStudentCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewStudentButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewStudentButtonIcon}"/>
                                     </Button>
 

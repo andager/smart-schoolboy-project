@@ -13,8 +13,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     {
         #region Fields
         private List<Student> _students;
-        private RelayCommand _addStudent;
-        private RelayCommand _editStudent;
+        private RelayCommand _addEditStudent;
         private RelayCommand _deleteStudent;
         private Student _selectedStudent;
         #endregion
@@ -33,29 +32,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand AddStudentCommand
+        public RelayCommand AddEditStudentCommand
         {
             get
             {
-                return _addStudent ?? new RelayCommand(obj =>
+                return _addEditStudent ?? new RelayCommand(obj =>
                 {
-                    AddEditStudentView addEditStudent = new AddEditStudentView(null);
+                    AddEditStudentView addEditStudent = new AddEditStudentView(obj as Student);
                     addEditStudent.ShowDialog();
-                });
-            }
-        }
-        public RelayCommand EditStudentCommand
-        {
-            get
-            {
-                return _editStudent ?? new RelayCommand(obj =>
-                {
-                    var student = obj as Student;
-                    if (student != null)
-                    {
-                        AddEditStudentView addEditStudent = new AddEditStudentView(student);
-                        addEditStudent.ShowDialog();
-                    }
+                    if (addEditStudent.IsVisible == false && addEditStudent.IsLoaded)
+                        addEditStudent.Close();
+                    UpdateList();
                 });
             }
         }

@@ -13,8 +13,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     {
         #region Fields
         private List<Course> _courses;
-        private RelayCommand _addCourse;
-        private RelayCommand _editCourse;
+        private RelayCommand _addEditCourse;
         private RelayCommand _deleteCourse;
         private Course _selectedCourse;
         private bool _isLoading;
@@ -39,13 +38,13 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand AddCourseCommand
+        public RelayCommand AddEditCourseCommand
         {
             get
             {
-                return _addCourse ?? new RelayCommand(obj =>
+                return _addEditCourse ?? new RelayCommand(obj =>
                 {
-                    AddEditCourseView addEditCourse = new AddEditCourseView(null);
+                    AddEditCourseView addEditCourse = new AddEditCourseView(obj as Course);
                     addEditCourse.ShowDialog();
                     if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
                         addEditCourse.Close();
@@ -53,25 +52,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 });
             }
         }
-        public RelayCommand EditCourseCommand
-        {
-            get
-            {
-                return _editCourse ?? new RelayCommand(obj =>
-                {
-                    var course = obj as Course;
-                    if (course != null)
-                    {
-                        AddEditCourseView addEditCourse = new AddEditCourseView(course);
-                        addEditCourse.ShowDialog();
-                        if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
-                            addEditCourse.Close();
-                        UpdateList();
-                    }
-                });
-            }
-        }
-
         public RelayCommand DeleteCourseCommand
         {
             get

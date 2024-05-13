@@ -39,7 +39,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
-                <Button ToolTip="Добавить нового пользователя" Command="{Binding AddTeacherCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+                <Button ToolTip="Добавить нового пользователя" Command="{Binding AddEditTeacherCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
                     <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
                 </Button>
             </StackPanel>
@@ -96,7 +96,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
 
-                                    <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.EditTeacherCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
+                                    <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.AddEditTeacherCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
                                     </Button>
 

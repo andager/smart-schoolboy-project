@@ -38,7 +38,7 @@
                 <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
             </StackPanel>
 
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding AddCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
                 <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
             </Button>
 
@@ -56,7 +56,7 @@
                                 <TextBlock Text="{Binding Path=teacher.fullName}" HorizontalAlignment="Left" FontSize="12"/>
 
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.EditCourseCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
+                                    <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.AddEditCourseCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
 

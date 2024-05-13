@@ -94,6 +94,7 @@
     <Compile Include="MVVM\Model\Repositories\UserRepositories.cs" />
     <Compile Include="MVVM\ViewModel\AddEditCourseViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditGroupViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AddEditSchoolSubjectViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditStudentViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditTeacherViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CourseViewModel.cs" />
@@ -108,6 +109,9 @@
     </Compile>
     <Compile Include="MVVM\View\AddEditeGroupView.xaml.cs">
       <DependentUpon>AddEditeGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AddEditSchoolSubjectView.xaml.cs">
+      <DependentUpon>AddEditSchoolSubjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\AddEditStudentView.xaml.cs">
       <DependentUpon>AddEditStudentView.xaml</DependentUpon>
@@ -149,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\AddEditeGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\AddEditSchoolSubjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

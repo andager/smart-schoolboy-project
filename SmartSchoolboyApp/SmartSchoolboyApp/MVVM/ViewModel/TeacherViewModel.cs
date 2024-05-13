@@ -41,21 +41,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         #region Commands
         public ICommand SearchCommand { get; }
-        public RelayCommand EditTeacherCommand
+        public RelayCommand AddEditTeacherCommand
         {
             get
             {
                 return _addEditCommand ?? new RelayCommand(obj =>
                 {
-                    var teacher = obj as Teacher;
-                    if (teacher != null)
-                    {
-                        AddEditTeacherView addEdit = new AddEditTeacherView(teacher);
-                        addEdit.ShowDialog();
-                        if (addEdit.IsVisible == false && addEdit.IsLoaded)
-                            addEdit.Close();
-                        UpdateDataGrid();
-                    }
+                    AddEditTeacherView addEdit = new AddEditTeacherView(obj as Teacher);
+                    addEdit.ShowDialog();
+                    if (addEdit.IsVisible == false && addEdit.IsLoaded)
+                        addEdit.Close();
+                    UpdateDataGrid();
                 });
             }
         }

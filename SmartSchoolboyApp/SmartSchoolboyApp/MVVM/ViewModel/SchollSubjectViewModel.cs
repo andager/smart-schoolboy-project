@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +36,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _isLoading; }
             set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
         }
+        
         #endregion
 
         #region Commands
@@ -45,10 +47,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 return _changeCommand ?? new RelayCommand(obj =>
                 {
                     var subject = obj as SchoolSubject;
-                    if (subject != null)
-                    {
-                        Console.WriteLine(subject.name);
-                    }
+                    AddEditSchoolSubjectView addEditSchool = new AddEditSchoolSubjectView(subject);
+                    addEditSchool.ShowDialog();
                 });
             }
             

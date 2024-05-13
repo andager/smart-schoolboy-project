@@ -15,7 +15,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Fields
         private string _windoWname;
         private List<Teacher> _teachers;
+        private int _indexTeacher;
+        private Teacher _selectedTeacher;
         private string _courseName;
+        private bool _isViewVisible = true;
         #endregion
 
         #region Properties
@@ -34,6 +37,21 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _courseName; }
             set { _courseName = value; OnPropertyChanged(nameof(CourseName)); }
         }
+        public int IndexTeacher
+        {
+            get { return _indexTeacher; }
+            set { _indexTeacher = value; OnPropertyChanged(nameof(IndexTeacher)); }
+        }
+        public Teacher SelectedTeacher
+        {
+            get { return _selectedTeacher; }
+            set { _selectedTeacher = value; OnPropertyChanged(nameof(SelectedTeacher)); }
+        }
+        public bool IsViewVisible
+        {
+            get { return _isViewVisible; }
+            set { _isViewVisible = value; OnPropertyChanged(nameof(IsViewVisible)); }
+        }
         #endregion
 
         #region Commands
@@ -44,6 +62,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         Course _course;
         public AddEditCourseViewModel(Course course)
         {
+            _course = course;   
             UpdateList();
             if (course is null)
             {
@@ -52,12 +71,13 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             else
             {
                 WindowName = "Edit Course";
+                IndexTeacher = course.teacherId - 1;
                 CourseName = course.name;
             }
             CourseSaveCommand = new RelayCommand(ExecuteCourseSaveCommand);
         }
 
-        private void ExecuteCourseSaveCommand(object obj)
+        private async void ExecuteCourseSaveCommand(object obj)
         {
             string _error = String.Empty;
             if (string.IsNullOrWhiteSpace(CourseName)) _error += "\nЗаполните название курса";
@@ -69,16 +89,37 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             }
             else
             {
-                _course = new Course()
+                try
                 {
-                    id = _course.id,
-                    name = CourseName,
-                    //teacherId
-                    //teacher
-                    isActive = _course.isActive,
-                };
-
-
+                    if (_course is null)
+                    {
+                        _course = new Course()
+                        {
+                            name = CourseName,
+                            teacherId = SelectedTeacher.id,
+                            teacher = SelectedTeacher,
+                        };
+                        await App.ApiConnector.PostTAsync(_course, "Courses");
+                    }
+                    else
+                    {
+                        _course = new Course()
+                        {
+                            id = _course.id,
+                            name = CourseName,
+                            teacherId = SelectedTeacher.id,
+                            teacher = SelectedTeacher,
+                            isActive = _course.isActive,
+                        };
+                        await App.ApiConnector.PutTAsync(_course, "Courses", _course.id);
+                    }
+                    IsViewVisible = false;
+                }
+                catch (Exception ex)
+                {
+                    ErrorView errorView = new ErrorView(ex.Message);
+                    errorView.ShowDialog();
+                }
             }
 
         }

@@ -21,6 +21,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private RelayCommand _removeCommand;
         private Teacher _selectTeacher;
         private string _search;
+        private bool _isLoading;
         #endregion
 
         #region Properties
@@ -31,6 +32,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             set { _selectTeacher = value; OnPropertyChanged(nameof(SelectedTeacher));}
         }
         public string Search { get { return _search; } set { _search = value; OnPropertyChanged(nameof(Search)); } }
+        public bool IsLoading
+        {
+            get { return _isLoading;}
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
+        }
         #endregion
 
         #region Commands
@@ -46,6 +52,9 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     {
                         AddEditTeacherView addEdit = new AddEditTeacherView(teacher);
                         addEdit.ShowDialog();
+                        if (addEdit.IsVisible == false && addEdit.IsLoaded)
+                            addEdit.Close();
+                        UpdateDataGrid();
                     }
                 });
             }
@@ -61,6 +70,9 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     AddEditTeacherView addEditTeacherView = new AddEditTeacherView(null);
                     addEditTeacherView.ShowDialog();
+                    if (addEditTeacherView.IsVisible == false && addEditTeacherView.IsLoaded)
+                        addEditTeacherView.Close();
+                    UpdateDataGrid();
                 });
             }
         }
@@ -75,7 +87,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var teacher = obj as Teacher;
                     if (teacher != null)
                     {
-                        teacher.isActive = true;
+                        teacher.isActive = false;
                         await App.ApiConnector.PutTAsync(teacher, "Teachers", teacher.id);
                     }
                 });
@@ -90,19 +102,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
         }
 
-        private void ExecuteAddEditTeacherCommand(object obj)
-        {
-            AddEditTeacherView addEdit = new AddEditTeacherView(obj as Teacher);
-            addEdit.ShowDialog();
-        }
-
         private async void UpdateDataGrid()
         {
-            var teacher = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
-            teacher.Where(p => p.lastName.ToLower().Trim().Contains(Search.ToLower().Trim()) ||
-            p.firstName.ToLower().Trim().Contains(Search.ToLower().Trim()) ||
-            p.patronymic.ToLower().Trim().Contains(Search.ToLower().Trim()));
-            Teachers = teacher;
+            IsLoading = true;
+            Teachers = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
+            IsLoading = false;
         }
 
         private bool CanExecuteSearchCommand(object obj)

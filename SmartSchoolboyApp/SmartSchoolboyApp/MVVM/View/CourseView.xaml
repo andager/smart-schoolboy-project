@@ -31,6 +31,17 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <fa:IconImage Icon="Search" Width="20" Height="20" Foreground="{StaticResource plainTextColor3}"/>
+                <TextBox Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="13" Height="24" Width="200" Background="Transparent" Foreground="{StaticResource plainTextColor3}" CaretBrush="{StaticResource plainTextColor3}" BorderThickness="0 0 0 1" VerticalAlignment="Center" Margin="5 5 0 0"/>
+                <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
+            </StackPanel>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding AddCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+                <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
+            </Button>
+
         </Grid>
 
         <Border Grid.Row="1" Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Style="{StaticResource listViewBorder}">

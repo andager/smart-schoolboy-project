@@ -134,7 +134,7 @@
     <Border Style="{StaticResource listViewBorder}">
 
         <Border.Background>
-            <SolidColorBrush Color="LightGray" Opacity="0.5"/>
+            <SolidColorBrush Color="LightGray" Opacity="0.8"/>
         </Border.Background>
         
         <Control Style="{StaticResource BusyAnimationStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>

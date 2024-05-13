@@ -40,31 +40,18 @@ namespace SmartSchoolboyApp
         /// </summary>
         protected void Application_Startup(object sender, StartupEventArgs e)
         {
-            LoginView loginView = new LoginView();
-            loginView.Show();
-
-            //_navigationStore.CurrentViewModel = new CourseViewModel();
-            //HomeView homeView = new HomeView()
-            //{
-            //    DataContext = new HomeViewModel(_navigationStore)
-            //};
-            //homeView.Show();
-            
-
-
-            //var addteacher = new AddEditTeacherView();
-            //addteacher.Show();
-
-            //окно авторизации
-            //var loginView = new LoginView();
+            //LoginView loginView = new LoginView();
             //loginView.Show();
-            //loginView.IsVisibleChanged += (s, ev) =>
+            //loginView.IsVisibleChanged += (s, sv) =>
             //{
             //    if (loginView.IsVisible == false && loginView.IsLoaded)
             //    {
-            //        // главное окно
-            //        var homeView = new HomeView();
-            //        homeView.Show();
+                    _navigationStore.CurrentViewModel = new CourseViewModel();
+                    HomeView homeView = new HomeView()
+                    {
+                        DataContext = new HomeViewModel(_navigationStore)
+                    };
+                    homeView.Show();
             //        loginView.Close();
             //    }
             //};

@@ -47,6 +47,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     AddEditCourseView addEditCourse = new AddEditCourseView(null);
                     addEditCourse.ShowDialog();
+                    if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
+                        addEditCourse.Close();
                     UpdateList();
                 });
             }
@@ -62,6 +64,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     {
                         AddEditCourseView addEditCourse = new AddEditCourseView(course);
                         addEditCourse.ShowDialog();
+                        if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
+                            addEditCourse.Close();
                         UpdateList();
                     }
                 });

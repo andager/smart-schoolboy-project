@@ -16,6 +16,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private List<SchoolSubject> _schoolSubjects;
         private RelayCommand _changeCommand;
         private SchoolSubject _selectSubject;
+        private bool _isLoading;
         #endregion
 
         #region Properties
@@ -28,6 +29,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get { return _selectSubject; }
             set { _selectSubject = value; OnPropertyChanged(nameof(SelectSubject)); }
+        }
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
         }
         #endregion
 
@@ -58,7 +64,9 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private async void UpdateList()
         {
+            IsLoading = true;
             SchoolSubjects = await App.ApiConnector.GetTAsync<List<SchoolSubject>>("SchoolSubjects");
+            IsLoading = false;
         }
         #endregion
     }

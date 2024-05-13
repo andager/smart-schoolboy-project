@@ -63,4 +63,5 @@
         <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
     </LinearGradientBrush>
 
+    
 </ResourceDictionary>

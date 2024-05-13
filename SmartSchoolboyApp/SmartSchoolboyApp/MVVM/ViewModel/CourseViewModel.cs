@@ -17,9 +17,15 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private RelayCommand _editCourse;
         private RelayCommand _deleteCourse;
         private Course _selectedCourse;
+        private bool _isLoading;
         #endregion
 
         #region Properties
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
+        }
         public List<Course> Courses
         {
             get { return _courses; }
@@ -41,6 +47,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     AddEditCourseView addEditCourse = new AddEditCourseView(null);
                     addEditCourse.ShowDialog();
+                    UpdateList();
                 });
             }
         }
@@ -55,6 +62,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     {
                         AddEditCourseView addEditCourse = new AddEditCourseView(course);
                         addEditCourse.ShowDialog();
+                        UpdateList();
                     }
                 });
             }
@@ -84,7 +92,9 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private async void UpdateList()
         {
+            IsLoading = true;
             Courses = await App.ApiConnector.GetTAsync<List<Course>>("Courses");
+            IsLoading = false;
         }
         #endregion
 

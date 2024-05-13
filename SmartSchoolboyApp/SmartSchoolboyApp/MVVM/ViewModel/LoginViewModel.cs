@@ -17,11 +17,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private string _errorMessage; // сообщение об ошибке
         private bool _isViewVisible = true; // видимость окна авторизации
         private bool _rememberMe;
+        private bool _isLoading;
         private UserRepositories userRepositories; // иницилизация interface авторизации
 
         #endregion
 
         #region Properties
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
+        }
         public string Username // номер телефона ползователя
         {
             get
@@ -125,10 +131,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         /// </summary>
         private async void ExecuteLoginCommand(object obj)
         {
+            IsLoading = true;
             if (await userRepositories.Authenticateuser(new NetworkCredential(Username, Password))) IsViewVisible = false;
             else ErrorMessage = "* Invalid number Phone or password";
+            IsLoading = false;
         }
-        
+
         private void ExecuteRememberMeCommand(object obj)
         {
             if (RememberMe == true)

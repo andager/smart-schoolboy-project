@@ -12,10 +12,6 @@
         WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Style="{StaticResource windowStyle}"
         Title="HomeView" MinHeight="450" Height="450" MinWidth="800" Width="800">
     
-    <Window.DataContext>
-        <viewModel:HomeViewModel/>
-    </Window.DataContext>
-
     <Window.Resources>
 
         <DataTemplate DataType="{x:Type viewModel:CourseViewModel}">
@@ -56,6 +52,7 @@
 
         <Grid>
 
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="220"/>
                 <ColumnDefinition Width="*"/>

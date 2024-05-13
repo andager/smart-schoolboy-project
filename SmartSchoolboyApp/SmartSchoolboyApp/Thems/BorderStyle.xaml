@@ -28,4 +28,5 @@
         <Setter Property="BorderBrush" Value="{StaticResource brushGradient}"/>
         <Setter Property="Background" Value="{StaticResource backgroundGradient}"/>
     </Style>
+    
 </ResourceDictionary>

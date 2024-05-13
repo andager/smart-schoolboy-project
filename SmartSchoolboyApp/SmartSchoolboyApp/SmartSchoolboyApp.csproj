@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\NavigateCommand.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="MVVM\Model\Clases\UserAccountModel.cs" />
     <Compile Include="MVVM\Model\Repositories\UserRepositories.cs" />
     <Compile Include="MVVM\ViewModel\AddEditCourseViewModel.cs" />
@@ -133,8 +136,13 @@
     <Compile Include="MVVM\View\TeacherView.xaml.cs">
       <DependentUpon>TeacherView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Stores\NavigationStore.cs" />
     <Compile Include="Thems\UserControls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Thems\UserControls\LoadingSpinner.xaml.cs">
+      <DependentUpon>LoadingSpinner.xaml</DependentUpon>
     </Compile>
     <Page Include="MVVM\View\AddEditCourseView.xaml">
       <SubType>Designer</SubType>
@@ -281,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Thems\UserControls\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Thems\UserControls\LoadingSpinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

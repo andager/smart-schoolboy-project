@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using SmartSchoolboyApp.MVVM.View;
+using SmartSchoolboyApp.Stores;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SmartSchoolboyApp
 {
@@ -23,19 +25,32 @@ namespace SmartSchoolboyApp
         public static readonly ApiConnection ApiConnector;
         //Строка подключения к Api
         private static readonly Uri BaseUri = new Uri("http://172.20.10.9:5063/api/");
+        private readonly NavigationStore _navigationStore;
         static App()
         {
             //Инициализация коннектора сконфигурированным HttpClient
             ApiConnector = new ApiConnection(new HttpClient() { BaseAddress = BaseUri });
         }
-
+        public App()
+        {
+            _navigationStore = new NavigationStore();
+        }
         /// <summary>
         /// Метод загрузки окон приложения
         /// </summary>
         protected void Application_Startup(object sender, StartupEventArgs e)
         {
-            var homeView = new HomeView();
-            homeView.Show();
+            LoginView loginView = new LoginView();
+            loginView.Show();
+
+            //_navigationStore.CurrentViewModel = new CourseViewModel();
+            //HomeView homeView = new HomeView()
+            //{
+            //    DataContext = new HomeViewModel(_navigationStore)
+            //};
+            //homeView.Show();
+            
+
 
             //var addteacher = new AddEditTeacherView();
             //addteacher.Show();

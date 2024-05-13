@@ -27,8 +27,14 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private string _phone; // номер телефона пользователя
         private string _password; // пароль пользователя
         private List<Gender> _gender; // пол пользователя
+        private Gender _selectedGender;
+        private int _indexGender;
         private DateTime _dateOfBirtch; // дата рождения пользователя
+        private DateTime _dateStart = DateTime.Today.AddYears(-100);
+        private DateTime _dateEnd = DateTime.Today.AddYears(-18);
         private List<Role> _role; // должность пользователя
+        private Role _selectedRole;
+        private int _indexRole;
         private string _workExperience; // стаж работы поьзователя
         private byte[] _teacherPhoto; // фото пользователя
         private string _errorMessage; // сообщение об ошибке
@@ -76,15 +82,45 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _gender; }
             set { _gender = value; OnPropertyChanged(nameof(Gender)); }
         }
+        public Gender SelectedGender
+        {
+            get { return _selectedGender; }
+            set { _selectedGender = value; OnPropertyChanged(nameof(SelectedGender)); }
+        }
+        public int IndexGender
+        {
+            get { return _indexGender; }
+            set { _indexGender = value; OnPropertyChanged(nameof(IndexGender)); }
+        }
         public DateTime DateOfBirtch
         {
             get { return _dateOfBirtch; }
             set { _dateOfBirtch = value; OnPropertyChanged(nameof(DateOfBirtch));}
         }
+        public DateTime DateStart
+        {
+            get { return _dateStart; }
+            set { _dateStart = value; OnPropertyChanged(nameof(DateStart)); }
+        }
+        public DateTime DateEnd
+        {
+            get { return _dateEnd; }
+            set { _dateEnd = value; OnPropertyChanged(nameof(DateEnd)); }
+        }
         public List<Role> Role
         {
             get { return _role; }
             set { _role = value; OnPropertyChanged(nameof(Role)); }
+        }
+        public Role SelectedRole
+        {
+            get { return _selectedRole; }
+            set { _selectedRole = value; OnPropertyChanged(nameof(SelectedRole)); }
+        }
+        public int IndexRole
+        {
+            get { return _indexRole; }
+            set { _indexRole = value; OnPropertyChanged(nameof(IndexRole)); }
         }
         public string WorkExperience
         {
@@ -115,7 +151,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         #region Constructor
         Teacher _teacher;
-        private bool _addEdit;
+        Teacherphoto _teacherhoto;
         public AddEditTeacherViewModel(Teacher teacher)
         {
             UpdateWindow();
@@ -127,15 +163,18 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 FirstName = teacher.firstName;
                 Patronymic = teacher.patronymic;
                 Phone = teacher.numberPhone;
+                DateOfBirtch = teacher.dateOfBirtch;
+                WorkExperience = teacher.workExperience;
+                IndexGender = teacher.genderId - 1;
+                IndexRole = teacher.roleId - 1;
                 TeacherPhoto = teacher.teacherPhoto.photo;
+                _teacherhoto = teacher.teacherPhoto;
                 Password = teacher.password;
-                _addEdit = false;
                 
             }
             else
             {
                 WindowName = "ADD Teachers";
-                _addEdit= true;
             }
             AddEditCommand = new RelayCommand(ExecuteAddEditCommand);
             AddPhotoCommand = new RelayCommand(ExecuteAddPhotoCommand);
@@ -176,42 +215,88 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private async void ExecuteAddEditCommand(object obj)
         {
             string _error = String.Empty;
-            if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя учителя";
-            if (string.IsNullOrWhiteSpace(FirstName)) _error += "\nЗаполните фамилию учителя";
-            if (string.IsNullOrWhiteSpace(Phone)) _error += "\nЗаполните номер телефона";
-            if (!Int32.TryParse(Phone, out int resultPhone)) _error += "\nНомер телефона введен не коректно";
-            if (string.IsNullOrWhiteSpace(Password)) _error += "\nЗаполните пароль пользователя";
-            //if (Password.Length < 4) _error += "\nДлинна пароля должна быть больше 4 символов";
-            if (string.IsNullOrWhiteSpace(WorkExperience)) _error += "\nЗаполните стаж работы";
-            if (!Double.TryParse(WorkExperience, out double resultWorkExperience)) _error += "\nСтаж работы заполнен не коректно";
+            //if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя учителя";
+            //if (string.IsNullOrWhiteSpace(FirstName)) _error += "\nЗаполните фамилию учителя";
+            //if (string.IsNullOrWhiteSpace(Phone)) _error += "\nЗаполните номер телефона";
+            //if (!Int32.TryParse(Phone, out int resultPhone)) _error += "\nНомер телефона введен не коректно";
+            //if (string.IsNullOrWhiteSpace(Password)) _error += "\nЗаполните пароль пользователя";
+            ////if (Password.Length < 4) _error += "\nДлинна пароля должна быть больше 4 символов";
+            //if (string.IsNullOrWhiteSpace(WorkExperience)) _error += "\nЗаполните стаж работы";
+            //if (!Double.TryParse(WorkExperience, out double resultWorkExperience)) _error += "\nСтаж работы заполнен не коректно";
 
-            if (!string.IsNullOrWhiteSpace(_error))
+            if (string.IsNullOrWhiteSpace(_error))
+            {
+                try
+                {
+                    if (_teacher is null)
+                    {
+                        if (_teacherhoto is null)
+                        {
+                            _teacherhoto = new Teacherphoto()
+                            {
+                                photo = TeacherPhoto
+                            };
+                            await App.ApiConnector.PostTAsync(_teacherhoto, "TeacherPhotos");
+                        }
+                        _teacher = new Teacher()
+                        {
+                            lastName = LastName,
+                            firstName = FirstName,
+                            patronymic = Patronymic,
+                            numberPhone = Phone,
+                            password = "fsdfgsdg",
+                            genderId = SelectedGender.id,
+                            gender = SelectedGender,
+                            dateOfBirtch = DateOfBirtch,
+                            roleId = SelectedRole.id,
+                            role = SelectedRole,
+                            workExperience = WorkExperience,
+                            teacherPhotoId = _teacherhoto.id,
+                            teacherPhoto = _teacherhoto
+                        };
+                        await App.ApiConnector.PostTAsync(_teacher, "Teachers");
+                    }
+                    else
+                    {
+                        _teacherhoto = new Teacherphoto()
+                        {
+                            id = _teacherhoto.id,
+                            photo = TeacherPhoto
+                        };
+                        await App.ApiConnector.PutTAsync(_teacherhoto, "TeacherPhotos", _teacherhoto.id);
+                        _teacher = new Teacher()
+                        {
+                            id = _teacher.id,
+                            lastName = LastName,
+                            firstName = FirstName,
+                            patronymic = Patronymic,
+                            numberPhone = Phone,
+                            password = Password,
+                            genderId = SelectedGender.id,
+                            gender = SelectedGender,
+                            dateOfBirtch = DateOfBirtch,
+                            roleId = SelectedRole.id,
+                            role = SelectedRole,
+                            workExperience = WorkExperience,
+                            teacherPhotoId = _teacherhoto.id,
+                            teacherPhoto = _teacherhoto,
+                            isActive = _teacher.isActive
+                        };
+                        await App.ApiConnector.PutTAsync(_teacher, "Teachers", _teacher.id);
+                    }
+                    IsViewVisible = false;
+                }
+                catch (Exception ex)
+                {
+                    ErrorView errorView = new ErrorView(ex.Message);
+                    errorView.ShowDialog();
+                }
+            }
+            else
             {
                 ErrorView errorView = new ErrorView(_error);
                 errorView.ShowDialog();
             }
-            //else
-            //{
-            //    _teacher = new Teacher()
-            //    {
-            //        id = _teacher.id,
-            //        lastName = LastName,
-            //        firstName = FirstName,
-            //        patronymic = Patronymic,
-            //        numberPhone = Phone,
-            //        password = Password,
-            //        //gender
-            //        dateOfBirtch = DateOfBirtch,
-            //        //role
-            //        workExperience = WorkExperience,
-            //        //photo
-            //        isActive = _teacher.isActive
-            //    };
-            //    if (_addEdit)
-            //        await App.ApiConnector.PostTAsync(_teacher, "Teachers");
-            //    else
-            //        await App.ApiConnector.PutTAsync(_teacher, "Teachers", _teacher.id);
-            //}
         }
         #endregion
     }

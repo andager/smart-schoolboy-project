@@ -7,6 +7,7 @@
         xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
         xmlns:customControls="clr-namespace:SmartSchoolboyApp.Thems.UserControls"
         mc:Ignorable="d"
+                     xmlns:converts="clr-namespace:SmartSchoolboyApp.Converters"
         FontFamily="Montserrat" FontWeight="Medium" Foreground="#fff" FontSize="12"
         WindowStartupLocation="CenterScreen" Style="{StaticResource windowStyle}"
         Title="Login" Height="480" Width="800" MouseDown="Window_MouseDown">
@@ -17,6 +18,7 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <converts:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     </Window.Resources>
     
     <Window.Visibility>
@@ -30,79 +32,89 @@
             <ImageBrush ImageSource="/Images/back-image.jpg" Stretch="Fill"/>
         </Border.Background>
 
-        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
+        <Grid>
 
-            <Border.BorderBrush>
-                <LinearGradientBrush>
-                    <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
-                    <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
-                    <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
+            <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
 
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
-                    <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+                <Border.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
+                        <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
 
-            <Grid>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+                <Grid>
 
-                <!-- Header -->
-                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <!-- Window name -->
-                        <ColumnDefinition/>
-                        <!-- Button minimaze -->
-                        <ColumnDefinition Width="25"/>
-                        <!-- Button close -->
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
+                    <!-- Header -->
+                    <Grid Grid.Row="0">
 
-                    <TextBlock Grid.Column="0" Text="LOG IN" Foreground="DarkGray" FontSize="10" FontWeight="Bold" Margin="10 0 0 0"/>
-                    <Button Grid.Column="1" Click="btnMinimaze_Click" Style="{StaticResource btnMinimaze}"/>
-                    <Button Grid.Column="2" Click="btnClose_Click" Style="{StaticResource btnClose}"/>
+                        <Grid.ColumnDefinitions>
+                            <!-- Window name -->
+                            <ColumnDefinition/>
+                            <!-- Button minimaze -->
+                            <ColumnDefinition Width="25"/>
+                            <!-- Button close -->
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="LOG IN" Foreground="DarkGray" FontSize="10" FontWeight="Bold" Margin="10 0 0 0"/>
+                        <Button Grid.Column="1" Click="btnMinimaze_Click" Style="{StaticResource btnMinimaze}"/>
+                        <Button Grid.Column="2" Click="btnClose_Click" Style="{StaticResource btnClose}"/>
+
+                    </Grid>
+
+                    <!-- Work area -->
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Width="220" Margin="0 10 0 0">
+
+                        <Image Source="/Images/logo-image.png" Width="100" Height="100"/>
+                        <TextBlock Text="Smart SchoolBoy" FontSize="26" HorizontalAlignment="Center" Margin="0 5"/>
+                        <TextBlock Text="Обучение полезно независимо от ваших амбиций" Foreground="LightGray" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
+                        <TextBlock Text="Number phone" Foreground="DarkGray" Margin="0 30 0 0"/>
+
+                        <!-- Поле ввода телефона -->
+                        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxLogin}">
+                            <TextBox.Background>
+                                <ImageBrush ImageSource="/Images/Icons/person-icon.png" Stretch="Uniform" AlignmentX="Left"/>
+                            </TextBox.Background>
+                        </TextBox>
+
+                        <TextBlock Text="Password" Foreground="DarkGray" Margin="0 15 0 0"/>
+
+                        <!-- Поле ввода пароля -->
+                        <customControls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="0 5 0 0"/>
+                        <CheckBox Content="Остаться в системе" Command="{Binding RememberMeCommand}" Margin="0 15 0 0" Style="{StaticResource cBoxRememberMe}"/>
+                        <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource color4}" Margin="0 10 0 0" TextWrapping="Wrap"/>
+
+                        <!-- Авторизация пользователя -->
+                        <Button Content="LOG IN" Command="{Binding LoginCommand}" Margin="0 20 0 0" Style="{StaticResource btnLogin}" Cursor="Hand"/>
+
+                    </StackPanel>
 
                 </Grid>
 
-                <!-- Work area -->
-                <StackPanel Grid.Row="1" Orientation="Vertical" Width="220" Margin="0 10 0 0">
+            </Border>
 
-                    <Image Source="/Images/logo-image.png" Width="100" Height="100"/>
-                    <TextBlock Text="Smart SchoolBoy" FontSize="26" HorizontalAlignment="Center" Margin="0 5"/>
-                    <TextBlock Text="Обучение полезно независимо от ваших амбиций" Foreground="LightGray" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
-                    <TextBlock Text="Number phone" Foreground="DarkGray" Margin="0 30 0 0"/>
-
-                    <!-- Поле ввода телефона -->
-                    <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxLogin}">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/Icons/person-icon.png" Stretch="Uniform" AlignmentX="Left"/>
-                        </TextBox.Background>
-                    </TextBox>
-
-                    <TextBlock Text="Password" Foreground="DarkGray" Margin="0 15 0 0"/>
-
-                    <!-- Поле ввода пароля -->
-                    <customControls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="0 5 0 0"/>
-                    <CheckBox Content="Остаться в системе" Command="{Binding RememberMeCommand}" Margin="0 15 0 0" Style="{StaticResource cBoxRememberMe}"/>
-                    <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource color4}" Margin="0 10 0 0" TextWrapping="Wrap"/>
-
-                    <!-- Авторизация пользователя -->
-                    <Button Content="LOG IN" Command="{Binding LoginCommand}" Margin="0 20 0 0" Style="{StaticResource btnLogin}" Cursor="Hand"/>
-
-                </StackPanel>
-
-            </Grid>
-
-        </Border>
+            <customControls:LoadingSpinner>
+                <customControls:LoadingSpinner.Visibility>
+                    <Binding Path="IsLoading" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+                </customControls:LoadingSpinner.Visibility>
+            </customControls:LoadingSpinner>
+            
+        </Grid>
 
     </Border>
 

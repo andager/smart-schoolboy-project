@@ -2,6 +2,7 @@
 using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class HomeViewModel : ObservableObject
     {
         #region Fields
+        private readonly NavigationStore _navigationStore;
         private ObservableObject _currentChildView; // Базовое представленеи
         private string _currentUserName; // ФИО активного пользователя
         private byte[] _currentUserPhoto; // Фото активного пользователя
@@ -24,11 +26,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Properties
-        public ObservableObject CurrentChildView
-        {
-            get { return _currentChildView; }
-            set { _currentChildView = value; OnPropertyChanged(nameof(CurrentChildView)); }
-        }
+        public ObservableObject CurrentChildView => _navigationStore.CurrentViewModel;
         public string CurrentUser
         {
             get { return _currentUserName; }
@@ -62,8 +60,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public HomeViewModel()
+        public HomeViewModel(NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
             if (App.currentUser != null)
             {
                 CurrentUser = App.currentUser.fullName;
@@ -80,44 +81,51 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             // Default view
             ExecuteSchowCourseViewCommand(null);
         }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentChildView));
+        }
+
         private void ExecuteSchowCourseViewCommand(object obj)
         {
-            CurrentChildView = new CourseViewModel();
+
+            _navigationStore.CurrentViewModel = new CourseViewModel();
             Caption = "Курсы";
             _Icon = IconChar.GraduationCap;
         }
 
         private void ExecuteSchowTeacherViewCommand(object obj)
         {
-            CurrentChildView = new TeacherViewModel();
+            _navigationStore.CurrentViewModel = new TeacherViewModel();
             Caption = "Учителя";
             _Icon = IconChar.ChalkboardTeacher;
         }
 
         private void ExecuteSchowSchoolSubjectViewCommand(object obj)
         {
-            CurrentChildView = new SchollSubjectViewModel();
+            _navigationStore.CurrentViewModel = new SchollSubjectViewModel();
             Caption = "Предметы";
             _Icon = IconChar.BookBookmark;
         }
 
         private void ExecuteSchowScheduleViewCommand(object obj)
         {
-            CurrentChildView = new ScheduleViewModel();
+            _navigationStore.CurrentViewModel = new ScheduleViewModel();
             Caption = "Расписанние";
             _Icon = IconChar.Calendar;
         }
 
         private void ExecuteSchowStudentCommand(object obj)
         {
-            CurrentChildView = new StudentViewModel();
+            _navigationStore.CurrentViewModel = new StudentViewModel();
             Caption = "Ученики";
             _Icon = IconChar.PeopleGroup;
         }
 
         private void ExecuteSchowGroupViewCommand(object obj)
         {
-            CurrentChildView = new GroupViewModel();
+            _navigationStore.CurrentViewModel = new GroupViewModel();
             Caption = "Группы";
             _Icon = IconChar.LayerGroup;
         }

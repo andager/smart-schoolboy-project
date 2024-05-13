@@ -21,6 +21,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private DateTime _dateOfBirtch;
         private List<Gender> _genders;
         private Gender _selectedGender;
+        public int _indexGender;
         private string _numberPhone;
         private object _telegramId;
         private DateTime _dateStart = DateTime.Today.AddYears(-100);
@@ -63,6 +64,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _selectedGender; }
             set { _selectedGender = value; OnPropertyChanged(nameof(SelectedGender)); }
         }
+        public int IndexGender
+        {
+            get { return _indexGender; }
+            set { _indexGender = value; OnPropertyChanged(nameof(IndexGender)); }
+        }
         public string NumberPhone
         {
             get { return _numberPhone; }
@@ -97,7 +103,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             UpdateList();
             if (student is null)
             {
-
             }
             else
             {
@@ -106,12 +111,13 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 Patronymic = student.patronymic;
                 DateOfBirtch = student.dateOfBirch;
                 NumberPhone = student.numberPhone;
+                IndexGender = student.genderId - 1;
                 TelegramId = student.telegramId;
             }
             StudentSaveCommand = new RelayCommand(ExecuteStudentSaveCommand);
         }
 
-    private async void UpdateList()
+        private async void UpdateList()
         {
             Genders = await App.ApiConnector.GetTAsync<List<Gender>>("Genders");
         }
@@ -120,47 +126,55 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             string _error = String.Empty;
             if (string.IsNullOrWhiteSpace(LastName)) _error += "Заполните имя ученика";
-            if (string.IsNullOrWhiteSpace(FirstName)) _error += "Заполните фамилию ученика";
+            if (string.IsNullOrWhiteSpace(FirstName)) _error += "\nЗаполните фамилию ученика";
 
-            try
+            if (string.IsNullOrWhiteSpace(_error))
             {
-                if (_student is null)
+                try
                 {
-                    _student = new Student()
+                    if (_student is null)
                     {
+                        _student = new Student()
+                        {
 
-                        lastName = LastName,
-                        firstName = FirstName,
-                        patronymic = Patronymic,
-                        dateOfBirch = DateOfBirtch,
-                        genderId = SelectedGender.id,
-                        gender = SelectedGender,
-                        numberPhone = NumberPhone,
-                        telegramId = TelegramId,
-                    };
-                    await App.ApiConnector.PostTAsync(_student, "Students");
-                }
-                else
-                {
-                    _student = new Student()
+                            lastName = LastName,
+                            firstName = FirstName,
+                            patronymic = Patronymic,
+                            dateOfBirch = DateOfBirtch,
+                            genderId = SelectedGender.id,
+                            gender = SelectedGender,
+                            numberPhone = NumberPhone,
+                            telegramId = TelegramId,
+                        };
+                        await App.ApiConnector.PostTAsync(_student, "Students");
+                    }
+                    else
                     {
-                        id = _student.id,
-                        lastName = LastName,
-                        firstName = FirstName,
-                        patronymic = Patronymic,
-                        dateOfBirch = DateOfBirtch,
-                        genderId = SelectedGender.id,
-                        gender = SelectedGender,
-                        numberPhone = NumberPhone,
-                        telegramId = TelegramId,
-                        isActive = _student.isActive
-                    };
-                    await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
+                        _student = new Student()
+                        {
+                            id = _student.id,
+                            lastName = LastName,
+                            firstName = FirstName,
+                            patronymic = Patronymic,
+                            dateOfBirch = DateOfBirtch,
+                            genderId = SelectedGender.id,
+                            gender = SelectedGender,
+                            numberPhone = NumberPhone,
+                            telegramId = TelegramId,
+                            isActive = _student.isActive
+                        };
+                        await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorView errorView = new ErrorView(ex.Message);
+                    errorView.ShowDialog();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                ErrorView errorView = new ErrorView(ex.Message);
+                ErrorView errorView = new ErrorView(_error);
                 errorView.ShowDialog();
             }
         }

@@ -7,6 +7,8 @@
              mc:Ignorable="d"
              FontFamily="Montserrat, Comic Sans MS"
              FontWeight="Medium"
+             xmlns:customControls="clr-namespace:SmartSchoolboyApp.Thems.UserControls"
+             xmlns:converts="clr-namespace:SmartSchoolboyApp.Converters"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800" x:Name="MainCourseView">
@@ -14,19 +16,24 @@
     <UserControl.DataContext>
         <viewModel:CourseViewModel/>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <converts:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     
     <Grid>
 
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-
         </Grid>
 
-        <Border Grid.Row="1" Style="{StaticResource listViewBorder}">
+        <Border Grid.Row="1" Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Style="{StaticResource listViewBorder}">
             <ListView ItemsSource="{Binding Path=Courses}">
 
                 <ListView.ItemTemplate>
@@ -55,5 +62,11 @@
             </ListView>
         </Border>
 
+        <customControls:LoadingSpinner Grid.Row="1">
+            <customControls:LoadingSpinner.Visibility>
+                <Binding Path="IsLoading" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+            </customControls:LoadingSpinner.Visibility>
+        </customControls:LoadingSpinner>
+        
     </Grid>
 </UserControl>

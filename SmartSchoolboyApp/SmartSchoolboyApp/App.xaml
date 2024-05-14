@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="/Thems/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Thems/UIColors.xaml"/>
                 <ResourceDictionary Source="/Thems/BorderStyle.xaml"/>
+                <ResourceDictionary Source="/Thems/VerticalScrollBarStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

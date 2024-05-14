@@ -11,6 +11,10 @@
         FontWeight="Medium"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Style="{StaticResource windowStyle}"
         Title="HomeView" MinHeight="450" Height="450" MinWidth="800" Width="800">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0" ResizeBorderThickness="4" CaptionHeight="0" CornerRadius="0"/>
+    </WindowChrome.WindowChrome>
     
     <Window.Resources>
 

@@ -36,7 +36,32 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border Width="200" Style="{StaticResource listViewBorderItem}">
-                            <StackPanel>
+                            <StackPanel Orientation="Vertical">
+
+                                <TextBlock Text="{Binding Path=name}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Path=course.name}" TextWrapping="Wrap" Margin="0 5 0 0"/>
+
+                                <Grid Margin="0 5 0 0">
+
+                                    <Button Tag="{StaticResource color9}" HorizontalAlignment="Left" Style="{StaticResource listViewButton}">
+                                        <fa:IconImage Icon="Eye" Style="{StaticResource listViewButtonIcon}"/>
+                                    </Button>
+
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                        <Button Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
+                                            <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
+                                        </Button>
+
+                                        <Button Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
+                                            <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewButtonIcon}"/>
+                                        </Button>
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </StackPanel>
+                            <!--<StackPanel>
+                                
                                 
                                 <TextBlock Text="{Binding Path=name}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 <TextBlock Text="{Binding Path=course.name}" TextWrapping="Wrap" Margin="0 5 0 0"/>
@@ -51,7 +76,7 @@
                                     </Button>
                                 </StackPanel>
                                 
-                            </StackPanel>
+                            </StackPanel>-->
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>

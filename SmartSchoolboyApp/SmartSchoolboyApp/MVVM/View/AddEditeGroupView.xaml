@@ -6,11 +6,8 @@
         xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
+        WindowStartupLocation="CenterScreen"
         Title="AddEditeGroupView" Height="450" Width="800" Style="{StaticResource windowStyle}">
-
-    <Window.DataContext>
-        <viewModel:AddEditGroupViewModel/>
-    </Window.DataContext>
     
     <Grid>
         

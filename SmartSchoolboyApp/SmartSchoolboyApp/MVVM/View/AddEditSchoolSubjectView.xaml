@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
         xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="AddEditSchoolSubjectView" Height="450" Width="800">
     
     <Grid>

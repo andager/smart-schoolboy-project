@@ -13,5 +13,6 @@ namespace SmartSchoolboyApp.Classes
         public int courseId { get; set; }
         public bool isActive { get; set; }
         public Course course { get; set; }
+        public List<Student> students { get; set; } 
     }
 }

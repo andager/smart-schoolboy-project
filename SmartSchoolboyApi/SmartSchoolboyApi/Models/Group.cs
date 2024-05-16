@@ -18,7 +18,6 @@ namespace SmartSchoolboyApi.Models
         public virtual Course Course { get; set; } = null!;
         [JsonIgnore]
         public virtual ICollection<Schedule> Schedules { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Student> Students { get; set; }
     }
 }

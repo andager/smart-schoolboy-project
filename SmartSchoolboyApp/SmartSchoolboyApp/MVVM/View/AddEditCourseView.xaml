@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="{Binding Path=WindowName}" Height="200" Width="300" MouseDown="Window_MouseDown" Style="{StaticResource windowStyle}">
 
     <Window.Resources>

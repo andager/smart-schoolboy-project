@@ -9,7 +9,7 @@
              FontWeight="Medium"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="MainGroupView">
     
     <UserControl.DataContext>
         <viewModel:GroupViewModel/>
@@ -43,7 +43,7 @@
 
                                 <Grid Margin="0 5 0 0">
 
-                                    <Button Tag="{StaticResource color9}" HorizontalAlignment="Left" Style="{StaticResource listViewButton}">
+                                    <Button Command="{Binding ElementName=MainGroupView, Path=DataContext.ViewGroup}" CommandParameter="{Binding}" Tag="{StaticResource color9}" HorizontalAlignment="Left" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="Eye" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
 
@@ -60,28 +60,13 @@
                                 </Grid>
 
                             </StackPanel>
-                            <!--<StackPanel>
-                                
-                                
-                                <TextBlock Text="{Binding Path=name}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding Path=course.name}" TextWrapping="Wrap" Margin="0 5 0 0"/>
-
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
-                                        <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
-                                    </Button>
-
-                                    <Button Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
-                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewButtonIcon}"/>
-                                    </Button>
-                                </StackPanel>
-                                
-                            </StackPanel>-->
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Border>
+
+        <ContentControl Content="{Binding Path=CurrentChildView}" Grid.RowSpan="2"/>
         
     </Grid>
     

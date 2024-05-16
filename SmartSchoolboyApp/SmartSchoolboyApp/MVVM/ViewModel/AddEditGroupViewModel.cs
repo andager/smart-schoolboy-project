@@ -1,4 +1,5 @@
-﻿using SmartSchoolboyApp.MVVM.Core;
+﻿using SmartSchoolboyApp.Classes;
+using SmartSchoolboyApp.MVVM.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
+        public AddEditGroupViewModel(Group group)
+        {
 
+        }
         #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartSchoolboyApp.Classes;
+using SmartSchoolboyApp.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace SmartSchoolboyApp.MVVM.View
     /// </summary>
     public partial class AddEditeGroupView : Window
     {
-        public AddEditeGroupView()
+        public AddEditeGroupView(Group group)
         {
             InitializeComponent();
+            DataContext = new AddEditGroupViewModel(group);
         }
     }
 }

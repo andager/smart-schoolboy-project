@@ -14,7 +14,7 @@
     <UserControl.DataContext>
         <viewModel:GroupViewModel/>
     </UserControl.DataContext>
-
+    
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding Path=AddEditGroupCommand}" Key="N" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Path=DeleteGroupCommand}" Key="Delete" Modifiers="Ctrl"/>

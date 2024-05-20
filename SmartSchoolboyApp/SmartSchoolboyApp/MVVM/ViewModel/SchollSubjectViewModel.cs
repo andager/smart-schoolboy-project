@@ -1,4 +1,5 @@
-﻿using SmartSchoolboyApp.Classes;
+﻿using Microsoft.Office.Interop.Excel;
+using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using System;
@@ -7,7 +8,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SmartSchoolboyApp.MVVM.ViewModel
 {
@@ -15,7 +18,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     {
         #region Fields
         private List<SchoolSubject> _schoolSubjects;
-        private RelayCommand _changeCommand;
+        private RelayCommand _addEditSchollSubject;
         private SchoolSubject _selectSubject;
         private bool _isLoading;
         #endregion
@@ -40,11 +43,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand ChangeCommand
+        public ICommand ExportSchollSubjectCommand { get; }
+        public RelayCommand AddEditSchollSubjectCommand
         {
             get
             {
-                return _changeCommand ?? new RelayCommand(obj =>
+                return _addEditSchollSubject ?? new RelayCommand(obj =>
                 {
                     var subject = obj as SchoolSubject;
                     AddEditSchoolSubjectView addEditSchool = new AddEditSchoolSubjectView(subject);
@@ -59,8 +63,51 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public SchollSubjectViewModel()
         {
             UpdateList();
+            ExportSchollSubjectCommand = new RelayCommand(ExecuteExportSchollSubjectCommand, CanExecuteExportSchollSubjectCommand);
         }
 
+        private bool CanExecuteExportSchollSubjectCommand(object obj)
+        {
+            if (IsLoading != true)
+                return true;
+            return false;
+        }
+
+        private void ExecuteExportSchollSubjectCommand(object obj)
+        {
+            try
+            {
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                {
+                    save.FileName = "Школьные предметы";
+
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        Excel.Application applicationExcel = new Excel.Application();
+                        Workbook workbookExcel = applicationExcel.Workbooks.Add(XlSheetType.xlWorksheet);
+                        Worksheet worksheet = (Worksheet)applicationExcel.ActiveSheet;
+                        applicationExcel.Visible = false;
+
+                        worksheet.Cells[1, 1] = "Название предмета";
+
+                        int r = 2;
+                        foreach (var item in SchoolSubjects)
+                        {
+                            worksheet.Cells[r, 1] = item.name;
+                            r++;
+                        }
+                        workbookExcel.SaveAs(save.FileName, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false, XlSaveAsAccessMode.xlNoChange, XlSaveConflictResolution.xlLocalSessionChanges, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        applicationExcel.Quit();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
+                errorView.ShowDialog();
+            }
+        }
 
         private async void UpdateList()
         {

@@ -1,4 +1,5 @@
-﻿using SmartSchoolboyApp.Classes;
+﻿using Microsoft.Office.Interop.Excel;
+using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using SmartSchoolboyApp.Stores;
@@ -7,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SmartSchoolboyApp.MVVM.ViewModel
 {
@@ -20,6 +23,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private RelayCommand _viewGroup;
         private RelayCommand _addEditGroup;
         private RelayCommand _deleteGroup;
+        private bool _isLoading;
         #endregion
 
         #region Properties
@@ -38,10 +42,27 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _selectedGroup; }
             set { _selectedGroup = value; OnPropertyChanged(nameof(SelectedGroup)); }
         }
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
+        }
         #endregion
 
         #region Commands
-        public ICommand DeleteGroupCommand { get; }
+        public RelayCommand DeleteGroupCommand
+        {
+            get
+            {
+                return _deleteGroup ?? new RelayCommand(async obj =>
+                {
+                    var group = obj as Group;
+                    if (group != null)
+                        await App.ApiConnector.DeleteAsync("Groups", group.id);
+                    UpdateList();
+                });
+            }
+        }
         public RelayCommand AddEditGroupCommand
         {
             get
@@ -69,22 +90,63 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 });
             }
         }
+        public ICommand ExportGroupCommand { get; }
         #endregion
 
         #region Constructor
         public GroupViewModel()
         {
             UpdateList();
-            DeleteGroupCommand = new RelayCommand(ExecuteDeleteGroupCommand);
+            ExportGroupCommand = new RelayCommand(ExecuteExportGroupCommand, CanExecuteExportGroupCommand);
         }
-        private void ExecuteDeleteGroupCommand(object obj)
+
+        private bool CanExecuteExportGroupCommand(object obj)
         {
-            throw new NotImplementedException();
+            if (IsLoading != true)
+                return true;
+            return false;
+        }
+
+        private void ExecuteExportGroupCommand(object obj)
+        {
+            try
+            {
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                {
+                    save.FileName = "Группы";
+
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        Excel.Application applicationExcel = new Excel.Application();
+                        Workbook workbookExcel = applicationExcel.Workbooks.Add(XlSheetType.xlWorksheet);
+                        Worksheet worksheet = (Worksheet)applicationExcel.ActiveSheet;
+                        applicationExcel.Visible = false;
+
+                        worksheet.Cells[1, 1] = "Фамилия";
+
+                        int r = 2;
+                        foreach (var item in Group)
+                        {
+                            worksheet.Cells[r, 1] = item.name;
+                            r++;
+                        }
+                        workbookExcel.SaveAs(save.FileName, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false, XlSaveAsAccessMode.xlNoChange, XlSaveConflictResolution.xlLocalSessionChanges, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        applicationExcel.Quit();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
+                errorView.ShowDialog();
+            }
         }
 
         private async void UpdateList()
         {
+            IsLoading = true;
             Group = await App.ApiConnector.GetTAsync<List<Group>>("Groups");
+            IsLoading = false;
         }
         #endregion
     }

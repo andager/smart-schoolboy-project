@@ -1,4 +1,6 @@
-﻿using SmartSchoolboyApp.Classes;
+﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using System;
@@ -6,6 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SmartSchoolboyApp.MVVM.ViewModel
 {
@@ -38,6 +44,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand ExportExelCommand { get; }
         public RelayCommand AddEditCourseCommand
         {
             get
@@ -56,13 +63,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _deleteCourse ?? new RelayCommand(obj =>
+                return _deleteCourse ?? new RelayCommand(async obj =>
                 {
                     var course = obj as Course;
-                    if (course != null )
-                    {
-
-                    }
+                    if (course != null)
+                        await App.ApiConnector.DeleteAsync("Courses", course.id);
+                    UpdateList();
                 });
             }
         }
@@ -72,6 +78,52 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public CourseViewModel()
         {
             UpdateList();
+            ExportExelCommand = new RelayCommand(ExecuteExportExelCommand, CanExecuteExportExelCommand);
+        }
+
+        private bool CanExecuteExportExelCommand(object obj)
+        {
+            if (IsLoading != true)
+                return true;
+            return false;
+        }
+
+        private void ExecuteExportExelCommand(object obj)
+        {
+            try
+            {
+                using (System.Windows.Forms.SaveFileDialog save = new System.Windows.Forms.SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                {
+                    save.FileName = "Курсы";
+
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        Excel.Application applicationExcel = new Excel.Application();
+                        Workbook workbookExcel = applicationExcel.Workbooks.Add(XlSheetType.xlWorksheet);
+                        Worksheet worksheet = (Worksheet)applicationExcel.ActiveSheet;
+                        applicationExcel.Visible = false;
+
+                        worksheet.Cells[1, 1] = "Название курса";
+                        worksheet.Cells[1, 2] = "Учитель";
+
+                        int r = 2;
+                        foreach (var item in Courses)
+                        {
+                            worksheet.Cells[r, 1] = item.name;
+                            worksheet.Cells[r, 2] = item.teacher.fullName;
+                            r++;
+                        }
+                        workbookExcel.SaveAs(save.FileName, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false, XlSaveAsAccessMode.xlNoChange, XlSaveConflictResolution.xlLocalSessionChanges, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        applicationExcel.Quit();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
+                errorView.ShowDialog();
+            }
         }
 
         private async void UpdateList()

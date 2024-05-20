@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
              mc:Ignorable="d" 
+             xmlns:custom="clr-namespace:SmartSchoolboyApp.Thems.UserControls"
+             xmlns:converter="clr-namespace:SmartSchoolboyApp.Converters"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800" x:Name="MainStudentView">
@@ -12,7 +14,12 @@
     <UserControl.DataContext>
         <viewModel:StudentViewModel/>
     </UserControl.DataContext>
-    
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
+    </UserControl.Resources>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -28,13 +35,21 @@
                 <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
             </StackPanel>
 
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
-                <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" >
+
+                <Button ToolTip="Экспортировать в Exel" Command="{Binding Path=ExportStudentCommand}" Tag="{StaticResource color3}" Style="{StaticResource addButton}">
+                    <fa:IconImage Icon="FileExport" Style="{StaticResource addButtonIcon}"/>
+                </Button>
+                
+                <Button ToolTip="Добавить нового пользователя" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+                    <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
+                </Button>
+
+            </StackPanel>
 
         </Grid>
 
-        <Border Grid.Row="1" Style="{StaticResource listViewBorder}">
+        <Border Grid.Row="1" Visibility="{Binding Path=IsLoading, Converter={StaticResource InverseBooleanToVisibility}}" Style="{StaticResource listViewBorder}">
             <ListView ItemsSource="{Binding Path=Students}" ItemsPanel="{StaticResource ListViewItemsPanelVertical}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -68,5 +83,12 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Border>
+
+        <custom:LoadingSpinner Grid.Row="1">
+            <custom:LoadingSpinner.Visibility>
+                <Binding Path="IsLoading" Converter="{StaticResource BooleanToVisibility}"/>
+            </custom:LoadingSpinner.Visibility>
+        </custom:LoadingSpinner>
+
     </Grid>
 </UserControl>

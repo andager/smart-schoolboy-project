@@ -38,10 +38,18 @@
                 <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
             </StackPanel>
 
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить нового пользователя" Command="{Binding ChangeCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
-                <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
+                <Button ToolTip="Экспортировать в Exel" Command="{Binding Path=ExportSchollSubjectCommand}" Tag="{StaticResource color3}" Style="{StaticResource addButton}">
+                    <fa:IconImage Icon="FileExport" Style="{StaticResource addButtonIcon}"/>
+                </Button>
+
+                <Button  ToolTip="Добавить нового пользователя" Command="{Binding AddEditSchollSubjectCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
+                    <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
+                </Button>
+
+            </StackPanel>
+            
         </Grid>
 
         <Border Visibility="{Binding Path=IsLoading, Converter={StaticResource InverseBooleanToVisibility}}" Grid.Row="1" Style="{StaticResource listViewBorder}">
@@ -55,7 +63,7 @@
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 5 5">
 
-                                    <Button Tag="{StaticResource color6}" Style="{StaticResource listViewButton}" Command="{Binding ElementName=MainSchoolSubjectView, Path=DataContext.ChangeCommand}" CommandParameter="{Binding}">
+                                    <Button Tag="{StaticResource color6}" Style="{StaticResource listViewButton}" Command="{Binding ElementName=MainSchoolSubjectView, Path=DataContext.AddEditSchollSubjectCommand}" CommandParameter="{Binding}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
 

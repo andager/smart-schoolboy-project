@@ -22,6 +22,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
         <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
     </UserControl.Resources>
+    
     <Grid>
         
         <Grid.RowDefinitions>
@@ -39,9 +40,14 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
+                <Button ToolTip="Экспортировать в Exel" Command="{Binding Path=ExportTeatcherCommnad}" Tag="{StaticResource color3}" Style="{StaticResource addButton}">
+                    <fa:IconImage Icon="FileExport" Style="{StaticResource addButtonIcon}"/>
+                </Button>
+                
                 <Button ToolTip="Добавить нового пользователя" Command="{Binding AddEditTeacherCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
                     <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
                 </Button>
+                
             </StackPanel>
             
         </Grid>

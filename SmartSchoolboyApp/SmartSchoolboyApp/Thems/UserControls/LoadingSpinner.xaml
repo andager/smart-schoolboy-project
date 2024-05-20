@@ -131,14 +131,6 @@
         </Style>
     </UserControl.Resources>
 
-    <Border Style="{StaticResource listViewBorder}">
+    <Control Style="{StaticResource BusyAnimationStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <Border.Background>
-            <SolidColorBrush Color="LightGray" Opacity="0.8"/>
-        </Border.Background>
-        
-        <Control Style="{StaticResource BusyAnimationStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        
-    </Border>
-    
 </UserControl>

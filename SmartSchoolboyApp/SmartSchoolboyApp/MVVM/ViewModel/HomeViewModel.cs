@@ -53,7 +53,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public ICommand SchowCourseViewCommand { get; } // Команда для открытия страници: Курсов
         public ICommand SchowTeacherViewCommand { get; } // Команда для открытия страници: Учителей
         public ICommand SchowSchoolSubjectViewCommand { get; } // Команда для открытия страници: Предметов
-        public ICommand SchowScheduleViewCommand { get; } // Команда для открытия страници: Расписания
         public ICommand SchowStudentCommand { get; } // Команда для открытия страници: Учеников
         public ICommand SchowGroupViewCommand { get; } // Команда для открытия страници: Груп
         public ICommand OutUserCommand { get; } // Команда для выхода пользователя из системы
@@ -74,7 +73,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             SchowCourseViewCommand = new RelayCommand(ExecuteSchowCourseViewCommand);
             SchowTeacherViewCommand = new RelayCommand(ExecuteSchowTeacherViewCommand);
             SchowSchoolSubjectViewCommand = new RelayCommand(ExecuteSchowSchoolSubjectViewCommand);
-            SchowScheduleViewCommand = new RelayCommand(ExecuteSchowScheduleViewCommand);
             SchowStudentCommand = new RelayCommand(ExecuteSchowStudentCommand);
             SchowGroupViewCommand = new RelayCommand(ExecuteSchowGroupViewCommand);
             OutUserCommand = new RelayCommand(ExecuteOutUserCommand);
@@ -107,13 +105,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             _navigationStore.CurrentViewModel = new SchollSubjectViewModel();
             Caption = "Предметы";
             _Icon = IconChar.BookBookmark;
-        }
-
-        private void ExecuteSchowScheduleViewCommand(object obj)
-        {
-            _navigationStore.CurrentViewModel = new ScheduleViewModel();
-            Caption = "Расписанние";
-            _Icon = IconChar.Calendar;
         }
 
         private void ExecuteSchowStudentCommand(object obj)

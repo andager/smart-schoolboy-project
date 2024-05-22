@@ -39,10 +39,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _isLoading; }
             set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
         }
-        
+
         #endregion
 
         #region Commands
+        public ICommand UpdateDataCommand { get; }
         public ICommand ExportSchollSubjectCommand { get; }
         public RelayCommand AddEditSchollSubjectCommand
         {
@@ -53,6 +54,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var subject = obj as SchoolSubject;
                     AddEditSchoolSubjectView addEditSchool = new AddEditSchoolSubjectView(subject);
                     addEditSchool.ShowDialog();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
             
@@ -62,8 +64,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public SchollSubjectViewModel()
         {
-            UpdateList();
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportSchollSubjectCommand = new RelayCommand(ExecuteExportSchollSubjectCommand, CanExecuteExportSchollSubjectCommand);
+
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private async void ExecuteUpdateDataCommand(object obj)
+        {
+            IsLoading = true;
+            SchoolSubjects = await App.ApiConnector.GetTAsync<List<SchoolSubject>>("SchoolSubjects");
+            IsLoading = false;
         }
 
         private bool CanExecuteExportSchollSubjectCommand(object obj)
@@ -77,10 +88,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             try
             {
-                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", FileName = "Школьные предметы", ValidateNames = true })
                 {
-                    save.FileName = "Школьные предметы";
-
                     if (save.ShowDialog() == DialogResult.OK)
                     {
                         Excel.Application applicationExcel = new Excel.Application();
@@ -107,13 +116,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
                 errorView.ShowDialog();
             }
-        }
-
-        private async void UpdateList()
-        {
-            IsLoading = true;
-            SchoolSubjects = await App.ApiConnector.GetTAsync<List<SchoolSubject>>("SchoolSubjects");
-            IsLoading = false;
         }
         #endregion
     }

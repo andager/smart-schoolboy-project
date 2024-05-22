@@ -38,7 +38,6 @@ namespace SmartSchoolboyApp.MVVM.View
         private void pnlControlbar_MouseEnter(object sender, MouseEventArgs e)
         {
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-            
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

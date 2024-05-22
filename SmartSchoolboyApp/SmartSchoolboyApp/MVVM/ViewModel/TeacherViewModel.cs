@@ -43,6 +43,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand UpdateDataCommand { get; }
         public ICommand SearchCommand { get; }
         public ICommand ExportTeatcherCommnad { get; }
         public RelayCommand AddEditTeacherCommand
@@ -55,7 +56,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     addEdit.ShowDialog();
                     if (addEdit.IsVisible == false && addEdit.IsLoaded)
                         addEdit.Close();
-                    UpdateDataGrid();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -69,7 +70,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var teacher = obj as Teacher;
                     if (teacher != null)
                         await App.ApiConnector.DeleteAsync("Teachers", teacher.id);
-                    UpdateDataGrid();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -78,9 +79,18 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public TeacherViewModel()
         {
-            UpdateDataGrid();
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             ExportTeatcherCommnad = new RelayCommand(ExecuteExportTeatcherCommnad, CanExecuteExportTeatcherCommnad);
+
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private async void ExecuteUpdateDataCommand(object obj)
+        {
+            IsLoading = true;
+            Teachers = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
+            IsLoading = false;
         }
 
         private bool CanExecuteExportTeatcherCommnad(object obj)
@@ -94,10 +104,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             try
             {
-                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", FileName = "Учителя", ValidateNames = true })
                 {
-                    save.FileName = "Учителя";
-
                     if (save.ShowDialog() == DialogResult.OK)
                     {
                         Excel.Application applicationExcel = new Excel.Application();
@@ -140,13 +148,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
                 errorView.ShowDialog();
             }
-        }
-
-        private async void UpdateDataGrid()
-        {
-            IsLoading = true;
-            Teachers = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
-            IsLoading = false;
         }
 
         private bool CanExecuteSearchCommand(object obj)

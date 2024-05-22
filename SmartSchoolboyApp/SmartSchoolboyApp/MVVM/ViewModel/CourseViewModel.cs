@@ -1,8 +1,8 @@
 ﻿using Microsoft.Office.Interop.Excel;
-using Microsoft.Win32;
 using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +44,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand UpdateDataCommand { get; }
         public ICommand ExportExelCommand { get; }
         public RelayCommand AddEditCourseCommand
         {
@@ -55,7 +56,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     addEditCourse.ShowDialog();
                     if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
                         addEditCourse.Close();
-                    UpdateList();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -68,7 +69,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var course = obj as Course;
                     if (course != null)
                         await App.ApiConnector.DeleteAsync("Courses", course.id);
-                    UpdateList();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -77,8 +78,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public CourseViewModel()
         {
-            UpdateList();
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportExelCommand = new RelayCommand(ExecuteExportExelCommand, CanExecuteExportExelCommand);
+
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private async void ExecuteUpdateDataCommand(object obj)
+        {
+            IsLoading = true;
+            Courses = await App.ApiConnector.GetTAsync<List<Course>>("Courses");
+            IsLoading = false;
         }
 
         private bool CanExecuteExportExelCommand(object obj)
@@ -92,10 +102,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             try
             {
-                using (System.Windows.Forms.SaveFileDialog save = new System.Windows.Forms.SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", FileName = "Курсы", ValidateNames = true })
                 {
-                    save.FileName = "Курсы";
-
                     if (save.ShowDialog() == DialogResult.OK)
                     {
                         Excel.Application applicationExcel = new Excel.Application();
@@ -124,13 +132,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
                 errorView.ShowDialog();
             }
-        }
-
-        private async void UpdateList()
-        {
-            IsLoading = true;
-            Courses = await App.ApiConnector.GetTAsync<List<Course>>("Courses");
-            IsLoading = false;
         }
         #endregion
 

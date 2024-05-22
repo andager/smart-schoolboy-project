@@ -16,12 +16,21 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
+            
             <RadioButton Tag="{StaticResource color1}" Style="{StaticResource menuGroupButton}">
                 <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="GraduationCap" Style="{StaticResource menuGroupButtonIcon}"/>
-                    <TextBlock Text="Курсы" Style="{StaticResource menuButtonText}"/>
+                    <fa:IconImage Icon="User" Style="{StaticResource menuGroupButtonIcon}"/>
+                    <TextBlock Text="Ученики" Style="{StaticResource menuButtonText}"/>
                 </StackPanel>
             </RadioButton>
+
+            <RadioButton Tag="{StaticResource color1}" Style="{StaticResource menuGroupButton}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="CalendarAlt" Style="{StaticResource menuGroupButtonIcon}"/>
+                    <TextBlock Text="Посещаемость" Style="{StaticResource menuButtonText}"/>
+                </StackPanel>
+            </RadioButton>
+
         </StackPanel>
 
         <ContentControl Content="{Binding Path=CurrentChildView}" Grid.Row="1"/>

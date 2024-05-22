@@ -17,6 +17,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class GroupViewModel : ObservableObject
     {
         #region Fields
+        private readonly NavigationStore _navigationStore;
         private ObservableObject _currentChildView;
         private List<Group> _group;
         private Group _selectedGroup;
@@ -27,11 +28,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Properties
-        public ObservableObject CurrentChildView
-        {
-            get { return _currentChildView; }
-            set { _currentChildView = value; OnPropertyChanged(nameof(CurrentChildView)); }
-        }
+        public ObservableObject CurrentChildView => _navigationStore.CurrentViewModel;
         public List<Group> Group
         {
             get { return _group; }
@@ -59,7 +56,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var group = obj as Group;
                     if (group != null)
                         await App.ApiConnector.DeleteAsync("Groups", group.id);
-                    UpdateList();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -73,6 +70,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     addEditeGroup.ShowDialog();
                     if (addEditeGroup.IsVisible == false && addEditeGroup.IsLoaded)
                         addEditeGroup.Close();
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -85,21 +83,30 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     var group = obj as Group;
                     if (group != null)
                     {
-                        CurrentChildView = new HomeGroupViewModel(group);
+                        _navigationStore.CurrentViewModel = new StudentViewModel();
                     }
                 });
             }
         }
+        public ICommand UpdateDataCommand { get; }
         public ICommand ExportGroupCommand { get; }
         #endregion
 
         #region Constructor
         public GroupViewModel()
         {
-            UpdateList();
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportGroupCommand = new RelayCommand(ExecuteExportGroupCommand, CanExecuteExportGroupCommand);
+
+            ExecuteUpdateDataCommand(null);
         }
 
+        private async void ExecuteUpdateDataCommand(object obj)
+        {
+            IsLoading = true;
+            Group = await App.ApiConnector.GetTAsync<List<Group>>("Groups");
+            IsLoading = false;
+        }
         private bool CanExecuteExportGroupCommand(object obj)
         {
             if (IsLoading != true)
@@ -111,10 +118,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             try
             {
-                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", ValidateNames = true })
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", FileName = "Группы", ValidateNames = true })
                 {
-                    save.FileName = "Группы";
-
                     if (save.ShowDialog() == DialogResult.OK)
                     {
                         Excel.Application applicationExcel = new Excel.Application();
@@ -140,13 +145,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
                 errorView.ShowDialog();
             }
-        }
-
-        private async void UpdateList()
-        {
-            IsLoading = true;
-            Group = await App.ApiConnector.GetTAsync<List<Group>>("Groups");
-            IsLoading = false;
         }
         #endregion
     }

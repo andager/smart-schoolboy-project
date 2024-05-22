@@ -30,10 +30,6 @@
             <local:SchoolSubjectView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:ScheduleViewModel}">
-            <local:ScheduleView/>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModel:GroupViewModel}">
             <local:GroupVIew/>
         </DataTemplate>
@@ -41,7 +37,7 @@
         <DataTemplate DataType="{x:Type viewModel:StudentViewModel}">
             <local:StudentView/>
         </DataTemplate>
-        
+
     </Window.Resources>
 
     <Border CornerRadius="10" BorderThickness="2">
@@ -102,21 +98,14 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <RadioButton Command="{Binding Path=SchowScheduleViewCommand}" Tag="{StaticResource color4}" Style="{StaticResource menuButton}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Calendar" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Расписание" Style="{StaticResource menuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>
-
-                    <RadioButton Command="{Binding Path=SchowStudentCommand}" Tag="{StaticResource color5}" Style="{StaticResource menuButton}">
+                    <RadioButton Command="{Binding Path=SchowStudentCommand}" Tag="{StaticResource color4}" Style="{StaticResource menuButton}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Ученики" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
 
-                    <RadioButton Command="{Binding Path=SchowGroupViewCommand}" Tag="{StaticResource color6}" Style="{StaticResource menuButton}">
+                    <RadioButton Command="{Binding Path=SchowGroupViewCommand}" Tag="{StaticResource color5}" Style="{StaticResource menuButton}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="LayerGroup" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Группы" Style="{StaticResource menuButtonText}"/>

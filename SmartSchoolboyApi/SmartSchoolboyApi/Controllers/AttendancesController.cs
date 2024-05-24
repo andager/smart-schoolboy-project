@@ -15,58 +15,119 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Attendances
+        /// <summary>
+        /// GET: api/Attendances
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances()
         {
-          if (_context.Attendances is null)
-              return NotFound();
+            try
+            {
+                if (_context.Attendances is null)
+                    return NotFound();
 
-            return await _context.Attendances.ToListAsync();
+                return Ok(await _context.Attendances.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/Attendances/5
+        /// <summary>
+        /// GET: api/Attendances/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Attendance>> GetAttendance(int id)
         {
-          if (_context.Attendances is null)
-              return NotFound();
+            try
+            {
+                if (_context.Attendances is null)
+                    return NotFound();
 
-            var attendance = await _context.Attendances.FindAsync(id);
+                var attendance = await _context.Attendances.FindAsync(id);
 
-            if (attendance is null)
-                return NotFound();
+                if (attendance is null)
+                    return NotFound();
 
-            return attendance;
+                return Ok(attendance);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // PUT: api/Attendances/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// GET: api/Attendances/search
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<Attendance>> SearchAttendance(string search)
+        {
+            try
+            {
+                if (_context.Attendances is null)
+                    return NotFound();
+
+                var attendance = await _context.Attendances.Where(p => p.Student.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Student.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Student.Patronymic!.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Schedule.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                return Ok(attendance);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
+
+        /// <summary>
+        /// PUT: api/Attendances/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="attendance"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAttendance(int id, Attendance attendance)
         {
-            if (id != attendance.Id)
-                return BadRequest();
-
-            _context.Entry(attendance).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AttendanceExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+                if (id != attendance.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(attendance).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AttendanceExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // POST: api/Attendances
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/Attendances
+        /// </summary>
+        /// <param name="attendance"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Attendance>> PostAttendance(Attendance attendance)
         {
@@ -90,13 +151,17 @@ namespace SmartSchoolboyApi.Controllers
 
                 return CreatedAtAction(nameof(PostAttendance), new { id = attendance.Id }, attendance);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
-        // DELETE: api/Attendances/5
+        /// <summary>
+        /// DELETE: api/Attendances/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttendance(int id)
         {
@@ -114,9 +179,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 return NoContent();
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

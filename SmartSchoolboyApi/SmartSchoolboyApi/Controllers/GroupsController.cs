@@ -40,6 +40,27 @@ namespace SmartSchoolboyApi.Controllers
             return @group;
         }
 
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<Group>> SearchGroup(string search)
+        {
+            try
+            {
+                if (_context.Groups is null)
+                    return BadRequest();
+
+                var @group = await _context.Groups.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Course.Teacher.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Course.Teacher.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Course.Teacher.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                return Ok(@group);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
         // PUT: api/Groups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

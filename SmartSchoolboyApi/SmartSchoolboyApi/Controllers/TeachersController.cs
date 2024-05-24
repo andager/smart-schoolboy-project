@@ -62,9 +62,6 @@ namespace SmartSchoolboyApi.Controllers
                     p.Gender.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Role.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
-                if (teacher is null)
-                    return NotFound();
-
                 return Ok(teacher);
             }
             catch (Exception)

@@ -50,9 +50,6 @@ namespace SmartSchoolboyApi.Controllers
 
                 var course = await _context.Courses.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
-                if (course is null)
-                    return NotFound();
-
                 return Ok(course);
 
             }

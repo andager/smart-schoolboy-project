@@ -40,6 +40,18 @@ namespace SmartSchoolboyApi.Controllers
             return schoolSubject;
         }
 
+        // GET: api/SchoolSubjects/5
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<SchoolSubject>> SearchSchoolSubject(string search)
+        {
+            if (_context.SchoolSubjects is null)
+                return NotFound();
+
+            var schoolSubject = await _context.SchoolSubjects.FindAsync(id);
+
+            return schoolSubject;
+        }
+
         // PUT: api/SchoolSubjects/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

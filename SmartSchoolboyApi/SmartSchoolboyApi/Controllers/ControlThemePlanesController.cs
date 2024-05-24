@@ -15,58 +15,93 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/ControlThemePlanes
+        /// <summary>
+        /// GET: api/ControlThemePlanes
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ControlThemePlane>>> GetControlThemePlanes()
         {
-          if (_context.ControlThemePlanes is null)
-              return NotFound();
+            try
+            {
+                if (_context.ControlThemePlanes is null)
+                    return NotFound();
 
-            return await _context.ControlThemePlanes.ToListAsync();
+                return Ok(await _context.ControlThemePlanes.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/ControlThemePlanes/5
+        /// <summary>
+        /// GET: api/ControlThemePlanes/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ControlThemePlane>> GetControlThemePlane(int id)
         {
-          if (_context.ControlThemePlanes is null)
-              return NotFound();
+            try
+            {
+                if (_context.ControlThemePlanes is null)
+                    return NotFound();
 
-            var controlThemePlane = await _context.ControlThemePlanes.FindAsync(id);
+                var controlThemePlane = await _context.ControlThemePlanes.FindAsync(id);
 
-            if (controlThemePlane is null)
-                return NotFound();
+                if (controlThemePlane is null)
+                    return NotFound();
 
-            return controlThemePlane;
+                return Ok(controlThemePlane);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // PUT: api/ControlThemePlanes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT: api/ControlThemePlanes/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="controlThemePlane"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutControlThemePlane(int id, ControlThemePlane controlThemePlane)
         {
-            if (id != controlThemePlane.Id)
-                return BadRequest();
-
-            _context.Entry(controlThemePlane).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ControlThemePlaneExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+                if (id != controlThemePlane.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(controlThemePlane).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ControlThemePlaneExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // POST: api/ControlThemePlanes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/ControlThemePlanes
+        /// </summary>
+        /// <param name="controlThemePlane"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ControlThemePlane>> PostControlThemePlane(ControlThemePlane controlThemePlane)
         {
@@ -83,13 +118,17 @@ namespace SmartSchoolboyApi.Controllers
 
                 return CreatedAtAction(nameof(PostControlThemePlane), new { id = controlThemePlane.Id }, controlThemePlane);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
-        // DELETE: api/ControlThemePlanes/5
+        /// <summary>
+        /// DELETE: api/ControlThemePlanes/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteControlThemePlane(int id)
         {
@@ -107,9 +146,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 return NoContent();
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

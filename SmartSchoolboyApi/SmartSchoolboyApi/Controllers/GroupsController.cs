@@ -15,31 +15,57 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Groups
+        /// <summary>
+        /// GET: api/Groups
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
         {
-          if (_context.Groups is null)
-              return NotFound();
+            try
+            {
+                if (_context.Groups is null)
+                    return NotFound();
 
-            return await _context.Groups.ToListAsync();
+                return Ok(await _context.Groups.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/Groups/5
+        /// <summary>
+        /// GET: api/Groups/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Group>> GetGroup(int id)
         {
-          if (_context.Groups is null)
-              return NotFound();
+            try
+            {
+                if (_context.Groups is null)
+                    return NotFound();
 
-            var @group = await _context.Groups.FindAsync(id);
+                var @group = await _context.Groups.FindAsync(id);
 
-            if (@group is null)
-                return NotFound();
+                if (@group is null)
+                    return NotFound();
 
-            return @group;
+                return Ok(@group);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
+        /// <summary>
+        /// GET: api/Groups/search
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Group>> SearchGroup(string search)
         {
@@ -61,33 +87,48 @@ namespace SmartSchoolboyApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
-        // PUT: api/Groups/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// PUT: api/Groups/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="group"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroup(int id, Group @group)
         {
-            if (id != @group.Id)
-                return BadRequest();
-
-            _context.Entry(@group).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GroupExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+                if (id != @group.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(@group).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!GroupExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // POST: api/Groups
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/Groups
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Group>> PostGroup(Group @group)
         {
@@ -109,13 +150,17 @@ namespace SmartSchoolboyApi.Controllers
 
                 return CreatedAtAction(nameof(PostGroup), new { id = @group.Id }, @group);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
-        // DELETE: api/Groups/5
+        /// <summary>
+        /// DELETE: api/Groups/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroup(int id)
         {
@@ -133,9 +178,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 return NoContent();
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

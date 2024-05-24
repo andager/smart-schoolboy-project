@@ -15,58 +15,93 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Teachers
+        /// <summary>
+        /// GET: api/TeacherPhotos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TeacherPhoto>>> GetTeacherPhotos()
         {
-            if (_context.TeacherPhotos is null)
-                return NotFound();
+            try
+            {
+                if (_context.TeacherPhotos is null)
+                    return NotFound();
 
-            return await _context.TeacherPhotos.ToListAsync();
+                return Ok(await _context.TeacherPhotos.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/Teachers/5
+        /// <summary>
+        /// GET: api/TeacherPhotos/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<TeacherPhoto>> GetTeacherPhoto(int id)
         {
-            if (_context.TeacherPhotos is null)
-                return NotFound();
+            try
+            {
+                if (_context.TeacherPhotos is null)
+                    return NotFound();
 
-            var teacherPhoto = await _context.TeacherPhotos.FindAsync(id);
+                var teacherPhoto = await _context.TeacherPhotos.FindAsync(id);
 
-            if (teacherPhoto is null)
-                return NotFound();
+                if (teacherPhoto is null)
+                    return NotFound();
 
-            return teacherPhoto;
+                return Ok(teacherPhoto);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // PUT: api/Teachers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT: api/TeacherPhotos/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="teacherPhoto"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeacherPhoto(int id, TeacherPhoto teacherPhoto)
         {
-            if (id != teacherPhoto.Id)
-                return BadRequest();
-
-            _context.Entry(teacherPhoto).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                //if (!teacherPhoto(id))
-                    return NotFound();
-                //else
-                //    throw;
-            }
+                if (id != teacherPhoto.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(teacherPhoto).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TeacherPhotoExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // POST: api/Teachers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/TeacherPhotos
+        /// </summary>
+        /// <param name="teacherPhoto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<TeacherPhoto>> PostTeacherPhoto(TeacherPhoto teacherPhoto)
         {
@@ -81,13 +116,17 @@ namespace SmartSchoolboyApi.Controllers
 
                 return CreatedAtAction(nameof(PostTeacherPhoto), new { id = teacherPhoto.Id }, teacherPhoto);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
-        // DELETE: api/Teachers/5
+        /// <summary>
+        /// DELETE: api/TeacherPhotos/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeacherPhoto(int id)
         {
@@ -105,9 +144,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 return NoContent();
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

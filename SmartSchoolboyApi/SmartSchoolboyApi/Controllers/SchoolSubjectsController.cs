@@ -44,12 +44,19 @@ namespace SmartSchoolboyApi.Controllers
         [HttpGet("search/{search}")]
         public async Task<ActionResult<SchoolSubject>> SearchSchoolSubject(string search)
         {
-            if (_context.SchoolSubjects is null)
-                return NotFound();
+            try
+            {
+                if (_context.SchoolSubjects is null)
+                    return NotFound();
 
-            var schoolSubject = await _context.SchoolSubjects.FindAsync(id);
+                var schoolSubject = await _context.SchoolSubjects.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
-            return schoolSubject;
+                return Ok(schoolSubject);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         // PUT: api/SchoolSubjects/5

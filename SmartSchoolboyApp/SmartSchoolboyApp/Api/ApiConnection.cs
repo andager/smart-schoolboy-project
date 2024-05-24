@@ -18,12 +18,12 @@ namespace SmartSchoolboyApp.Classes
         {
             _httpClient = client;
         }
-        public async Task<List<Teacher>> SearchAsync()
+        public async Task<T> SearchAsync<T>(string url, string search)
         {
-            var response = await _httpClient.GetAsync(_httpClient.BaseAddress + "Teachers" + "/баранова");
+            var response = await _httpClient.GetAsync(_httpClient.BaseAddress + url + "/search/" + search);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException($"Запрос завершился с кодом: {response.StatusCode}");
-            return JsonConvert.DeserializeObject<List<Teacher>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
         public async Task<T> GetTAsync<T>(string url)
         {

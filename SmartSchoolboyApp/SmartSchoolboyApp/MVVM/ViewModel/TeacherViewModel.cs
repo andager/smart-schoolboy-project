@@ -160,8 +160,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private async void ExecuteSearchCommand(object obj)
         {
-            var ds = await App.ApiConnector.SearchAsync();
-            throw new NotImplementedException();
+            Teachers = await App.ApiConnector.SearchAsync<List<Teacher>>("Teachers", Search);
         }
         #endregion
 

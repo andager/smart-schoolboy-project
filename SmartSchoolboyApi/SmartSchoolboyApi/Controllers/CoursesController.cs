@@ -19,8 +19,8 @@ namespace SmartSchoolboyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-          if (_context.Courses is null)
-              return NotFound();
+            if (_context.Courses is null)
+                return NotFound();
 
             return await _context.Courses.ToListAsync();
         }

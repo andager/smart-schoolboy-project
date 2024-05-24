@@ -19,10 +19,17 @@ namespace SmartSchoolboyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Teacher>>> GetTeachers()
         {
-            if (_context.Teachers is null)
-                return NotFound();
+            try
+            {
+                if (_context.Teachers is null)
+                    return NotFound();
 
-            return await _context.Teachers.ToListAsync();
+                return await _context.Teachers.ToListAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         // GET: api/Teachers/5
@@ -38,6 +45,32 @@ namespace SmartSchoolboyApi.Controllers
                 return NotFound();
 
             return teacher;
+        }
+
+        // GET: api/Teachers/search
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<Teacher>> SearchTeachers(string search)
+        {
+            try
+            {
+ 
+                var teacher = await _context.Teachers.ToListAsync();
+
+                if (search != null)
+                    teacher = teacher.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Gender.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Role.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToList();
+
+                else return NotFound();
+
+                return Ok(teacher);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         // PUT: api/Teachers/5

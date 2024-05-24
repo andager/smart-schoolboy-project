@@ -15,7 +15,10 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Courses
+        /// <summary>
+        /// GET: api/Courses
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDTO>>> GetCourses()
         {
@@ -32,7 +35,11 @@ namespace SmartSchoolboyApi.Controllers
             }
         }
 
-        // GET: api/Courses/5
+        /// <summary>
+        /// GET: api/Courses/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
@@ -54,6 +61,11 @@ namespace SmartSchoolboyApi.Controllers
             }
         }
 
+        /// <summary>
+        /// GET: api/Courses/search
+        /// </summary>
+        /// <param name="search">Параметр поиска и фильтрации данных</param>
+        /// <returns></returns>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Course>> SearchCourse(string search)
         {
@@ -72,8 +84,13 @@ namespace SmartSchoolboyApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
-        // PUT: api/Courses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// PUT: api/Courses/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(int id, Course course)
         {
@@ -104,8 +121,11 @@ namespace SmartSchoolboyApi.Controllers
             }
         }
 
-        // POST: api/Courses
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/Courses
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
@@ -134,7 +154,11 @@ namespace SmartSchoolboyApi.Controllers
             }
         }
 
-        // DELETE: api/Courses/5
+        /// <summary>
+        /// DELETE: api/Courses/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {

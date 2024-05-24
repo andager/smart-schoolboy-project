@@ -81,7 +81,7 @@ namespace SmartSchoolboyApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetControlThemePlane", new { id = controlThemePlane.Id }, controlThemePlane);
+                return CreatedAtAction(nameof(PostControlThemePlane), new { id = controlThemePlane.Id }, controlThemePlane);
             }
             catch
             {

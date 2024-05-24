@@ -126,7 +126,7 @@ namespace SmartSchoolboyApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetTeacher", new { id = teacher.Id }, teacher);
+                return CreatedAtAction(nameof(PostTeacher), new { id = teacher.Id }, teacher);
             }
             catch
             {

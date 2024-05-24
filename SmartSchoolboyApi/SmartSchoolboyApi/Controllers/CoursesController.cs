@@ -17,27 +17,41 @@ namespace SmartSchoolboyApi.Controllers
 
         // GET: api/Courses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDTO>>> GetCourses()
         {
-            if (_context.Courses is null)
-                return NotFound();
+            try
+            {
+                if (_context.Courses is null)
+                    return NotFound();
 
-            return await _context.Courses.ToListAsync();
+                return Ok(await _context.Courses.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         // GET: api/Courses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
-          if (_context.Courses is null)
-              return NotFound();
+            try
+            {
+                if (_context.Courses is null)
+                    return NotFound();
 
-            var course = await _context.Courses.FindAsync(id);
+                var course = await _context.Courses.FindAsync(id);
 
-            if (course is null)
-                return NotFound();
+                if (course is null)
+                    return NotFound();
 
-            return course;
+                return Ok(course);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         [HttpGet("search/{search}")]
@@ -63,24 +77,31 @@ namespace SmartSchoolboyApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(int id, Course course)
         {
-            if (id != course.Id)
-                return BadRequest();
-
-            _context.Entry(course).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+                if (id != course.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(course).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CourseExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
         // POST: api/Courses
@@ -105,11 +126,11 @@ namespace SmartSchoolboyApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetCourse", new { id = course.Id }, course);
+                return CreatedAtAction(nameof(PostCourse), new { id = course.Id }, course);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
@@ -133,7 +154,7 @@ namespace SmartSchoolboyApi.Controllers
             }
             catch
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

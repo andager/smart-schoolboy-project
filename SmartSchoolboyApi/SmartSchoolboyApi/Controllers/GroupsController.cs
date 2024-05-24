@@ -107,7 +107,7 @@ namespace SmartSchoolboyApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetGroup", new { id = @group.Id }, @group);
+                return CreatedAtAction(nameof(PostGroup), new { id = @group.Id }, @group);
             }
             catch
             {

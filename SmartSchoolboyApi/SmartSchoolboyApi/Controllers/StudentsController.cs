@@ -39,6 +39,29 @@ namespace SmartSchoolboyApi.Controllers
             return student;
         }
 
+        // GET: api/Students/5
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<Student>> SearchStudent(string search)
+        {
+            try
+            {
+                if (_context.Students is null)
+                    return NotFound();
+
+                var student = await _context.Students.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                p.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                p.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                p.Gender.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                p.NumberPhone.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                return Ok(student);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
+
         // PUT: api/Students/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

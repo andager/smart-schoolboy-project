@@ -46,7 +46,7 @@ namespace SmartSchoolboyApi.Controllers
             try
             {
                 if (_context.Groups is null)
-                    return BadRequest();
+                    return NotFound();
 
                 var @group = await _context.Groups.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||

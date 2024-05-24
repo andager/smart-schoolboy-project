@@ -54,7 +54,7 @@ namespace SmartSchoolboyApi.Controllers
             try
             {
                 if (_context.Teachers is null)
-                    return BadRequest();
+                    return NotFound();
 
                 var teacher = await _context.Teachers.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||

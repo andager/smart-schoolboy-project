@@ -46,7 +46,7 @@ namespace SmartSchoolboyApi.Controllers
             try
             {
                 if (_context.Courses is null)
-                    return BadRequest();
+                    return NotFound();
 
                 var course = await _context.Courses.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 

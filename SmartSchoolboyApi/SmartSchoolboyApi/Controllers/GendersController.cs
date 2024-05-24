@@ -15,14 +15,24 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Genders
+        /// <summary>
+        /// GET: api/Genders
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gender>>> GetGenders()
         {
-          if (_context.Genders is null)
-              return NotFound();
+            try
+            {
+                if (_context.Genders is null)
+                    return NotFound();
 
-            return await _context.Genders.ToListAsync();
+                return await _context.Genders.ToListAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
     }
 }

@@ -15,14 +15,25 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Roles
+        /// <summary>
+        /// GET: api/Roles
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
-          if (_context.Roles is null)
-              return NotFound();
+            try
+            {
+                if (_context.Roles is null)
+                    return NotFound();
 
-            return await _context.Roles.ToListAsync();
+                return await _context.Roles.ToListAsync();
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
     }
 }

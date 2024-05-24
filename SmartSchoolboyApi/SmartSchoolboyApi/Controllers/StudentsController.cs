@@ -15,31 +15,56 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Students
+        /// <summary>
+        /// GET: api/Students
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
-          if (_context.Students is null)
-              return NotFound();
+            try
+            {
+                if (_context.Students is null)
+                    return NotFound();
 
-            return await _context.Students.ToListAsync();
+                return Ok(await _context.Students.ToListAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/Students/5
+        /// <summary>
+        /// GET: api/Students/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
-          if (_context.Students is null)
-              return NotFound();
-            var student = await _context.Students.FindAsync(id);
+            try
+            {
+                if (_context.Students is null)
+                    return NotFound();
+                var student = await _context.Students.FindAsync(id);
 
-            if (student is null)
-                return NotFound();
+                if (student is null)
+                    return NotFound();
 
-            return student;
+                return Ok(student);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // GET: api/Students/5
+        /// <summary>
+        /// GET: api/Students/search
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Student>> SearchStudent(string search)
         {
@@ -50,9 +75,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 var student = await _context.Students.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                 p.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                p.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                p.Patronymic!.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                 p.Gender.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                p.NumberPhone.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+                p.NumberPhone!.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
                 return Ok(student);
             }
@@ -62,33 +87,47 @@ namespace SmartSchoolboyApi.Controllers
             }
         }
 
-        // PUT: api/Students/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT: api/Students/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="student"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStudent(int id, Student student)
         {
-            if (id != student.Id)
-                return BadRequest();
-
-            _context.Entry(student).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+                if (id != student.Id)
+                    return BadRequest();
 
-            return NoContent();
+                _context.Entry(student).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StudentExists(id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
         }
 
-        // POST: api/Students
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/Students
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent(Student student)
         {
@@ -116,13 +155,17 @@ namespace SmartSchoolboyApi.Controllers
 
                 return CreatedAtAction(nameof(PostStudent), new { id = student.Id }, student);
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 
-        // DELETE: api/Students/5
+        /// <summary>
+        /// DELETE: api/Students/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
@@ -140,9 +183,9 @@ namespace SmartSchoolboyApi.Controllers
 
                 return NoContent();
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
 

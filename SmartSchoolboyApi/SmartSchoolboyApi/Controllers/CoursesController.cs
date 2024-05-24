@@ -40,6 +40,27 @@ namespace SmartSchoolboyApi.Controllers
             return course;
         }
 
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<Course>> SearchCourse(string search)
+        {
+            try
+            {
+                if (_context.Courses is null)
+                    return BadRequest();
+
+                var course = await _context.Courses.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                if (course is null)
+                    return NotFound();
+
+                return Ok(course);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
         // PUT: api/Courses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

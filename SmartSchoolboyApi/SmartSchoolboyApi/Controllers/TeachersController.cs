@@ -53,17 +53,17 @@ namespace SmartSchoolboyApi.Controllers
         {
             try
             {
- 
-                var teacher = await _context.Teachers.ToListAsync();
+                if (_context.Teachers is null)
+                    return BadRequest();
 
-                if (search != null)
-                    teacher = teacher.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                var teacher = await _context.Teachers.Where(p => p.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Gender.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Role.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToList();
+                    p.Role.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
-                else return NotFound();
+                if (teacher is null)
+                    return NotFound();
 
                 return Ok(teacher);
             }

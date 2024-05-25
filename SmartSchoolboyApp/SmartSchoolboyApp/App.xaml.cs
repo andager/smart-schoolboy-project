@@ -27,7 +27,8 @@ namespace SmartSchoolboyApp
         //Строка подключения к Api localhost
         //private static readonly Uri BaseUri = new Uri("http://localhost:5063/api/");
 
-        //Строка подключения к Api hosting
+        // Не нужно, для теста ПОТОМ УДАЛЮ
+        //Строка подключения к Api hosting 
         private static readonly Uri BaseUri = new Uri("http://a27202-44a1.u.d-f.pw/api/");
 
         private readonly NavigationStore _navigationStore;

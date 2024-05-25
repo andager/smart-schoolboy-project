@@ -8,8 +8,7 @@ namespace SmartSchoolboyApi.Models
         {
         }
 
-        public SmartSchoolboyBaseContext(DbContextOptions<SmartSchoolboyBaseContext> options)
-            : base(options)
+        public SmartSchoolboyBaseContext(DbContextOptions<SmartSchoolboyBaseContext> options) : base(options)
         {
         }
 

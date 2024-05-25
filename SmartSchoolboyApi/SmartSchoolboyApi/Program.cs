@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SmartSchoolboyApi.Models;
 
@@ -20,6 +21,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// обработка ошибок HTTP
+app.UseStatusCodePages(async statusCodeContext =>
+{
+    var response = statusCodeContext.HttpContext.Response;
+    var path = statusCodeContext.HttpContext.Request.Path;
+
+    response.ContentType = "text/plain; charset=UTF-8";
+
+    if (response.StatusCode == 400)
+        await response.WriteAsync($"Path: {path}. «апрос был неверно сформирован");
+    else if (response.StatusCode == 401)
+        await response.WriteAsync($"Path: {path}. «апрос требует аутентификации, и клиенту не удалось предоставить действительные учетные данные");
+    else if (response.StatusCode == 403)
+        await response.WriteAsync($"Path: {path}. ” клиента нет разрешени€ на доступ к запрошенному ресурсу");
+    else if (response.StatusCode == 404)
+        await response.WriteAsync($"Resource {path}. Ќе удалось найти запрошенный ресурс на сервере");
+    else if (response.StatusCode == 500)
+        await response.WriteAsync($"Path: {path}. Server error, the server is not responding");
+});
 
 app.UseAuthorization();
 

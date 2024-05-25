@@ -18,9 +18,10 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Courses
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Course"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CourseDTO>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
             try
             {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Courses/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора курса</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="Course"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
@@ -62,10 +64,11 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
-        /// GET: api/Courses/search
+        /// GET: api/Courses/search/5
         /// </summary>
-        /// <param name="search">Параметр поиска и фильтрации данных</param>
-        /// <returns></returns>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="Course"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Course>> SearchCourse(string search)
         {
@@ -88,9 +91,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/Courses/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="course"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора курса</param>
+        /// <param name="course">Параметр обьекта <see cref="Course"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="Course"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(int id, Course course)
         {
@@ -124,8 +129,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/Courses
         /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
+        /// <param name="course">Параметр обьекта <see cref="Course"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="Course"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
@@ -157,8 +163,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/Courses/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора курса</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="Course"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -174,7 +181,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch
             {

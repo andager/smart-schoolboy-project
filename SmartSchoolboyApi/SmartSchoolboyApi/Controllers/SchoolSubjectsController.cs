@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/SchoolSubjects
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="SchoolSubject"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SchoolSubject>>> GetSchoolSubjects()
         {
@@ -39,8 +40,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/SchoolSubjects/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора учебного предмета</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="SchoolSubject"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<SchoolSubject>> GetSchoolSubject(int id)
         {
@@ -63,11 +65,37 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
+        /// GET: api/SchoolSubjects/search/5
+        /// </summary>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="SchoolSubject"/></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<SchoolSubject>> SearchSchoolSubject(string search)
+        {
+            try
+            {
+                if (_context.SchoolSubjects is null)
+                    return NotFound();
+
+                var schoolSubject = await _context.SchoolSubjects.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                return Ok(schoolSubject);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
+
+        /// <summary>
         /// PUT: api/SchoolSubjects/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="schoolSubject"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора учебного предмета</param>
+        /// <param name="schoolSubject">Параметр обьекта <see cref="SchoolSubject"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="SchoolSubject"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSchoolSubject(int id, SchoolSubject schoolSubject)
         {
@@ -99,33 +127,11 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
-        /// GET: api/SchoolSubjects/search
-        /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        [HttpGet("search/{search}")]
-        public async Task<ActionResult<SchoolSubject>> SearchSchoolSubject(string search)
-        {
-            try
-            {
-                if (_context.SchoolSubjects is null)
-                    return NotFound();
-
-                var schoolSubject = await _context.SchoolSubjects.Where(p => p.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
-
-                return Ok(schoolSubject);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
-            }
-        }
-
-        /// <summary>
         /// POST: api/SchoolSubjects
         /// </summary>
-        /// <param name="schoolSubject"></param>
-        /// <returns></returns>
+        /// <param name="schoolSubject">Параметр обьекта <see cref="SchoolSubject"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="SchoolSubject"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<SchoolSubject>> PostSchoolSubject(SchoolSubject schoolSubject)
         {
@@ -150,8 +156,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/SchoolSubjects/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора учебного предмета</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="SchoolSubject"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSchoolSubject(int id)
         {
@@ -167,7 +174,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.SchoolSubjects.Remove(schoolSubject);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

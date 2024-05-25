@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Roles
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Role"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {

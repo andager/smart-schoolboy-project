@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/TeacherPhotos
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="TeacherPhoto"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TeacherPhoto>>> GetTeacherPhotos()
         {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/TeacherPhotos/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора фотографии учителя</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="TeacherPhoto"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<TeacherPhoto>> GetTeacherPhoto(int id)
         {
@@ -64,9 +66,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/TeacherPhotos/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="teacherPhoto"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора фотографии учителя</param>
+        /// <param name="teacherPhoto">Параметр обьекта <see cref="TeacherPhoto"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="TeacherPhoto"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeacherPhoto(int id, TeacherPhoto teacherPhoto)
         {
@@ -100,8 +104,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/TeacherPhotos
         /// </summary>
-        /// <param name="teacherPhoto"></param>
-        /// <returns></returns>
+        /// <param name="teacherPhoto">Параметр обьекта <see cref="TeacherPhoto"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="TeacherPhoto"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<TeacherPhoto>> PostTeacherPhoto(TeacherPhoto teacherPhoto)
         {
@@ -125,8 +130,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/TeacherPhotos/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора фотографии учителя</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="TeacherPhoto"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeacherPhoto(int id)
         {
@@ -142,7 +148,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.TeacherPhotos.Remove(teacherPhoto);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

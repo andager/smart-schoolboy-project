@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Attendances
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Attendance"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances()
         {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Attendances/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора посещаемости</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="Attendance"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<Attendance>> GetAttendance(int id)
         {
@@ -62,10 +64,11 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
-        /// GET: api/Attendances/search
+        /// GET: api/Attendances/search/5
         /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="Attendance"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Attendance>> SearchAttendance(string search)
         {
@@ -90,9 +93,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/Attendances/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="attendance"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора посещаемости</param>
+        /// <param name="attendance">Параметр обьекта <see cref="Attendance"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="Attendance"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAttendance(int id, Attendance attendance)
         {
@@ -126,8 +131,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/Attendances
         /// </summary>
-        /// <param name="attendance"></param>
-        /// <returns></returns>
+        /// <param name="attendance">Параметр обьекта <see cref="Attendance"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="Attendance"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<Attendance>> PostAttendance(Attendance attendance)
         {
@@ -160,8 +166,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/Attendances/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора посещаемости</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="Attendance"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttendance(int id)
         {
@@ -177,7 +184,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.Attendances.Remove(attendance);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

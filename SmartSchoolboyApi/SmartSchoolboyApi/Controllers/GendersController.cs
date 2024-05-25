@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Genders
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Gender"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gender>>> GetGenders()
         {

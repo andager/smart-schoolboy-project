@@ -15,10 +15,14 @@ namespace SmartSchoolboyApi.Controllers
             _context = context;
         }
 
-        // POST: api/TeacherAutches
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/TeacherAutches
+        /// </summary>
+        /// <param name="teacherAutch">Параметр обьекта <see cref="TeacherAutch"/></param>
+        /// <returns>Результат задачи содержит авторизовавшегося пользователя</returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
-        public async Task<ActionResult<TeacherAutch>> PostTeacherAutch(TeacherAutch teacherAutch)
+        public async Task<ActionResult<TeacherAutch>> AutchTeacherAutch(TeacherAutch teacherAutch)
         {
             try
             {
@@ -28,8 +32,8 @@ namespace SmartSchoolboyApi.Controllers
                     return NotFound();
             }
             catch
-            {   
-                return BadRequest();
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
     }

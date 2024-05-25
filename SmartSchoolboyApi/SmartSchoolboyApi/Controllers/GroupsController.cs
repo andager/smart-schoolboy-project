@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Groups
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Group"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
         {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Groups/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора группы</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="Group"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<Group>> GetGroup(int id)
         {
@@ -62,10 +64,11 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
-        /// GET: api/Groups/search
+        /// GET: api/Groups/search/5
         /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="Group"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Group>> SearchGroup(string search)
         {
@@ -78,7 +81,7 @@ namespace SmartSchoolboyApi.Controllers
                     p.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Course.Teacher.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Course.Teacher.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Course.Teacher.Patronymic.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+                    p.Course.Teacher.Patronymic!.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
 
                 return Ok(@group);
             }
@@ -91,9 +94,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/Groups/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="group"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора группы</param>
+        /// <param name="group">Параметр обьекта <see cref="Group"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="Group"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroup(int id, Group @group)
         {
@@ -127,8 +132,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/Groups
         /// </summary>
-        /// <param name="group"></param>
-        /// <returns></returns>
+        /// <param name="group">Параметр обьекта <see cref="Group"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="Group"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<Group>> PostGroup(Group @group)
         {
@@ -159,8 +165,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/Groups/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора группы</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="Group"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroup(int id)
         {
@@ -176,7 +183,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.Groups.Remove(@group);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

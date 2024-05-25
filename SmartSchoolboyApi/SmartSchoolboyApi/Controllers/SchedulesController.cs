@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Schedules
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="Schedule"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/Schedules/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора расписания</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="Schedule"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<Schedule>> GetSchedule(int id)
         {
@@ -62,10 +64,11 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
-        /// GET: api/Schedules/search
+        /// GET: api/Schedules/search/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="Schedule"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("search/{search}")]
         public async Task<ActionResult<Schedule>> SearchSchedule(string search)
         {
@@ -88,9 +91,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/Schedules/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="schedule"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора расписания</param>
+        /// <param name="schedule">Параметр обьекта <see cref="Schedule"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="Schedule"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSchedule(int id, Schedule schedule)
         {
@@ -124,8 +129,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/Schedules
         /// </summary>
-        /// <param name="schedule"></param>
-        /// <returns></returns>
+        /// <param name="schedule">Параметр обьекта <see cref="Schedule"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="Schedule"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<Schedule>> PostSchedule(Schedule schedule)
         {
@@ -157,8 +163,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/Schedules/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора расписания</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="Schedule"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSchedule(int id)
         {
@@ -174,7 +181,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.Schedules.Remove(schedule);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

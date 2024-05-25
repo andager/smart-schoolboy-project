@@ -22,11 +22,4 @@ namespace SmartSchoolboyApi.Models
         [JsonIgnore]
         public virtual ICollection<ControlThemePlane> ControlThemePlanes { get; set; }
     }
-
-    public partial class CourseDTO
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-
-    }
 }

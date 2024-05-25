@@ -18,7 +18,8 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/ControlThemePlanes
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий элементы последовательности <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ControlThemePlane>>> GetControlThemePlanes()
         {
@@ -38,8 +39,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// GET: api/ControlThemePlanes/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора тематического плана</param>
+        /// <returns>Результат задачи содержит найденый обьект <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<ControlThemePlane>> GetControlThemePlane(int id)
         {
@@ -64,9 +66,11 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// PUT: api/ControlThemePlanes/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="controlThemePlane"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора тематического плана</param>
+        /// <param name="controlThemePlane">Параметр обьекта <see cref="ControlThemePlane"/></param>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="DbUpdateConcurrencyException"></exception>
+        /// <exception cref="Exception"></exception>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutControlThemePlane(int id, ControlThemePlane controlThemePlane)
         {
@@ -100,8 +104,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// POST: api/ControlThemePlanes
         /// </summary>
-        /// <param name="controlThemePlane"></param>
-        /// <returns></returns>
+        /// <param name="controlThemePlane">Параметр обьекта <see cref="ControlThemePlane"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<ActionResult<ControlThemePlane>> PostControlThemePlane(ControlThemePlane controlThemePlane)
         {
@@ -127,8 +132,9 @@ namespace SmartSchoolboyApi.Controllers
         /// <summary>
         /// DELETE: api/ControlThemePlanes/5
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Параметр индификатора тематического плана</param>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteControlThemePlane(int id)
         {
@@ -144,7 +150,7 @@ namespace SmartSchoolboyApi.Controllers
                 _context.ControlThemePlanes.Remove(controlThemePlane);
                 await _context.SaveChangesAsync();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception)
             {

@@ -62,6 +62,29 @@ namespace SmartSchoolboyApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }
         }
+        /// <summary>
+        /// GET: api/ControlThemePlanes/search/5
+        /// </summary>
+        /// <param name="search">Параметр для поиска и фильтрации данных</param>
+        /// <returns>Результат задачи содержит <see cref="List{T}"/> содержащий отфильтрованные элементы последовательности <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<ControlThemePlane>> SearchControlThemePlane(string search)
+        {
+            try
+            {
+                if (_context.ControlThemePlanes is null)
+                    return NotFound();
+
+                var controlThemePlane = await _context.ControlThemePlanes.Where(p => p.LessonName.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+
+                return Ok(controlThemePlane);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
 
         /// <summary>
         /// PUT: api/ControlThemePlanes/5

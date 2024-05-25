@@ -23,8 +23,13 @@ namespace SmartSchoolboyApp
         public static Teacher currentUser;
         //Экземпляр класса коннектора для реализации Http запросов
         public static readonly ApiConnection ApiConnector;
-        //Строка подключения к Api
-        private static readonly Uri BaseUri = new Uri("http://localhost:5063/api/");
+
+        //Строка подключения к Api localhost
+        //private static readonly Uri BaseUri = new Uri("http://localhost:5063/api/");
+
+        //Строка подключения к Api hosting
+        private static readonly Uri BaseUri = new Uri("http://a27202-44a1.u.d-f.pw/api/");
+
         private readonly NavigationStore _navigationStore;
         static App()
         {

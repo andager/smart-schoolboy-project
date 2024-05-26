@@ -19,7 +19,6 @@ namespace SmartSchoolboyApi.Models
         public virtual Teacher Teacher { get; set; } = null!;
         [JsonIgnore]
         public virtual ICollection<Group> Groups { get; set; }
-        [JsonIgnore]
         public virtual ICollection<ControlThemePlane> ControlThemePlanes { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 
-![Logo]([[https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png](https://github.com/andager/smart-schoolboy-project/blob/main/HeaderLogo.png](https://github.com/andager/smart-schoolboy-project/blob/main/HeaderLogo.png?raw=true)))
-
+![HeaderLogo](https://github.com/andager/smart-schoolboy-project/assets/85036928/32688c98-e02f-4f48-9f50-01cc901404a8)
 
 # rage: mart SchoolBoy
 

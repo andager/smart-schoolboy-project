@@ -24,11 +24,18 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private RelayCommand _viewGroup;
         private RelayCommand _addEditGroup;
         private RelayCommand _deleteGroup;
+        private string _search;
         private bool _isLoading;
+        private bool _isSearchNull;
         #endregion
 
         #region Properties
         public ObservableObject CurrentChildView => _navigationStore.CurrentViewModel;
+        public bool IsSearchNull
+        {
+            get { return _isSearchNull; }
+            set { _isSearchNull = value; OnPropertyChanged(nameof(IsSearchNull)); }
+        }
         public List<Group> Group
         {
             get { return _group; }
@@ -38,6 +45,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get { return _selectedGroup; }
             set { _selectedGroup = value; OnPropertyChanged(nameof(SelectedGroup)); }
+        }
+        public string Search
+        {
+            get { return _search; }
+            set { _search = value; OnPropertyChanged(nameof(Search)); }
         }
         public bool IsLoading
         {
@@ -88,6 +100,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 });
             }
         }
+        public ICommand SearchCommand { get; }
+        public ICommand SearchNullCommnad { get; }
         public ICommand UpdateDataCommand { get; }
         public ICommand ExportGroupCommand { get; }
         #endregion
@@ -95,17 +109,49 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public GroupViewModel()
         {
+            SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
+            SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportGroupCommand = new RelayCommand(ExecuteExportGroupCommand, CanExecuteExportGroupCommand);
 
             ExecuteUpdateDataCommand(null);
         }
 
+        private bool CanExecuteSearchNullCommnad(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(Search))
+                IsSearchNull = false;
+            else
+                IsSearchNull = true;
+            return IsSearchNull;
+        }
+
+        private void ExecuteSearchNullCommnad(object obj)
+        {
+            Search = null;
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private bool CanExecuteSearchCommand(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(Search))
+                return false;
+            else return true;
+        }
+
+        private void ExecuteSearchCommand(object obj)
+        {
+            ExecuteUpdateDataCommand(null);
+        }
+
         private async void ExecuteUpdateDataCommand(object obj)
         {
             IsLoading = true;
-            Group = await App.ApiConnector.GetTAsync<List<Group>>("Groups");
+            if (string.IsNullOrWhiteSpace(Search))
+                Group = await App.ApiConnector.GetTAsync<List<Group>>("Groups");
+            else Group = await App.ApiConnector.SearchAsync<List<Group>>("Groups", Search);
             IsLoading = false;
+
         }
         private bool CanExecuteExportGroupCommand(object obj)
         {

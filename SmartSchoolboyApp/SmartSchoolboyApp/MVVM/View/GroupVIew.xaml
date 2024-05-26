@@ -39,7 +39,8 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <fa:IconImage Icon="Search" Width="20" Height="20" Foreground="{StaticResource plainTextColor3}"/>
                 <TextBox Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="13" Height="24" Width="200" Background="Transparent" Foreground="{StaticResource plainTextColor3}" CaretBrush="{StaticResource plainTextColor3}" BorderThickness="0 0 0 1" VerticalAlignment="Center" Margin="5 5 0 0"/>
-                <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}" Margin="10 0 0 0"/>
+                <Button Command="{Binding Path=SearchNullCommnad}" Visibility="{Binding Path=IsSearchNull, Converter={StaticResource BooleanToVisibility}}" Style="{StaticResource searchNullButton}"/>
+                <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}"/>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">

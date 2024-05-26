@@ -22,10 +22,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private RelayCommand _addEditCourse;
         private RelayCommand _deleteCourse;
         private Course _selectedCourse;
+        private string _search;
         private bool _isLoading;
+        private bool _isSearchNull;
         #endregion
 
         #region Properties
+        public bool IsSearchNull
+        {
+            get { return _isSearchNull; }
+            set { _isSearchNull = value; OnPropertyChanged(nameof(IsSearchNull)); }
+        }
         public bool IsLoading
         {
             get { return _isLoading; }
@@ -36,6 +43,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             get { return _courses; }
             set { _courses = value; OnPropertyChanged(nameof(Courses)); }
         }
+        public string Search
+        {
+            get { return _search; }
+            set { _search = value; OnPropertyChanged(nameof(Search)); }
+        }
         public Course SelectedCourse
         {
             get { return _selectedCourse; }
@@ -44,6 +56,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand SearchCommand { get; }
+        public ICommand SearchNullCommnad { get; }
         public ICommand UpdateDataCommand { get; }
         public ICommand ExportExelCommand { get; }
         public RelayCommand AddEditCourseCommand
@@ -78,16 +92,47 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public CourseViewModel()
         {
+            SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
+            SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportExelCommand = new RelayCommand(ExecuteExportExelCommand, CanExecuteExportExelCommand);
 
             ExecuteUpdateDataCommand(null);
         }
 
+        private bool CanExecuteSearchNullCommnad(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(Search))
+                IsSearchNull = false;
+            else
+                IsSearchNull = true;
+            return IsSearchNull;
+        }
+
+        private void ExecuteSearchNullCommnad(object obj)
+        {
+            Search = null;
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private bool CanExecuteSearchCommand(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(Search))
+                return false;
+            else return true;
+        }
+
+        private void ExecuteSearchCommand(object obj)
+        {
+            ExecuteUpdateDataCommand(null);
+        }
+
         private async void ExecuteUpdateDataCommand(object obj)
         {
             IsLoading = true;
-            Courses = await App.ApiConnector.GetTAsync<List<Course>>("Courses");
+            if (string.IsNullOrWhiteSpace(Search))
+                Courses = await App.ApiConnector.GetTAsync<List<Course>>("Courses");
+            else Courses = await App.ApiConnector.SearchAsync<List<Course>>("Courses", Search);
             IsLoading = false;
         }
 

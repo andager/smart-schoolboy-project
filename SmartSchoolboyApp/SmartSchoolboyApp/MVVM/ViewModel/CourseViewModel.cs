@@ -21,9 +21,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Fields
         private readonly NavigationStore _navigationStore;
         private List<Course> _courses;
-        private RelayCommand _addEditCourse;
-        private RelayCommand _eyeCourse;
-        private RelayCommand _deleteCourse;
+        private RelayCommand _selectCourse;
         private Course _selectedCourse;
         private string _search;
         private bool _isLoading;
@@ -68,7 +66,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _addEditCourse ?? new RelayCommand(obj =>
+                return _selectCourse ?? new RelayCommand(obj =>
                 {
                     AddEditCourseView addEditCourse = new AddEditCourseView(obj as Course);
                     addEditCourse.ShowDialog();
@@ -82,7 +80,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _eyeCourse ?? new RelayCommand(obj =>
+                return _selectCourse ?? new RelayCommand(obj =>
                 {
                     var course = obj as Course;
                     new NavigateCommand<HomeCourseViewModel>(_navigationStore, () => new HomeCourseViewModel(_navigationStore, course));
@@ -93,7 +91,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _deleteCourse ?? new RelayCommand(async obj =>
+                return _selectCourse ?? new RelayCommand(async obj =>
                 {
                     var course = obj as Course;
                     if (course != null)

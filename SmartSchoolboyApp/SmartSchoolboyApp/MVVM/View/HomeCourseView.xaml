@@ -16,22 +16,34 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
-            
-            <TextBlock Text="{Binding Path=CourseName}"/>
+        <Grid Grid.Row="0">
 
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Ведет: "/>
-                <TextBlock Text="{Binding Path=TeacherName}"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                <TextBlock Text="{Binding Path=CourseName}"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Ведет: "/>
+                    <TextBlock Text="{Binding Path=TeacherName}"/>
+                </StackPanel>
+                
             </StackPanel>
-            
-        </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                <Button Command="{Binding Path=ExportExelCommand}" Tag="{StaticResource color3}" Style="{StaticResource exportButton}"/>
+
+                <Button  ToolTip="Добавить новый курс" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}"/>
+
+            </StackPanel>
+
+        </Grid>
 
         <Border Grid.Row="1" Background="#200F53" CornerRadius="10" Padding="10">
             <DataGrid ItemsSource="{Binding Path=ThemePlanes, Mode=TwoWay}">
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Binding="{Binding Path=lessonName}" Width="2*">
+                    <DataGridTextColumn CanUserSort="False" Binding="{Binding Path=lessonName}" Width="2*">
                         <DataGridTextColumn.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Тема"/>
@@ -40,7 +52,7 @@
                         </DataGridTextColumn.Header>
                     </DataGridTextColumn>
 
-                    <DataGridTextColumn Binding="{Binding Path=lessonDescription}" Width="3*">
+                    <DataGridTextColumn CanUserSort="False" Binding="{Binding Path=lessonDescription}" Width="3*">
                         <DataGridTextColumn.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Описание"/>

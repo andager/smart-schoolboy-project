@@ -45,17 +45,11 @@
 
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
 
-                <Button ToolTip="Обновить данные" Command="{Binding Path=UpdateDataCommand, UpdateSourceTrigger=PropertyChanged}" Tag="{StaticResource color6}" Style="{StaticResource addButton}">
-                    <fa:IconImage Icon="Refresh" Style="{StaticResource addButtonIcon}"/>
-                </Button>
+                <Button Command="{Binding Path=UpdateDataCommand, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource refreshButton}"/>
 
-                <Button ToolTip="Экспортировать в Exel" Command="{Binding Path=ExportExelCommand}" Tag="{StaticResource color3}" Style="{StaticResource addButton}">
-                    <fa:IconImage Icon="FileExport" Style="{StaticResource addButtonIcon}"/>
-                </Button>
+                <Button Command="{Binding Path=ExportExelCommand}" Style="{StaticResource exportButton}"/>
 
-                <Button  ToolTip="Добавить новую группу" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}">
-                    <fa:IconImage Icon="Add" Style="{StaticResource addButtonIcon}"/>
-                </Button>
+                <Button ToolTip="Добавить новую группу" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
 
             </StackPanel>
 

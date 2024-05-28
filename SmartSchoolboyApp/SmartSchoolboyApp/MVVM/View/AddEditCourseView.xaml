@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
         mc:Ignorable="d"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         WindowStartupLocation="CenterScreen"
-        Title="{Binding Path=WindowName}" Height="200" Width="300" MouseDown="Window_MouseDown" Style="{StaticResource windowStyle}">
+        x:Name="MainAddEditCourseView"
+        Title="{Binding Path=WindowName}" Height="300" Width="620" MouseDown="Window_MouseDown" Style="{StaticResource windowStyle}">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
@@ -44,19 +46,69 @@
 
             </Grid>
 
-            <StackPanel Grid.Row="1" Width="250" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                
-                <TextBlock Text="Название курса"/>
-                <TextBox Text="{Binding CourseName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxAddEdit}">
-                    <TextBox.Background>
-                        <ImageBrush ImageSource="\Images\Icons\identification.png" Stretch="Uniform" AlignmentX="Left"/>
-                    </TextBox.Background>
-                </TextBox>
+            <Grid Grid.Row="1">
 
-                <TextBlock Text="Учитель" Margin="0 10"/>
-                <ComboBox SelectedIndex="{Binding Path=IndexTeacher}" SelectedItem="{Binding Path=SelectedTeacher}" DisplayMemberPath="fullName" ItemsSource="{Binding Path=Teachers}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.3*"/>
+                </Grid.ColumnDefinitions>
                 
-            </StackPanel>
+                <StackPanel Grid.Column="0" Width="250" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <TextBlock Text="Название курса"/>
+                    <TextBox Text="{Binding CourseName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxAddEdit}">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="\Images\Icons\identification.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+
+                    <TextBlock Text="Учитель" Margin="0 10"/>
+                    <ComboBox SelectedIndex="{Binding Path=IndexTeacher}" SelectedItem="{Binding Path=SelectedTeacher}" DisplayMemberPath="fullName" ItemsSource="{Binding Path=Teachers}"/>
+
+                </StackPanel>
+
+                <Border Grid.Column="1" Background="#200F53" CornerRadius="10" Padding="10" Margin="10">
+                    <DataGrid ItemsSource="{Binding Path=ControlThemes, Mode=TwoWay}">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Binding="{Binding Path=lessonName}" Width="4*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Тема"/>
+                                        <fa:IconImage Icon="Book" Style="{StaticResource headerIcon}"/>
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn Width="*">
+                                
+                                <DataGridTemplateColumn.Header>
+                                    <Button Command="{Binding ElementName=MainAddEditCourseView, Path=DataContext.AddEditThemePlaneCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
+                                </DataGridTemplateColumn.Header>
+                                
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainAddEditCourseView, Path=DataContext.AddEditThemePlaneCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
+                                                <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
+                                            </Button>
+
+                                            <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainAddEditCourseView, Path=DataContext.RemoveThemePlaneCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
+                                                <fa:IconImage Icon="TrashCan" Style="{StaticResource dataGridButtonIcon}"/>
+                                            </Button>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                
+                            </DataGridTemplateColumn>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                
+            </Grid>
 
             <Button Command="{Binding Path=CourseSaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
         

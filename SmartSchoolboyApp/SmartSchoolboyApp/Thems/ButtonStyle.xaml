@@ -103,10 +103,10 @@
 
     </Style>
 
-    <!-- Add button -->
+    <!-- Add button --><!--
     <Style x:Key="addButton" TargetType="{x:Type Button}">
 
-        <!-- Button style on normal -->
+        --><!-- Button style on normal --><!--
         <Setter Property="Width" Value="30"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource plainTextColor3}"/>
@@ -120,13 +120,13 @@
 
                     <ControlTemplate.Triggers>
 
-                        <!-- Button style on hover -->
+                        --><!-- Button style on hover --><!--
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource panelActiveColor}"/>
                             <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
                         </Trigger>
 
-                        <!-- Button style on presed -->
+                        --><!-- Button style on presed --><!--
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
@@ -141,7 +141,7 @@
             </Setter.Value>
         </Setter>
 
-    </Style>
+    </Style>-->
 
     <!-- Search button -->
     <Style x:Key="searchButton" TargetType="{x:Type Button}">
@@ -431,6 +431,128 @@
                         <!-- Button style on hover -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource color4}"/>
+                        </Trigger>
+
+                        <!-- Button style on presed -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0.5" X="0.5"></TranslateTransform>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!-- Add button -->
+    <Style x:Key="addButton" TargetType="{x:Type Button}">
+
+        <!-- Button style on normal -->
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource plainTextColor3}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <fa:IconImage Icon="Add" Style="{DynamicResource addButtonIcon}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Button style on hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource panelActiveColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource color9}"/>
+                        </Trigger>
+
+                        <!-- Button style on presed -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0.5" X="0.5"></TranslateTransform>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!-- Export button -->
+    <Style x:Key="exportButton" TargetType="{x:Type Button}">
+
+        <!-- Button style on normal -->
+        <Setter Property="ToolTip" Value="Экспортировать в Exel"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource plainTextColor3}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <fa:IconImage Icon="FileExport" Width="20" Height="20" Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/> 
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Button style on hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource panelActiveColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource color3}"/>
+                        </Trigger>
+
+                        <!-- Button style on presed -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0.5" X="0.5"></TranslateTransform>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!-- Refresh button -->
+    <Style x:Key="refreshButton" TargetType="{x:Type Button}">
+
+        <!-- Button style on normal -->
+        <Setter Property="ToolTip" Value="Обновить данные"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource plainTextColor3}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <fa:IconImage Icon="Refresh" Style="{DynamicResource addButtonIcon}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Button style on hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource panelActiveColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource color6}"/>
                         </Trigger>
 
                         <!-- Button style on presed -->

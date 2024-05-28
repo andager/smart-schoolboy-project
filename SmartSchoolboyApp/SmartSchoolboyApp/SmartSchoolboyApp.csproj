@@ -135,6 +135,7 @@
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="MVVM\Model\Clases\UserAccountModel.cs" />
     <Compile Include="MVVM\Model\Repositories\UserRepositories.cs" />
+    <Compile Include="MVVM\ViewModel\AddEditControlThemePlaneViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditCourseViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditGroupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditSchoolSubjectViewModel.cs" />
@@ -148,6 +149,9 @@
     <Compile Include="MVVM\ViewModel\SchollSubjectViewModel.cs" />
     <Compile Include="MVVM\ViewModel\StudentViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TeacherViewModel.cs" />
+    <Compile Include="MVVM\View\AddEditControlThemePlaneView.xaml.cs">
+      <DependentUpon>AddEditControlThemePlaneView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\AddEditCourseView.xaml.cs">
       <DependentUpon>AddEditCourseView.xaml</DependentUpon>
     </Compile>
@@ -194,6 +198,10 @@
     <Compile Include="Thems\UserControls\LoadingSpinner.xaml.cs">
       <DependentUpon>LoadingSpinner.xaml</DependentUpon>
     </Compile>
+    <Page Include="MVVM\View\AddEditControlThemePlaneView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\AddEditCourseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -454,9 +462,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\HarfBuzzSharp.NativeAssets.macOS.7.3.0\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

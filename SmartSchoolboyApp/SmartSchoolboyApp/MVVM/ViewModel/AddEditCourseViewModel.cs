@@ -14,6 +14,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     {
         #region Fields
         private string _windoWname;
+        private RelayCommand _selectThemePlane;
+        private List<ControlThemePlane> _controlThemes;
         private List<Teacher> _teachers;
         private int _indexTeacher;
         private Teacher _selectedTeacher;
@@ -26,6 +28,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get { return _windoWname; }
             set { _windoWname = value; OnPropertyChanged(nameof(WindowName)); }
+        }
+        public List<ControlThemePlane> ControlThemes
+        {
+            get { return _controlThemes; }
+            set { _controlThemes = value; OnPropertyChanged(nameof(ControlThemes)); }
         }
         public List<Teacher> Teachers
         {
@@ -55,6 +62,27 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public RelayCommand AddEditThemePlaneCommand
+        {
+            get
+            {
+                return _selectThemePlane ?? new RelayCommand(obj =>
+                {
+                    AddEditControlThemePlaneView themePlaneView = new AddEditControlThemePlaneView(obj as ControlThemePlane);
+                    themePlaneView.ShowDialog();
+                });
+            }
+        }
+        public RelayCommand RemoveThemePlaneCommand
+        {
+            get
+            {
+                return _selectThemePlane ?? new RelayCommand(async obj =>
+                {
+                    await App.ApiConnector.DeleteAsync("ControlThemePlanes", (obj as ControlThemePlane).id);
+                });
+            }
+        }
         public ICommand CourseSaveCommand { get; }
         #endregion
 

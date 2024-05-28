@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="SmartSchoolboyApp.MVVM.View.HomeCourseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
+             xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             d:DesignHeight="450" d:DesignWidth="800">
+        
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+            
+            <TextBlock Text="{Binding Path=CourseName}"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Ведет: "/>
+                <TextBlock Text="{Binding Path=TeacherName}"/>
+            </StackPanel>
+            
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="#200F53" CornerRadius="10" Padding="10">
+            <DataGrid ItemsSource="{Binding Path=ThemePlanes, Mode=TwoWay}">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Binding="{Binding Path=lessonName}" Width="2*">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Тема"/>
+                                <fa:IconImage Icon="Book" Style="{StaticResource headerIcon}"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Binding="{Binding Path=lessonDescription}" Width="3*">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Описание"/>
+                                <fa:IconImage Icon="Info" Style="{StaticResource headerIcon}"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.AddEditTeacherCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
+                                        <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
+                                    </Button>
+
+                                    <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.RemoveCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
+                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource dataGridButtonIcon}"/>
+                                    </Button>
+
+                                </StackPanel>                                
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+        
+    </Grid>
+</UserControl>

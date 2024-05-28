@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using SmartSchoolboyApp.Classes;
+using SmartSchoolboyApp.Commands;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using SmartSchoolboyApp.Stores;
@@ -18,8 +19,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class CourseViewModel : ObservableObject
     {
         #region Fields
+        private readonly NavigationStore _navigationStore;
         private List<Course> _courses;
         private RelayCommand _addEditCourse;
+        private RelayCommand _eyeCourse;
         private RelayCommand _deleteCourse;
         private Course _selectedCourse;
         private string _search;
@@ -60,6 +63,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public ICommand SearchNullCommnad { get; }
         public ICommand UpdateDataCommand { get; }
         public ICommand ExportExelCommand { get; }
+        public ICommand SchowHomeCourseViewCommnad { get; }
         public RelayCommand AddEditCourseCommand
         {
             get
@@ -71,6 +75,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     if (addEditCourse.IsVisible == false && addEditCourse.IsLoaded)
                         addEditCourse.Close();
                     ExecuteUpdateDataCommand(null);
+                });
+            }
+        }
+        public RelayCommand EyeCourseCommnad
+        {
+            get
+            {
+                return _eyeCourse ?? new RelayCommand(obj =>
+                {
+                    var course = obj as Course;
+                    new NavigateCommand<HomeCourseViewModel>(_navigationStore, () => new HomeCourseViewModel(_navigationStore, course));
                 });
             }
         }
@@ -90,8 +105,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public CourseViewModel()
+        public CourseViewModel(NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
+            SchowHomeCourseViewCommnad = new NavigateCommand<HomeCourseViewModel>(navigationStore, () => new HomeCourseViewModel(navigationStore, null));
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);

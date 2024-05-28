@@ -2,6 +2,7 @@
 using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -84,7 +85,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public TeacherViewModel()
+        public TeacherViewModel(NavigationStore navigationStore)
         {
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);

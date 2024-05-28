@@ -13,10 +13,6 @@
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800" x:Name="MainCourseView">
 
-    <UserControl.DataContext>
-        <viewModel:CourseViewModel/>
-    </UserControl.DataContext>
-
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
         <converts:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
@@ -35,7 +31,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <fa:IconImage Icon="Search" Width="20" Height="20" Foreground="{StaticResource plainTextColor3}"/>
                 <TextBox Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="13" Height="24" Width="200" Background="Transparent" Foreground="{StaticResource plainTextColor3}" CaretBrush="{StaticResource plainTextColor3}" BorderThickness="0 0 0 1" VerticalAlignment="Center" Margin="5 5 0 0"/>
-                <Button Command="{Binding Path=SearchNullCommnad}" Visibility="{Binding Path=IsSearchNull, Converter={StaticResource BooleanToVisibility}}" Style="{StaticResource searchNullButton}"/>
+                    <Button Command="{Binding Path=SearchNullCommnad}" Visibility="{Binding Path=IsSearchNull, Converter={StaticResource BooleanToVisibility}}" Style="{StaticResource searchNullButton}"/>
                 <Button ToolTip="Выполнить поиск" Command="{Binding SearchCommand}" Content="Поиск" Style="{StaticResource searchButton}"/>
             </StackPanel>
 
@@ -69,6 +65,11 @@
                                 <TextBlock Text="{Binding Path=teacher.fullName}" HorizontalAlignment="Left" FontSize="12"/>
 
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                                    <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.SchowHomeCourseViewCommnad}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Просмотр курса" Style="{StaticResource listViewButton}">
+                                        <fa:IconImage Icon="Eye" Style="{StaticResource listViewButtonIcon}"/>
+                                    </Button>
+
                                     <Button Command="{Binding ElementName=MainCourseView, Path=DataContext.AddEditCourseCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>

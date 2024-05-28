@@ -30,17 +30,21 @@
             <local:SchoolSubjectView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:GroupViewModel}">
-            <local:GroupVIew/>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModel:StudentViewModel}">
             <local:StudentView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:GroupViewModel}">
+            <local:GroupVIew/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HomeCourseViewModel}">
+            <local:HomeCourseView/>
+        </DataTemplate>
+        
     </Window.Resources>
 
-    <Border CornerRadius="10" BorderThickness="2">
+    <Border Background="#000" CornerRadius="10" BorderThickness="2">
 
         <Border.BorderBrush>
             <LinearGradientBrush>

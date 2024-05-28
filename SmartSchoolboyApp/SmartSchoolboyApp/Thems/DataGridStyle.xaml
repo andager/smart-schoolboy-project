@@ -99,6 +99,9 @@
     </Style>
     
     <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="CellStyle" Value="{DynamicResource DataGridCellStyle1}"/>
+        <Setter Property="RowStyle" Value="{DynamicResource DataGridRowStyle1}"/>
+        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridColumnHeaderStyle1}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="SelectionUnit" Value="FullRow"/>
         <Setter Property="CanUserResizeColumns" Value="False"/>

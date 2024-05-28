@@ -10,21 +10,19 @@ namespace SmartSchoolboyApp.Stores
     public class NavigationStore
     {
         private ObservableObject _currentViewModel;
+        public event Action CurrentViewModelChanged;
         public ObservableObject CurrentViewModel
         {
-            get { return _currentViewModel; }
+            get => _currentViewModel;
             set
             {
-                _currentViewModel = value;
+                _currentViewModel = value;  
                 OnCurrentViewModelChanged();
             }
         }
-
         private void OnCurrentViewModelChanged()
         {
             CurrentViewModelChanged?.Invoke();
         }
-
-        public event Action CurrentViewModelChanged;
     }
 }

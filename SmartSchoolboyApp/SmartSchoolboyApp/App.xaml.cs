@@ -46,13 +46,14 @@ namespace SmartSchoolboyApp
         /// </summary>
         protected void Application_Startup(object sender, StartupEventArgs e)
         {
+            NavigationStore navigationStore = new NavigationStore();
             //LoginView loginView = new LoginView();
             //loginView.Show();
             //loginView.IsVisibleChanged += (s, sv) =>
             //{
             //    if (loginView.IsVisible == false && loginView.IsLoaded)
             //    {
-                    _navigationStore.CurrentViewModel = new CourseViewModel();
+                    _navigationStore.CurrentViewModel = new CourseViewModel(navigationStore);
                     HomeView homeView = new HomeView()
                     {
                         DataContext = new HomeViewModel(_navigationStore)

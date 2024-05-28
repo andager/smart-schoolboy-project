@@ -1,7 +1,7 @@
 
 ![HeaderLogo](https://github.com/andager/smart-schoolboy-project/assets/85036928/32688c98-e02f-4f48-9f50-01cc901404a8)
 
-<h1 align="center"> Smart SchoolBoy </h1>
+<h1 align="center"> Smart SchoolBoy - Умный школьник </h1>
 
 ![Static Badge](https://img.shields.io/badge/License-Apache%202.0-red?link=http%3A%2F%2Fwww.apache.org%2Flicenses%2F)
 ![Static Badge](https://img.shields.io/badge/Visual%20Studio%202022-%235C2D91?logo=Visual%20Studio&logoColor=white)

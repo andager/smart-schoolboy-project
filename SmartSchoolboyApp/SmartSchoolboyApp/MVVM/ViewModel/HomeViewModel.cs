@@ -71,16 +71,16 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             }
             // Initialize command
 
-            //SchowCourseViewCommand = new RelayCommand(ExecuteSchowCourseViewCommand);
-            //SchowTeacherViewCommand = new RelayCommand(ExecuteSchowTeacherViewCommand);
+            SchowCourseViewCommand = new RelayCommand(ExecuteSchowCourseViewCommand);
+            SchowTeacherViewCommand = new RelayCommand(ExecuteSchowTeacherViewCommand);
             SchowSchoolSubjectViewCommand = new RelayCommand(ExecuteSchowSchoolSubjectViewCommand);
             SchowStudentCommand = new RelayCommand(ExecuteSchowStudentCommand);
-            //SchowGroupViewCommand = new RelayCommand(ExecuteSchowGroupViewCommand);
+            SchowGroupViewCommand = new RelayCommand(ExecuteSchowGroupViewCommand);
             OutUserCommand = new RelayCommand(ExecuteOutUserCommand);
 
-            SchowCourseViewCommand = new NavigateCommand<CourseViewModel>(navigationStore, () => new CourseViewModel(navigationStore));
-            SchowTeacherViewCommand = new NavigateCommand<TeacherViewModel>(navigationStore, () => new TeacherViewModel(navigationStore));
-            SchowGroupViewCommand = new NavigateCommand<GroupViewModel>(navigationStore, () => new GroupViewModel(navigationStore));
+            //SchowCourseViewCommand = new NavigateCommand<CourseViewModel>(navigationStore, () => new CourseViewModel(navigationStore));
+            //SchowTeacherViewCommand = new NavigateCommand<TeacherViewModel>(navigationStore, () => new TeacherViewModel(navigationStore));
+            //SchowGroupViewCommand = new NavigateCommand<GroupViewModel>(navigationStore, () => new GroupViewModel(navigationStore));
 
             // Default view
             ExecuteSchowCourseViewCommand(null);
@@ -93,14 +93,14 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private void ExecuteSchowCourseViewCommand(object obj)
         {
-            //_navigationStore.CurrentViewModel = new CourseViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = new CourseViewModel(_navigationStore);
             Caption = "Курсы";
             _Icon = IconChar.GraduationCap;
         }
 
         private void ExecuteSchowTeacherViewCommand(object obj)
         {
-            //_navigationStore.CurrentViewModel = new TeacherViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = new TeacherViewModel(_navigationStore);
             Caption = "Учителя";
             _Icon = IconChar.ChalkboardTeacher;
         }
@@ -121,7 +121,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private void ExecuteSchowGroupViewCommand(object obj)
         {
-            _navigationStore.CurrentViewModel = new GroupViewModel(null);
+            _navigationStore.CurrentViewModel = new GroupViewModel(_navigationStore);
             Caption = "Группы";
             _Icon = IconChar.LayerGroup;
         }

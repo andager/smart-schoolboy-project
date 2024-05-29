@@ -15,6 +15,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class HomeCourseViewModel : ObservableObject
     {
         #region Fields
+        private Course _course;
         private string _courseName;
         private string _teacherName;
         private RelayCommand _selectControlPlane;
@@ -70,15 +71,18 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public HomeCourseViewModel(NavigationStore navigationStore, Course course)
+        public HomeCourseViewModel(Course course)
         {
-            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
+            _course = course;
+            CourseName = _course.name;
+            TeacherName = _course.teacher.fullName;
+            //UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExecuteUpdateDataCommand(null);
         }
 
         private async void ExecuteUpdateDataCommand(object obj)
         {
-            ThemePlanes = await App.ApiConnector.GetTAsync<List<ControlThemePlane>>("ControlThemePlanes");
+            //ThemePlanes = _course.controlThemePlane;
         }
         #endregion
     }

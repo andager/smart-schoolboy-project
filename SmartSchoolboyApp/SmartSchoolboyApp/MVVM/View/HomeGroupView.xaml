@@ -5,35 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
              mc:Ignorable="d" 
-             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource backgroundGradient}">
+             xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.DataContext>
+        <viewModel:HomeGroupViewModel/>
+    </UserControl.DataContext>
     
     <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
             
-            <RadioButton Tag="{StaticResource color1}" Style="{StaticResource menuGroupButton}">
-                <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="User" Style="{StaticResource menuGroupButtonIcon}"/>
-                    <TextBlock Text="Ученики" Style="{StaticResource menuButtonText}"/>
-                </StackPanel>
-            </RadioButton>
-
-            <RadioButton Tag="{StaticResource color1}" Style="{StaticResource menuGroupButton}">
-                <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="CalendarAlt" Style="{StaticResource menuGroupButtonIcon}"/>
-                    <TextBlock Text="Посещаемость" Style="{StaticResource menuButtonText}"/>
-                </StackPanel>
-            </RadioButton>
-
-        </StackPanel>
-
-        <ContentControl Content="{Binding Path=CurrentChildView}" Grid.Row="1"/>
-        
     </Grid>
 </UserControl>

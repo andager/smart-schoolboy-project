@@ -111,7 +111,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public GroupViewModel(NavigationStore navigationStore)
         {
-            ShowHomeGroupViewCommnad = new NavigateCommand<HomeGroupViewModel>(navigationStore, () => new HomeGroupViewModel(navigationStore, null));
+            ShowHomeGroupViewCommnad = new NavigateCommand<HomeGroupViewModel>(navigationStore, () => new HomeGroupViewModel());
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);

@@ -101,7 +101,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 WindowName = "Edit Course";
                 IndexTeacher = course.teacherId - 1;
                 CourseName = course.name;
-                ControlThemes = course.controlThemePlane;
+                //ControlThemes = course.controlThemePlane;
             }
             CourseSaveCommand = new RelayCommand(ExecuteCourseSaveCommand);
         }

@@ -1,6 +1,4 @@
-﻿using SmartSchoolboyApp.Classes;
-using SmartSchoolboyApp.MVVM.Core;
-using SmartSchoolboyApp.Stores;
+﻿using SmartSchoolboyApp.MVVM.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +9,5 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 {
     public class HomeGroupViewModel : ObservableObject
     {
-        #region Fields
-
-        #endregion
-
-        #region Properties
-
-        #endregion
-
-        #region Commands
-
-        #endregion
-
-        #region Constructor
-        public HomeGroupViewModel(NavigationStore navigationStore, Group group)
-        {
-
-        }
-        #endregion
     }
 }

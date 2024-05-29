@@ -41,6 +41,10 @@
         <DataTemplate DataType="{x:Type viewModel:HomeCourseViewModel}">
             <local:HomeCourseView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HomeGroupViewModel}">
+            <local:HomeGroupView/>
+        </DataTemplate>
         
     </Window.Resources>
 

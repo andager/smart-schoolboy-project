@@ -83,7 +83,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 return _selectCourse ?? new RelayCommand(obj =>
                 {
                     var course = obj as Course;
-                    new NavigateCommand<HomeCourseViewModel>(_navigationStore, () => new HomeCourseViewModel(_navigationStore, course));
+                        _navigationStore.CurrentViewModel = new HomeCourseViewModel(course);
+                    //new NavigateCommand<HomeCourseViewModel>(_navigationStore, () => new HomeCourseViewModel(_navigationStore, course));
                 });
             }
         }
@@ -106,7 +107,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public CourseViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            SchowHomeCourseViewCommnad = new NavigateCommand<HomeCourseViewModel>(navigationStore, () => new HomeCourseViewModel(navigationStore, null));
+            SchowHomeCourseViewCommnad = new NavigateCommand<HomeCourseViewModel>(navigationStore, () => new HomeCourseViewModel(null));
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);

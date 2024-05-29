@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using SmartSchoolboyApp.Classes;
+using SmartSchoolboyApp.Commands;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using SmartSchoolboyApp.Stores;
@@ -59,6 +60,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand ShowHomeGroupViewCommnad { get; }
         public RelayCommand DeleteGroupCommand
         {
             get
@@ -107,8 +109,9 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public GroupViewModel()
+        public GroupViewModel(NavigationStore navigationStore)
         {
+            ShowHomeGroupViewCommnad = new NavigateCommand<HomeGroupViewModel>(navigationStore, () => new HomeGroupViewModel(navigationStore, null));
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);

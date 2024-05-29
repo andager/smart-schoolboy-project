@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              mc:Ignorable="d" 
+             x:Name="MainHomeCourseView"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              d:DesignHeight="450" d:DesignWidth="800">
         
@@ -33,7 +34,7 @@
 
                 <Button Command="{Binding Path=ExportExelCommand}" Tag="{StaticResource color3}" Style="{StaticResource exportButton}"/>
 
-                <Button  ToolTip="Добавить новый курс" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}"/>
+                <Button  ToolTip="Добавить новый курс" Command="{Binding AddEditControlPlaneCommnad}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}"/>
 
             </StackPanel>
 
@@ -66,11 +67,11 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
 
-                                    <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.AddEditTeacherCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
+                                    <Button ToolTip="Отредактировать выбраного пользователя" Command="{Binding ElementName=MainHomeCourseView, Path=DataContext.AddEditControlPlaneCommnad}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
                                         <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
                                     </Button>
 
-                                    <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainTeacherView, Path=DataContext.RemoveCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
+                                    <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainHomeCourseView, Path=DataContext.RemoveCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource dataGridButtonIcon}"/>
                                     </Button>
 

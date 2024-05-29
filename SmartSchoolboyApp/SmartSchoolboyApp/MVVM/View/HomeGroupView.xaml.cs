@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.ViewModel;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace SmartSchoolboyApp.MVVM.View
     /// </summary>
     public partial class HomeGroupView : UserControl
     {
-        public HomeGroupView(Group group)
+        public HomeGroupView(Group group, NavigationStore navigationStore)
         {
             InitializeComponent();
-            DataContext = new HomeGroupViewModel(group);
+            DataContext = new HomeGroupViewModel(navigationStore, group);
         }
     }
 }

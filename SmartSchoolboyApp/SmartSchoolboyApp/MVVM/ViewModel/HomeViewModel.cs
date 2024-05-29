@@ -75,12 +75,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             //SchowTeacherViewCommand = new RelayCommand(ExecuteSchowTeacherViewCommand);
             SchowSchoolSubjectViewCommand = new RelayCommand(ExecuteSchowSchoolSubjectViewCommand);
             SchowStudentCommand = new RelayCommand(ExecuteSchowStudentCommand);
-            SchowGroupViewCommand = new RelayCommand(ExecuteSchowGroupViewCommand);
+            //SchowGroupViewCommand = new RelayCommand(ExecuteSchowGroupViewCommand);
             OutUserCommand = new RelayCommand(ExecuteOutUserCommand);
 
             SchowCourseViewCommand = new NavigateCommand<CourseViewModel>(navigationStore, () => new CourseViewModel(navigationStore));
             SchowTeacherViewCommand = new NavigateCommand<TeacherViewModel>(navigationStore, () => new TeacherViewModel(navigationStore));
-
+            SchowGroupViewCommand = new NavigateCommand<GroupViewModel>(navigationStore, () => new GroupViewModel(navigationStore));
 
             // Default view
             ExecuteSchowCourseViewCommand(null);
@@ -121,7 +121,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
         private void ExecuteSchowGroupViewCommand(object obj)
         {
-            _navigationStore.CurrentViewModel = new GroupViewModel();
+            _navigationStore.CurrentViewModel = new GroupViewModel(null);
             Caption = "Группы";
             _Icon = IconChar.LayerGroup;
         }

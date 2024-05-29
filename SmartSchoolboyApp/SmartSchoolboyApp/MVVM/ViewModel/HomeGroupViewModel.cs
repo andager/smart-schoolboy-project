@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public HomeGroupViewModel(Group group)
+        public HomeGroupViewModel(NavigationStore navigationStore, Group group)
         {
 
         }

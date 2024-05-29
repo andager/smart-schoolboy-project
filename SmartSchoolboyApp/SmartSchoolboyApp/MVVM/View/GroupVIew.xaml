@@ -12,11 +12,7 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800" x:Name="MainGroupView">
-    
-    <UserControl.DataContext>
-        <viewModel:GroupViewModel/>
-    </UserControl.DataContext>
-    
+        
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding Path=AddEditGroupCommand}" Key="N" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Path=DeleteGroupCommand}" Key="Delete" Modifiers="Ctrl"/>
@@ -67,7 +63,7 @@
 
                                 <Grid Margin="0 5 0 0">
 
-                                    <Button Command="{Binding ElementName=MainGroupView, Path=DataContext.ViewGroup}" CommandParameter="{Binding}" Tag="{StaticResource color9}" HorizontalAlignment="Left" Style="{StaticResource listViewButton}">
+                                    <Button Command="{Binding ElementName=MainGroupView, Path=DataContext.ShowHomeGroupViewCommnad}" CommandParameter="{Binding}" Tag="{StaticResource color9}" HorizontalAlignment="Left" Style="{StaticResource listViewButton}">
                                         <fa:IconImage Icon="Eye" Style="{StaticResource listViewButtonIcon}"/>
                                     </Button>
 

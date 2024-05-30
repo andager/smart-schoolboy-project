@@ -23,7 +23,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private List<Group> _group;
         private Group _selectedGroup;
         private RelayCommand _viewGroup;
-        private RelayCommand _addEditGroup;
+        private RelayCommand _selectGroup;
         private RelayCommand _deleteGroup;
         private string _search;
         private bool _isLoading;
@@ -60,7 +60,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
-        public ICommand ShowHomeGroupViewCommnad { get; }
         public RelayCommand DeleteGroupCommand
         {
             get
@@ -78,7 +77,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _addEditGroup ?? new RelayCommand(obj =>
+                return _selectGroup ?? new RelayCommand(obj =>
                 {
                     AddEditeGroupView addEditeGroup = new AddEditeGroupView(obj as Group);
                     addEditeGroup.ShowDialog();
@@ -88,16 +87,15 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 });
             }
         }
-        public RelayCommand ViewGroup
+        public RelayCommand ShowHomeGroupViewCommnad
         {
             get
             {
-                return _viewGroup ?? new RelayCommand(obj =>
+                return _selectGroup ?? new RelayCommand(obj =>
                 {
-                    var group = obj as Group;
-                    if (group != null)
+                    if ((obj as Group) != null)
                     {
-                        _navigationStore.CurrentViewModel = new StudentViewModel();
+                        _navigationStore.CurrentViewModel = new HomeGroupViewModel(obj as Group);
                     }
                 });
             }
@@ -111,7 +109,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Constructor
         public GroupViewModel(NavigationStore navigationStore)
         {
-            ShowHomeGroupViewCommnad = new NavigateCommand<HomeGroupViewModel>(navigationStore, () => new HomeGroupViewModel());
+            _navigationStore = navigationStore;
+
             SearchCommand = new RelayCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             SearchNullCommnad = new RelayCommand(ExecuteSearchNullCommnad, CanExecuteSearchNullCommnad);
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);

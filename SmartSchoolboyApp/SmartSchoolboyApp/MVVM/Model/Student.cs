@@ -8,6 +8,7 @@ namespace SmartSchoolboyApp.Classes
         public string lastName { get; set; }
         public string firstName { get; set; }
         public string patronymic { get; set; }
+        public string fullName { get => $"{lastName} {firstName} {patronymic}"; }
         public DateTime dateOfBirch { get; set; }
         public int genderId { get; set; }
         public string numberPhone { get; set; }

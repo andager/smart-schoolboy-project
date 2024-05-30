@@ -14,6 +14,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class AddEditStudentViewModel : ObservableObject
     {
         #region Fields
+        private Student _student;
         private string _windowName;
         private string _lastName;
         private string _firstName;
@@ -29,10 +30,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Properties
-        public string Windowname
+        public string WindowName
         {
             get { return _windowName; }
-            set { _windowName = value; OnPropertyChanged(nameof(Windowname)); }
+            set { _windowName = value; OnPropertyChanged(nameof(WindowName)); }
         }
         public string LastName
         {
@@ -96,23 +97,22 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        private Student _student;
         public AddEditStudentViewModel(Student student)
         {
             _student = student; 
             UpdateList();
-            if (student is null)
-            {
-            }
+            if (_student is null)
+                WindowName = "Add Studen";
             else
             {
-                LastName = student.lastName;
-                FirstName = student.firstName;
-                Patronymic = student.patronymic;
-                DateOfBirtch = student.dateOfBirch;
-                NumberPhone = student.numberPhone;
-                IndexGender = student.genderId - 1;
-                TelegramId = student.telegramId;
+                WindowName = "Edit Student";
+                LastName = _student.lastName;
+                FirstName = _student.firstName;
+                Patronymic = _student.patronymic;
+                DateOfBirtch = _student.dateOfBirch;
+                NumberPhone = _student.numberPhone;
+                IndexGender = _student.genderId - 1;
+                TelegramId = _student.telegramId;
             }
             StudentSaveCommand = new RelayCommand(ExecuteStudentSaveCommand);
         }
@@ -136,7 +136,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     {
                         _student = new Student()
                         {
-
                             lastName = LastName,
                             firstName = FirstName,
                             patronymic = Patronymic,

@@ -9,6 +9,6 @@ namespace SmartSchoolboyApp.Classes
         public int teacherId { get; set; }
         public bool isActive { get; set; }
         public Teacher teacher { get; set; }
-        public List<ControlThemePlane> controlThemePlane { get; set; }
+        public List<ControlThemePlane> controlThemePlanes { get; set; }
     }
 }

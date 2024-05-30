@@ -7,9 +7,50 @@
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
         WindowStartupLocation="CenterScreen"
-        Title="AddEditeGroupView" Height="450" Width="800" Style="{StaticResource windowStyle}">
-    
-    <Grid>
-        
-    </Grid>
+        Title="{Binding Path=WindowName}" Height="450" Width="800" MouseDown="Window_MouseDown" Style="{StaticResource windowStyle}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+
+    <Border Style="{StaticResource backBorder}">
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <!-- Window name -->
+                    <ColumnDefinition/>
+                    <!-- Button minimaze -->
+                    <ColumnDefinition Width="25"/>
+                    <!-- Button close -->
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding Path=WindowName}" Foreground="DarkGray" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                <Button Grid.Column="1" Click="btnMinimaze_Click" ToolTip="Свернуть окно" Style="{StaticResource btnMinimaze}"/>
+                <Button Grid.Column="2" Click="btnClose_Click" ToolTip="Закрыть окно" Style="{StaticResource btnClose}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                
+            </Grid>
+
+            <Button Command="{Binding Path=CourseSaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
+
+        </Grid>
+    </Border>
 </Window>

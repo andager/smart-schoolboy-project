@@ -71,7 +71,7 @@
                                         <fa:IconImage Icon="Edit" Style="{StaticResource listViewStudentButtonIcon}"/>
                                     </Button>
 
-                                    <Button Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewStudentButton}">
+                                    <Button Command="{Binding ElementName=MainStudentView, Path=DataContext.DeleteStudentCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewStudentButton}">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewStudentButtonIcon}"/>
                                     </Button>
                                 </StackPanel>

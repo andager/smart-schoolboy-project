@@ -62,6 +62,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand UpdateDataCommand { get; }
+        public ICommand CourseSaveCommand { get; }
         public RelayCommand AddEditThemePlaneCommand
         {
             get
@@ -70,6 +72,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     AddEditControlThemePlaneView themePlaneView = new AddEditControlThemePlaneView(obj as ControlThemePlane);
                     themePlaneView.ShowDialog();
+                    if (themePlaneView.IsVisible == false && themePlaneView.IsLoaded)
+                        themePlaneView.Close();
+                    // sdgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+                    // ТУт нада сделать добавление темы к курсу
+                    //ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -83,27 +91,34 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 });
             }
         }
-        public ICommand CourseSaveCommand { get; }
         #endregion
 
         #region Constructor
         Course _course;
         public AddEditCourseViewModel(Course course)
         {
-            _course = course;   
-            UpdateList();
-            if (course is null)
+            _course = course;
+            if (_course is null)
             {
                 WindowName = "Add Course";
             }
             else
             {
                 WindowName = "Edit Course";
-                IndexTeacher = course.teacherId - 1;
-                CourseName = course.name;
-                //ControlThemes = course.controlThemePlane;
+                IndexTeacher = _course.teacherId - 1;
+                CourseName = _course.name;
+                ControlThemes = _course.controlThemePlanes;
             }
+
             CourseSaveCommand = new RelayCommand(ExecuteCourseSaveCommand);
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
+
+            ExecuteUpdateDataCommand(null);
+        }
+
+        private async void ExecuteUpdateDataCommand(object obj)
+        {
+            Teachers = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
         }
 
         private async void ExecuteCourseSaveCommand(object obj)
@@ -152,12 +167,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             }
 
         }
-
-        private async void UpdateList()
-        {
-            Teachers = await App.ApiConnector.GetTAsync<List<Teacher>>("Teachers");
-        }
-
         #endregion
 
     }

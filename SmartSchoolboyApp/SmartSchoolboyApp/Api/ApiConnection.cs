@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace SmartSchoolboyApp.Classes
 {
@@ -18,11 +19,11 @@ namespace SmartSchoolboyApp.Classes
         /// <summary>
         /// GET: api/T
         /// <para/>
-        /// Асинхронный метод Http GET
+        /// Асинхронный метод Http GET, для получения данных через Api
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="url">Параметр ссылки на контроллер API</param>
-        /// <returns></returns>
+        /// <returns>Результат задачи содержит <see cref="List"/>, содержащий элементы последовательности <see cref="T"/></returns>
         /// <exception cref="HttpRequestException"></exception>
         public async Task<T> GetTAsync<T>(string url)
         {
@@ -35,13 +36,13 @@ namespace SmartSchoolboyApp.Classes
         /// <summary>
         /// GET: api/T/search/5
         /// <para/>
-        /// Асинхронный метод Http GET/search
+        /// Асинхронный метод Http GET/search, для поиска и фильтрации данных через Api
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="url">Параметр ссылки на контроллер API</param>
         /// <param name="search">Параметр для поиска и фильтрации данных</param>
-        /// <returns></returns>
-        /// <exception cref="HttpRequestException"></exception>
+        /// <returns>Результат задачи содержит <see cref="List"/> содержащий отфильтрованные элементы последовательности <see cref="T"/></returns>
+        /// <exception cref="HttpRequestException"></exception> 
         public async Task<T> SearchAsync<T>(string url, string search)
         {
             var response = await _httpClient.GetAsync(_httpClient.BaseAddress + url + "/search/" + search);
@@ -53,12 +54,12 @@ namespace SmartSchoolboyApp.Classes
         /// <summary>
         /// POST: api/T
         /// <para/>
-        /// Асинхронный метод Http POST
+        /// Асинхронный метод Http POST, для добавления данных через Api
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">Параметр добавляемого обьекта модели</param>
         /// <param name="url">Параметр ссылки на контроллер API</param>
-        /// <returns></returns>
+        /// <returns>Результат задачи, новый обьект класса <see cref="T"/></returns>
         /// <exception cref="HttpRequestException"></exception>
         public async Task<T> PostTAsync<T>(T obj, string url)
         {
@@ -72,13 +73,13 @@ namespace SmartSchoolboyApp.Classes
         /// <summary>
         /// PUT: api/T/5
         /// <para/>
-        /// Асинхронный метод Http PUT
+        /// Асинхронный метод Http PUT, для редактирования данных через Api
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">Параметр изменяемого обьекта модели</param>
         /// <param name="url">Параметр ссылки на контроллер API</param>
         /// <param name="objId">Параметр индификатора обьекта</param>
-        /// <returns></returns>
+        /// <returns>Результат задачи, изменение обьекта класса <see cref="T"/></returns>
         /// <exception cref="HttpRequestException"></exception>
         public async Task<T> PutTAsync<T>(T obj, string url, int objId)
         {
@@ -92,11 +93,11 @@ namespace SmartSchoolboyApp.Classes
         /// <summary>
         /// DELETE: api/T/5
         /// <para/>
-        /// Асинхронный метод Http DELETE
+        /// Асинхронный метод Http DELETE, для удаления данных через Api
         /// </summary>
         /// <param name="url">Параметр ссылки на контроллер API</param>
         /// <param name="objId">Параметр индификатора обьекта</param>
-        /// <returns></returns>
+        /// <returns>Результат задачи, удаление обьекта класса <see cref="T"/></returns>
         public async Task<HttpStatusCode> DeleteAsync(string url, int objId) => (await _httpClient.DeleteAsync(_httpClient.BaseAddress + url + $"/{objId}")).StatusCode;
     }
 }

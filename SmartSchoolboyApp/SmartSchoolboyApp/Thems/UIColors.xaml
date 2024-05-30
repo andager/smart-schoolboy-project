@@ -58,7 +58,7 @@
         <GradientStop Color="{DynamicResource winBorderColor3}" Offset="1.0"/>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="backgroundGradient" StartPoint="0,1" EndPoint="1,0" Opacity="0.95">
+    <LinearGradientBrush x:Key="backgroundGradient" StartPoint="0,1" EndPoint="1,0">
         <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
         <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
     </LinearGradientBrush>

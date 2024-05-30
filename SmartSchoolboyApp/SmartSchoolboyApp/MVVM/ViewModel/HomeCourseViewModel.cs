@@ -1,4 +1,5 @@
-﻿using SmartSchoolboyApp.Classes;
+﻿using Microsoft.Office.Interop.Excel;
+using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
 using SmartSchoolboyApp.MVVM.View;
 using SmartSchoolboyApp.Stores;
@@ -8,7 +9,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SmartSchoolboyApp.MVVM.ViewModel
 {
@@ -41,6 +44,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Commands
+        public ICommand ExportExelCommand { get; }
         public ICommand UpdateDataCommand { get; }
         public RelayCommand AddEditControlPlaneCommnad
         {
@@ -76,13 +80,60 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             _course = course;
             CourseName = _course.name;
             TeacherName = _course.teacher.fullName;
-            //UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
+            ThemePlanes = _course.controlThemePlanes;
+            UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
+            ExportExelCommand = new RelayCommand(ExecuteExportExelCommand, CanExecuteExportExelCommand);
             ExecuteUpdateDataCommand(null);
+        }
+
+        private bool CanExecuteExportExelCommand(object obj)
+        {
+            return true;
+        }
+
+        private void ExecuteExportExelCommand(object obj)
+        {
+            try
+            {
+                using (SaveFileDialog save = new SaveFileDialog() { Filter = "Книга Excel|*.xlsx", FileName = $"Курс - {CourseName}", ValidateNames = true })
+                {
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        Excel.Application applicationExcel = new Excel.Application();
+                        Workbook workbookExcel = applicationExcel.Workbooks.Add(XlSheetType.xlWorksheet);
+                        Worksheet worksheet = (Worksheet)applicationExcel.ActiveSheet;
+                        applicationExcel.Visible = false;
+
+                        worksheet.Cells[1, 1] = "Название курса";
+                        worksheet.Cells[2, 1] = CourseName;
+                        worksheet.Cells[1, 2] = "Ведет";
+                        worksheet.Cells[2, 2] = TeacherName;
+                        worksheet.Cells[1, 3] = "Название темы";
+                        worksheet.Cells[1, 4] = "Описание темы";
+
+                        int r = 2;
+                        foreach (var item in ThemePlanes)
+                        {
+                            worksheet.Cells[r, 3] = item.lessonName;
+                            worksheet.Cells[r, 4] = item.lessonDescription;
+                            r++;
+                        }
+                        workbookExcel.SaveAs(save.FileName, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false, XlSaveAsAccessMode.xlNoChange, XlSaveConflictResolution.xlLocalSessionChanges, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        applicationExcel.Quit();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private async void ExecuteUpdateDataCommand(object obj)
         {
-            //ThemePlanes = _course.controlThemePlane;
+            var c = await App.ApiConnector.GetTAsync<List<ControlThemePlane>>("ControlThemePlanes");
+
         }
         #endregion
     }

@@ -76,13 +76,12 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get
             {
-                return _deleteStudent ?? new RelayCommand(obj =>
+                return _deleteStudent ?? new RelayCommand(async obj =>
                 {
                     var student = obj as Student;
-                    if (student != null)
-                    {
-
-                    }
+                    if ((obj as Student) != null)
+                        await App.ApiConnector.DeleteAsync("Students", (obj as Student).id);
+                    ExecuteUpdateDataCommand(null);
                 });
             }
         }

@@ -9,8 +9,8 @@
         mc:Ignorable="d"
         FontFamily="Montserrat"
         FontWeight="Medium"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Style="{StaticResource windowStyle}"
-        Title="HomeView" MinHeight="450" Height="450" MinWidth="800" Width="800">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanResize" Style="{StaticResource windowStyle}"
+        Title="Smart School" MinHeight="450" Height="450" MinWidth="800" Width="800">
 
     <WindowChrome.WindowChrome>
         <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0" ResizeBorderThickness="4" CaptionHeight="0" CornerRadius="0"/>
@@ -81,7 +81,7 @@
                     <!-- Logo -->
                     <StackPanel Orientation="Horizontal" Height="35" Margin="15 25 0 40">
                         <Image Source="/Images/logo-image.png" Height="30" Width="30"/>
-                        <TextBlock Text="Smart SchoolBoy" Foreground="{StaticResource titleColor2}" FontSize="20" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                        <TextBlock Text="Smart School" Foreground="{StaticResource titleColor2}" FontSize="20" VerticalAlignment="Center" Margin="10 0 0 0"/>
                     </StackPanel>
 
                     <!-- MenuButton -->

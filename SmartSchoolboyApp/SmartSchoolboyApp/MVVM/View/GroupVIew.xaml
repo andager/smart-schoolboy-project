@@ -68,7 +68,7 @@
                                     </Button>
 
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                        <Button Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
+                                        <Button Command="{Binding ElementName=MainGroupView, Path=DataContext.AddEditGroupCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" ToolTip="Редактировать (Ctrl+N)" Style="{StaticResource listViewButton}">
                                             <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                         </Button>
 

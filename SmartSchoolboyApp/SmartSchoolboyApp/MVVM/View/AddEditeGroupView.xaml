@@ -47,6 +47,27 @@
 
             <Grid Grid.Row="1">
                 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="270"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Vertical" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <TextBlock Text="Курс" Margin="0 10"/>
+
+                    <ComboBox SelectedIndex="{Binding Path=IndexCourse}" SelectedItem="{Binding Path=SelectedCourse}" DisplayMemberPath="name" ItemsSource="{Binding Path=Courses, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    <TextBlock Text="Название группы"/>
+                    
+                    <TextBox Text="{Binding CourseName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource tBoxAddEdit}">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="\Images\Icons\identification.png" Stretch="Uniform" AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+
+                </StackPanel>
+                
             </Grid>
 
             <Button Command="{Binding Path=CourseSaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>

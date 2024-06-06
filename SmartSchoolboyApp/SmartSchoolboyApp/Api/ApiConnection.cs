@@ -71,6 +71,24 @@ namespace SmartSchoolboyApp.Classes
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
+        public async Task<T> PostTAsyncE<T>(T obj, string url, int id)
+        {
+            var response = await _httpClient.PostAsync(_httpClient.BaseAddress + url + $"/{id}",
+                new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            else throw new HttpRequestException($"Запрос завершился с кодом: {response.StatusCode}");
+        }
+
+        /// <summary>
         /// PUT: api/T/5
         /// <para/>
         /// Асинхронный метод Http PUT, для редактирования данных через Api

@@ -84,7 +84,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     var course = obj as Course;
                         _navigationStore.CurrentViewModel = new HomeCourseViewModel(course);
-                    //new NavigateCommand<HomeCourseViewModel>(_navigationStore, () => new HomeCourseViewModel(_navigationStore, course));
                 });
             }
         }

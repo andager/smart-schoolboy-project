@@ -183,7 +183,7 @@ namespace SmartSchoolboyApi.Controllers
 
                 return Ok();
             }
-            catch
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
             }

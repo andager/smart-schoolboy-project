@@ -52,7 +52,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             {
                 return _selectControlPlane ?? new RelayCommand(obj =>
                 {
-                    AddEditControlThemePlaneView addEditControl = new AddEditControlThemePlaneView(obj as ControlThemePlane);
+                    AddEditControlThemePlaneView addEditControl = new AddEditControlThemePlaneView(obj as ControlThemePlane, _course);
                     addEditControl.ShowDialog();
                     if (addEditControl.IsVisible == false && addEditControl.IsLoaded)
                         addEditControl.Close();

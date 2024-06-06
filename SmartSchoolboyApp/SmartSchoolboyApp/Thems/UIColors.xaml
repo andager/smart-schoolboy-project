@@ -58,6 +58,11 @@
         <GradientStop Color="{DynamicResource winBorderColor3}" Offset="1.0"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="menuGradient" StartPoint="0 0" EndPoint="1 0.7">
+        <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
+        <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
+    </LinearGradientBrush>
+
     <LinearGradientBrush x:Key="backgroundGradient" StartPoint="0,1" EndPoint="1,0">
         <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
         <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>

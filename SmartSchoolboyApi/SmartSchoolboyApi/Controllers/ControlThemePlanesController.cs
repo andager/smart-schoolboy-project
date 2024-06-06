@@ -153,6 +153,38 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
+        /// POST: api/ControlThemePlanes/lessonId
+        /// </summary>
+        /// <param name="controlThemePlane">Параметр обьекта <see cref="ControlThemePlane"/></param>
+        /// <param name="lessonId">Параметр индификатора <see cref="Course"/></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="ControlThemePlane"/></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("{lessonId}")]
+        public async Task<ActionResult<ControlThemePlane>> PostThemeByLesson(ControlThemePlane controlThemePlane, int lessonId)
+        {
+            try
+            {
+                var theme = await _context.AddAsync(new ControlThemePlane()
+                {
+                    Id = controlThemePlane.Id,
+                    LessonName = controlThemePlane.LessonName,
+                    LessonDescription = controlThemePlane.LessonDescription,
+                });
+
+                (await _context.Courses.FindAsync(lessonId) ?? throw new ArgumentNullException()).ControlThemePlanes.Add(controlThemePlane);
+
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(PostControlThemePlane), new { id = theme.Entity.Id }, theme.Entity);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
+
+        /// <summary>
         /// DELETE: api/ControlThemePlanes/5
         /// </summary>
         /// <param name="id">Параметр индификатора тематического плана</param>

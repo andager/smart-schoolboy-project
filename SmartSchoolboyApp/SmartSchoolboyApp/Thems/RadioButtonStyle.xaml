@@ -49,15 +49,15 @@
 
         <!-- Button style on normal -->
         <Setter Property="Height" Value="50"/>
-        <Setter Property="Margin" Value="0,-5,0,5"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource plainTextColor3}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0 0 0 0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
 
-                    <Border Background="{TemplateBinding Background}" BorderThickness="0 4 0 0" BorderBrush="{TemplateBinding BorderBrush}">
+                    <Border CornerRadius="2" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
 
@@ -65,7 +65,7 @@
 
                         <!-- Button style on hover -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Margin" Value="0,0,5,0"/>
+                            <Setter Property="BorderThickness" Value="0 0 0 4"/>
                             <Setter Property="Background" Value="{DynamicResource panelOverColor}"/>
                             <Setter Property="Foreground" Value="{DynamicResource titleColor3}"/>
                             <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
@@ -73,7 +73,7 @@
 
                         <!-- Button style on activated -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Margin" Value="0,0,0,5"/>
+                            <Setter Property="BorderThickness" Value="0 0 0 4"/>
                             <Setter Property="Background" Value="{DynamicResource panelActiveColor}"/>
                             <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>

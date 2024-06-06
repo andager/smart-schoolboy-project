@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace SmartSchoolboyApp.MVVM.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddEditControlThemePlaneView.xaml
+    /// Логика взаимодействия для AddEditScheduleView.xaml
     /// </summary>
-    public partial class AddEditControlThemePlaneView : Window
+    public partial class AddEditScheduleView : Window
     {
-        public AddEditControlThemePlaneView(ControlThemePlane themePlane, Course course)
+        public AddEditScheduleView(Schedule schedule, Group group)
         {
             InitializeComponent();
-            DataContext = new AddEditControlThemePlaneViewModel(themePlane, course);
+            DataContext = new AddEditScheduleViewModel(schedule, group);
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

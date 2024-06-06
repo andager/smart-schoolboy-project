@@ -7,12 +7,25 @@
              mc:Ignorable="d" 
              xmlns:viewModel="clr-namespace:SmartSchoolboyApp.MVVM.ViewModel"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             d:DesignHeight="450" d:DesignWidth="800">
+             x:Name="MainHomeGroupView" d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
         
+        <DataTemplate DataType="{x:Type viewModel:StudentGroupViewModel}">
+            <local:StudentGroupView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ScheduleViewModel}">
+            <local:ScheduleView/>
+        </DataTemplate>
+        
+    </UserControl.Resources>
+    
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -26,58 +39,31 @@
 
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-
-                <Button Command="{Binding Path=ExportExelCommand}" Tag="{StaticResource color3}" Style="{StaticResource exportButton}"/>
-
-                <Button  ToolTip="Добавить нового ученика" Command="{Binding AddEditControlPlaneCommnad}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}"/>
-
-            </StackPanel>
-
         </Grid>
 
-        <Border Grid.Row="1" Background="#200F53" CornerRadius="10" Padding="10">
-            <DataGrid ItemsSource="{Binding Path=StudentGroup, Mode=TwoWay}">
-                <DataGrid.Columns>
+        <Grid Background="{StaticResource menuGradient}" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
-                    <DataGridTextColumn Width="3*" Binding="{Binding Path=fullName}">
-                        <DataGridTextColumn.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="IdBadge" Style="{StaticResource headerIcon}"/>
-                                <TextBlock Text="ФИО"/>
-                            </StackPanel>
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
+                <RadioButton IsChecked="True" Command="{Binding Path=ShowStudentCommand}" Tag="{StaticResource color10}" Style="{StaticResource menuGroupButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuGroupButtonIcon}"/>
+                        <TextBlock Text="Ученики" Style="{StaticResource menuGroupButtonText}"/>
+                    </StackPanel>
+                </RadioButton>
 
-                    <DataGridTextColumn Width="1.5*" Binding="{Binding Path=dateOfBirch}">
-                        <DataGridTextColumn.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="CalendarAlt" Style="{StaticResource headerIcon}"/>
-                                <TextBlock Text="Дата рождения"/>
-                            </StackPanel>
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
+                <GridSplitter Style="{StaticResource menuGroup}"/>
 
-                    <DataGridTextColumn Width="*" Binding="{Binding Path=gender.name}">
-                        <DataGridTextColumn.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Transgender" Style="{StaticResource headerIcon}"/>
-                                <TextBlock Text="Пол"/>
-                            </StackPanel>
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
+                <RadioButton Command="{Binding Path=ShowScheduleCommand}" Tag="{StaticResource color9}" Style="{StaticResource menuGroupButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="CalendarAlt" Style="{StaticResource menuGroupButtonIcon}"/>
+                        <TextBlock Text="Расписание" Style="{StaticResource menuGroupButtonText}"/>
+                    </StackPanel>
+                </RadioButton>
 
-                    <DataGridTextColumn Width="1.5*" Binding="{Binding Path=numberPhone}">
-                        <DataGridTextColumn.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Phone" Style="{StaticResource headerIcon}"/>
-                                <TextBlock Text="Номер телефона"/>
-                            </StackPanel>
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                    
-                </DataGrid.Columns>
-            </DataGrid>
-        </Border>
+            </StackPanel>
+        </Grid>
+
+        <ContentControl Content="{Binding Path=CurrentChildView}" Grid.Row="2"/>
+        
     </Grid>
 </UserControl>

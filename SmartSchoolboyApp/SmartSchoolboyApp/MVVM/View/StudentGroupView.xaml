@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="SmartSchoolboyApp.MVVM.View.StudentGroupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartSchoolboyApp.MVVM.View"
+             mc:Ignorable="d" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             x:Name="MainStudentGroupView" d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                <Button Command="{Binding Path=ExportExelCommand}" Tag="{StaticResource color3}" Style="{StaticResource exportButton}"/>
+
+                <Button  ToolTip="Добавить нового ученика" Command="{Binding AddEditStudentCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}" Tag="{StaticResource color9}"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Border Grid.Row="1" Background="#200F53" CornerRadius="10" Padding="10">
+            <DataGrid ItemsSource="{Binding Path=StudentGroup, Mode=TwoWay}">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Width="3*" Binding="{Binding Path=fullName}">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="IdBadge" Style="{StaticResource headerIcon}"/>
+                                <TextBlock Text="ФИО"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Width="1.5*" Binding="{Binding Path=dateOfBirch, StringFormat=\{0:dd.MM.yyyy\}}">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CalendarAlt" Style="{StaticResource headerIcon}"/>
+                                <TextBlock Text="Дата рождения"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Width="*" Binding="{Binding Path=gender.name}">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Transgender" Style="{StaticResource headerIcon}"/>
+                                <TextBlock Text="Пол"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Width="1.5*" Binding="{Binding Path=numberPhone}">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Phone" Style="{StaticResource headerIcon}"/>
+                                <TextBlock Text="Номер телефона"/>
+                            </StackPanel>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Width="65">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button ToolTip="Отредактировать выбраного ученика" Command="{Binding ElementName=MainStudentGroupView, Path=DataContext.AddEditStudentCommand}" CommandParameter="{Binding}" Tag="{StaticResource color6}" Style="{StaticResource dataGridButton}">
+                                        <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
+                                    </Button>
+
+                                    <Button ToolTip="Удалить выбранного ученика" Command="{Binding ElementName=MainStudentGroupView, Path=DataContext.RemoveCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
+                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource dataGridButtonIcon}"/>
+                                    </Button>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

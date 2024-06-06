@@ -168,6 +168,50 @@ namespace SmartSchoolboyApi.Controllers
         }
 
         /// <summary>
+        /// POST: api/Students/groupId
+        /// </summary>
+        /// <param name="student">Параметр обьекта <see cref="Student"/></param>
+        /// <param name="groupId"></param>
+        /// <returns>Результат задачи, новый обьект класса <see cref="Student"/></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        [HttpPost("{groupId}")]
+        public async Task<ActionResult<Student>> PostThemeByLesson(Student student, int groupId)
+        {
+            try
+            {
+                var _gender = await _context.Genders.FindAsync(student.GenderId);
+
+                if (_gender is null)
+                    return BadRequest();
+
+                var studentG = await _context.AddAsync(new Student()
+                {
+                    Id = student.Id,
+                    LastName = student.LastName,
+                    FirstName = student.FirstName,
+                    Patronymic = student.Patronymic,
+                    DateOfBirch = student.DateOfBirch,
+                    GenderId = student.GenderId,
+                    Gender = _gender,
+                    NumberPhone = student.NumberPhone,
+                    TelegramId = student.TelegramId,
+                    IsActive = student.IsActive
+
+                });
+
+                (await _context.Groups.FindAsync(groupId) ?? throw new ArgumentNullException()).Students.Add(student);
+
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(PostStudent), new { id = studentG.Entity.Id }, studentG.Entity);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error, the server is not responding");
+            }
+        }
+
+        /// <summary>
         /// DELETE: api/Students/5
         /// </summary>
         /// <param name="id">Параметр индификатора ученика</param>

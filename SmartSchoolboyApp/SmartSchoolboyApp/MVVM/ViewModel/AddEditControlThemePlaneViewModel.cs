@@ -13,6 +13,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class AddEditControlThemePlaneViewModel : ObservableObject
     {
         #region Fields
+        private Course _course;
         private ControlThemePlane _themePlane;
         private string _windowName;
         private string _controlPlaneName;
@@ -49,9 +50,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #endregion
 
         #region Constructor
-        public AddEditControlThemePlaneViewModel(ControlThemePlane themePlane)
+        public AddEditControlThemePlaneViewModel(ControlThemePlane themePlane, Course course)
         {
             _themePlane = themePlane;
+            _course = course;
+
             if (_themePlane is null)
                 WindowName = "Add Control Theme plane";
             else
@@ -61,6 +64,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 ControlPlaneDescription = _themePlane.lessonDescription;
             }
             ThemePaneSaveCommand = new RelayCommand(ExecuteThemePaneSaveCommand);
+            _course = course;
         }
 
         private async void ExecuteThemePaneSaveCommand(object obj)
@@ -85,7 +89,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                             lessonName = ControlPlaneName,
                             lessonDescription = ControlPlaneDescription
                         };
-                        await App.ApiConnector.PostTAsync(_themePlane, "ControlThemePlanes");
+                        await App.ApiConnector.PostTAsyncE(_themePlane, "ControlThemePlanes", _course.id);
                     }
                     else
                     {

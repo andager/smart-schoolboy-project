@@ -70,13 +70,10 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             {
                 return _selectThemePlane ?? new RelayCommand(obj =>
                 {
-                    AddEditControlThemePlaneView themePlaneView = new AddEditControlThemePlaneView(obj as ControlThemePlane);
+                    AddEditControlThemePlaneView themePlaneView = new AddEditControlThemePlaneView(obj as ControlThemePlane, _course);
                     themePlaneView.ShowDialog();
                     if (themePlaneView.IsVisible == false && themePlaneView.IsLoaded)
                         themePlaneView.Close();
-                    // sdgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-                    // ТУт нада сделать добавление темы к курсу
-                    //ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
                     ExecuteUpdateDataCommand(null);
                 });
             }

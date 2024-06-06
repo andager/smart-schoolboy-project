@@ -138,6 +138,7 @@
     <Compile Include="MVVM\ViewModel\AddEditControlThemePlaneViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditCourseViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditGroupViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AddEditScheduleViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditSchoolSubjectViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditStudentViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AddEditTeacherViewModel.cs" />
@@ -146,7 +147,9 @@
     <Compile Include="MVVM\ViewModel\GroupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeCourseViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeGroupViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ScheduleViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SchollSubjectViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\StudentGroupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\StudentViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TeacherViewModel.cs" />
     <Compile Include="MVVM\View\AddEditControlThemePlaneView.xaml.cs">
@@ -157,6 +160,9 @@
     </Compile>
     <Compile Include="MVVM\View\AddEditeGroupView.xaml.cs">
       <DependentUpon>AddEditeGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AddEditScheduleView.xaml.cs">
+      <DependentUpon>AddEditScheduleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\AddEditSchoolSubjectView.xaml.cs">
       <DependentUpon>AddEditSchoolSubjectView.xaml</DependentUpon>
@@ -182,8 +188,14 @@
     <Compile Include="MVVM\View\HomeGroupView.xaml.cs">
       <DependentUpon>HomeGroupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\ScheduleView.xaml.cs">
+      <DependentUpon>ScheduleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\SchoolSubjectView.xaml.cs">
       <DependentUpon>SchoolSubjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\StudentGroupView.xaml.cs">
+      <DependentUpon>StudentGroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\StudentView.xaml.cs">
       <DependentUpon>StudentView.xaml</DependentUpon>
@@ -207,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\AddEditeGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\AddEditScheduleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,7 +294,15 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\View\ScheduleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\SchoolSubjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\StudentGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -335,6 +359,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Thems\RadioButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Thems\SplitterStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

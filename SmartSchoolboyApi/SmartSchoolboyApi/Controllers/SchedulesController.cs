@@ -78,7 +78,10 @@ namespace SmartSchoolboyApi.Controllers
                     return NotFound();
 
                 var schedule = await _context.Schedules.Where(p => p.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Group.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+                    p.Group.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Group.Id.ToString() == search).ToListAsync();
+
+                schedule = schedule.Where(p => p.Date >= DateTime.Today).ToList();
 
                 return Ok(schedule);
             }

@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,12 +62,72 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             _schedule = schedule;
             _group = group;
 
+            if (_schedule is null)
+                WindowName = "Add Schedule";
+            else
+            {
+                WindowName = "Edit Schedule";
+                DateSchedule = _schedule.date.ToString("dd:MM:yyyy");
+                StartTime = _schedule.startTime.ToString();
+                EndTime = _schedule.endTime.ToString();
+            }
             SaveScheduleCommnad = new RelayCommand(ExecuteSaveScheduleCommnad);
         }
 
-        private void ExecuteSaveScheduleCommnad(object obj)
+        private async void ExecuteSaveScheduleCommnad(object obj)
         {
-            throw new NotImplementedException();
+            string _error = String.Empty;
+            if (string.IsNullOrWhiteSpace(DateSchedule)) _error += "Заполните дату проведения занятия";
+            if (DateTime.TryParse(DateSchedule, out DateTime dateSchedule)) _error += "\nПоле даты занятия, заполнено не коректно";
+            if (string.IsNullOrWhiteSpace(StartTime)) _error += "\nЗаполните время начала занятия";
+            if (!TimeSpan.TryParse(StartTime, out TimeSpan timeStart)) _error += "\nПоле начала занятия, заполнено не коректно";
+            if (string.IsNullOrWhiteSpace(EndTime)) _error += "\nЗаполните поле окончания занятия";
+            if (!TimeSpan.TryParse(EndTime, out TimeSpan timeEnd)) _error += "\nПоле окончания занятия, заполнено не коректно";
+            if (timeStart > timeEnd) _error += "\nОкончание занятия не может быть раньше начала занятия";
+            if (dateSchedule >= DateTime.Today) _error += "\nЗанятие не может быть в прошлом";
+
+            if (!string.IsNullOrWhiteSpace(_error))
+            {
+                ErrorView errorView = new ErrorView(_error);
+                errorView.ShowDialog();
+            }
+            else
+            {
+                try
+                {
+                    if (_schedule is null)
+                    {
+                        _schedule = new Schedule()
+                        {
+                            groupId = _group.id,
+                            date = dateSchedule,
+                            startTime = timeStart,
+                            endTime = timeEnd,
+                            group = _group,
+                        };
+                        await App.ApiConnector.PostTAsync(_schedule, "Schedules");
+                    }
+                    else
+                    {
+                        _schedule = new Schedule()
+                        {
+                            id = _schedule.id,
+                            groupId = _group.id,
+                            date = dateSchedule,
+                            startTime = timeStart,
+                            endTime = timeEnd,
+                            group = _group,
+                        };
+                        await App.ApiConnector.PutTAsync(_schedule, "Schedules", _schedule.id);
+                    }
+                    IsViewVisible = false;
+                }
+                catch (Exception ex)
+                {
+                    ErrorView errorView = new ErrorView(ex.Message);
+                    errorView.ShowDialog();
+                }
+            }
         }
         #endregion
     }

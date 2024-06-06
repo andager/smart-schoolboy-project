@@ -68,7 +68,7 @@
                 
             </StackPanel>
 
-            <Button Command="{Binding Path=ThemePaneSaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
+            <Button Command="{Binding Path=SaveScheduleCommnad}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
 
         </Grid>
     </Border>

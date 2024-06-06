@@ -80,7 +80,8 @@ namespace SmartSchoolboyApi.Controllers
                 var attendance = await _context.Attendances.Where(p => p.Student.LastName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Student.FirstName.ToLower().Trim().Contains(search.ToLower().Trim()) ||
                     p.Student.Patronymic!.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Schedule.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToListAsync();
+                    p.Schedule.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.StudentId.ToString() == search).ToListAsync();
 
                 return Ok(attendance);
             }

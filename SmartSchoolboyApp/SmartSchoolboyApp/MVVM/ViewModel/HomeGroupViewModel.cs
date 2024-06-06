@@ -40,6 +40,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         #region Commands
         public ICommand ShowStudentCommand { get; }
         public ICommand ShowScheduleCommand { get; }
+        public ICommand ShowAttendanceCommand { get; }
         #endregion
 
         #region Constructor
@@ -51,8 +52,14 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
 
             ShowStudentCommand = new RelayCommand(ExecuteShowStudentCommand);
             ShowScheduleCommand = new RelayCommand(ExecuteShowScheduleCommand);
+            ShowAttendanceCommand = new RelayCommand(ExecuteShowAttendanceCommand);
 
             ExecuteShowStudentCommand(null);
+        }
+
+        private void ExecuteShowAttendanceCommand(object obj)
+        {
+            CurrentChildView = new AttendanceViewModel(_group);
         }
 
         private void ExecuteShowScheduleCommand(object obj)

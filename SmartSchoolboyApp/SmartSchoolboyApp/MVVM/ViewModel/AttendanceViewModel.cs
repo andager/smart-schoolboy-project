@@ -31,7 +31,13 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         public AttendanceViewModel(Group group)
         {
             _group = group;
+            ef();
+        }
 
+        private async void ef()
+        {
+            Attendances = await App.ApiConnector.SearchAsync<List<Attendance>>("Attendances", _group.id.ToString());
+            var t = Attendances;
         }
         #endregion
     }

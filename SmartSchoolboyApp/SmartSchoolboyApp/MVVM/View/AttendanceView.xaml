@@ -15,10 +15,10 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="1" Background="#200F53" CornerRadius="10" Padding="10">
-            <DataGrid AutoGenerateColumns="True">
+            <DataGrid ItemsSource="{Binding Path=Attendances}" AutoGenerateColumns="True">
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=student.fullName}">
                         <DataGridTextColumn.Header>
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="IdBadge" Style="{StaticResource headerIcon}"/>

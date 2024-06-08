@@ -27,6 +27,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         private object _telegramId;
         private DateTime _dateStart = DateTime.Today.AddYears(-100);
         private DateTime _dateEnd = DateTime.Today.AddYears(-6);
+        private bool _isViewVisible = true;
         #endregion
 
         #region Properties
@@ -89,6 +90,11 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
         {
             get { return _dateEnd; }
             set { _dateEnd = value; OnPropertyChanged(nameof(DateEnd)); }
+        }
+        public bool IsViewVisible
+        {
+            get { return _isViewVisible; }
+            set { _isViewVisible = value; OnPropertyChanged(nameof(IsViewVisible)); }
         }
         #endregion
 
@@ -164,6 +170,7 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                         };
                         await App.ApiConnector.PutTAsync(_student, "Students", _student.id);
                     }
+                    IsViewVisible = false;
                 }
                 catch (Exception ex)
                 {

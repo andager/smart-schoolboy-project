@@ -42,7 +42,7 @@
 
                 <Button Command="{Binding Path=ExportStudentCommand}" Style="{StaticResource exportButton}"/>
 
-                <Button ToolTip="Добавить нового ученика" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
+                <Button ToolTip="Добавить нового ученика" Command="{Binding AddEditStudentCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
 
             </StackPanel>
 

@@ -8,6 +8,14 @@
         WindowStartupLocation="CenterScreen"
         Title="{Binding Path=WindowName}" Height="450" Width="800" MouseDown="Window_MouseDown" Style="{StaticResource windowStyle}">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+
     <Border CornerRadius="12">
 
         <!-- Background -->

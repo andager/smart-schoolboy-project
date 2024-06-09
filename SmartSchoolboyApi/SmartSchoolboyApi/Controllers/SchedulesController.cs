@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchoolboyApi.Models;
+using System.Linq;
 
 namespace SmartSchoolboyApi.Controllers
 {
@@ -77,11 +78,14 @@ namespace SmartSchoolboyApi.Controllers
                 if (_context.Schedules is null)
                     return NotFound();
 
-                var schedule = await _context.Schedules.Where(p => p.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Group.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
-                    p.Group.Id.ToString() == search).ToListAsync();
+                var schedule = await _context.Schedules.ToListAsync();
 
-                schedule = schedule.Where(p => p.Date >= DateTime.Today).ToList();
+                if (Int32.TryParse(search, out int groupId))
+                    schedule = schedule.Where(p => p.GroupId.ToString().Contains(search)).ToList();
+                else schedule = schedule.Where(p => p.Group.Name.ToLower().Trim().Contains(search.ToLower().Trim()) ||
+                    p.Group.Course.Name.ToLower().Trim().Contains(search.ToLower().Trim())).ToList();
+
+                //schedule = schedule.Where(p => p.Date >= DateTime.Today).ToList();
 
                 return Ok(schedule);
             }

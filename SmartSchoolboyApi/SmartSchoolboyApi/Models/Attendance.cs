@@ -10,7 +10,6 @@ namespace SmartSchoolboyApi.Models
         public bool MarkOfPresence { get; set; }
         [JsonIgnore]
         public virtual Schedule Schedule { get; set; } = null!;
-        [JsonIgnore]
         public virtual Student Student { get; set; } = null!;
     }
 }

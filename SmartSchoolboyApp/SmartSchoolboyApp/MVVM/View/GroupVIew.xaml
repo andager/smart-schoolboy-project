@@ -72,9 +72,10 @@
                                             <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
                                         </Button>
 
-                                        <Button Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
+                                        <Button Command="{Binding ElementName=MainGroupView, Path=DataContext.DeleteGroupCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" ToolTip="Удалить (Ctrl+Del" Style="{StaticResource listViewButton}">
                                             <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewButtonIcon}"/>
                                         </Button>
+                                        
                                     </StackPanel>
 
                                 </Grid>

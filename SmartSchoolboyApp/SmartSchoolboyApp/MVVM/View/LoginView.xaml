@@ -78,7 +78,7 @@
                     </Grid>
 
                     <!-- Work area -->
-                    <StackPanel Grid.Row="1" Orientation="Vertical" Width="220" Margin="0 10 0 0">
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Width="230" Margin="0 10 0 0">
 
                         <Image Source="/Images/logo-image.png" Width="100" Height="100"/>
                         <TextBlock Text="Smart SchoolBoy" FontSize="26" HorizontalAlignment="Center" Margin="0 5"/>

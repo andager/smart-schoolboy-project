@@ -45,7 +45,7 @@
 
                 <Button Command="{Binding Path=ExportExelCommand}" Style="{StaticResource exportButton}"/>
 
-                <Button ToolTip="Добавить новую группу" Command="{Binding AddEditCourseCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
+                <Button ToolTip="Добавить новую группу" Command="{Binding AddEditGroupCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
 
             </StackPanel>
 

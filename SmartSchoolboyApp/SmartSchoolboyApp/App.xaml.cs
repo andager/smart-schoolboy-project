@@ -25,11 +25,11 @@ namespace SmartSchoolboyApp
         public static readonly ApiConnection ApiConnector;
 
         //Строка подключения к Api localhost
-        //private static readonly Uri BaseUri = new Uri("http://localhost:5063/api/");
+        private static readonly Uri BaseUri = new Uri("http://localhost:5063/api/");
 
         // Не нужно, для теста ПОТОМ УДАЛЮ
         //Строка подключения к Api hosting 
-        private static readonly Uri BaseUri = new Uri("https://a27611-edd2.t.d-f.pw/api/");
+        //private static readonly Uri BaseUri = new Uri("https://a27611-edd2.t.d-f.pw/api/");
 
         private readonly NavigationStore _navigationStore;
         static App()
@@ -47,21 +47,21 @@ namespace SmartSchoolboyApp
         protected void Application_Startup(object sender, StartupEventArgs e)
         {
             NavigationStore navigationStore = new NavigationStore();
-            LoginView loginView = new LoginView();
-            loginView.Show();
-            loginView.IsVisibleChanged += (s, sv) =>
-            {
-                if (loginView.IsVisible == false && loginView.IsLoaded)
-                {
+            //LoginView loginView = new LoginView();
+            //loginView.Show();
+            //loginView.IsVisibleChanged += (s, sv) =>
+            //{
+            //    if (loginView.IsVisible == false && loginView.IsLoaded)
+            //    {
                     _navigationStore.CurrentViewModel = new CourseViewModel(navigationStore);
                     HomeView homeView = new HomeView()
                     {
                         DataContext = new HomeViewModel(_navigationStore)
                     };
                     homeView.Show();
-                    loginView.Close();
-                }
-            };
+                    //loginView.Close();
+            //    }
+            //};
         }
     }
 }

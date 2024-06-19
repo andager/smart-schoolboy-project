@@ -45,8 +45,6 @@
 
                 <Button Command="{Binding Path=ExportSchollSubjectCommand}" Style="{StaticResource exportButton}"/>
 
-                <Button ToolTip="Добавить новый предмет" Command="{Binding AddEditSchollSubjectCommand}" CommandParameter="{Binding}" Style="{StaticResource addButton}"/>
-
             </StackPanel>
             
         </Grid>
@@ -58,19 +56,7 @@
                         <Border Width="200" Height="90" Style="{StaticResource listViewBorderItem}">
                             <Grid>
 
-                                <TextBlock Text="{Binding Path=name}" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 10 0 0"/>
-
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 5 5">
-
-                                    <Button Tag="{StaticResource color6}" Style="{StaticResource listViewButton}" Command="{Binding ElementName=MainSchoolSubjectView, Path=DataContext.AddEditSchollSubjectCommand}" CommandParameter="{Binding}">
-                                        <fa:IconImage Icon="Edit" Style="{StaticResource listViewButtonIcon}"/>
-                                    </Button>
-
-                                    <Button Tag="{StaticResource color4}" Style="{StaticResource listViewButton}">
-                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource listViewButtonIcon}"/>
-                                    </Button>
-
-                                </StackPanel>
+                                <TextBlock Text="{Binding Path=name}" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 0"/>
                                 
                             </Grid>
                         </Border>

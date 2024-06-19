@@ -1,5 +1,6 @@
 ﻿using SmartSchoolboyApp.Classes;
 using SmartSchoolboyApp.MVVM.Core;
+using SmartSchoolboyApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;

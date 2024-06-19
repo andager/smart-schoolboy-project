@@ -56,7 +56,7 @@
 
                     <TextBlock Text="Курс" Margin="0 10"/>
 
-                    <ComboBox SelectedIndex="{Binding Path=IndexCourse}" SelectedItem="{Binding Path=SelectedCourse}" DisplayMemberPath="name" ItemsSource="{Binding Path=Courses, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <ComboBox SelectedIndex="{Binding Path=IndexCourse}" SelectedItem="{Binding Path=SelectedCourse}" DisplayMemberPath="name" ItemsSource="{Binding Path=Coursess, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <TextBlock Text="Название группы"/>
                     
@@ -67,10 +67,28 @@
                     </TextBox>
 
                 </StackPanel>
-                
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <ComboBox Width="250" SelectedIndex="{Binding Path=SelectedIndexStudent}" SelectedItem="{Binding Path=SelectedItemStudent}" ItemsSource="{Binding Path=StudentView}" DisplayMemberPath="fullName" Margin="0 0 20 0"/>
+                        <Button Command="{Binding Path=AddStudentCommnad}" Content="Добавить" ToolTip="Добавить пользователя" Grid.Row="2" Style="{StaticResource btnSave}"/>
+                    </StackPanel>
+
+                    <Border Background="#200F53" CornerRadius="10" Padding="10" Height="250" Margin="0 10 0 0">
+                        <DataGrid ItemsSource="{Binding Path=Students, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=fullName}" ClipboardContentBinding="{x:Null}"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    
+                </StackPanel>
             </Grid>
 
-            <Button Command="{Binding Path=CourseSaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
+            <Button Command="{Binding Path=SaveCommand}" Content="Сохранить" ToolTip="Сохранить изменения (ctrl + s)" Grid.Row="2" Style="{StaticResource btnSave}"/>
 
         </Grid>
     </Border>

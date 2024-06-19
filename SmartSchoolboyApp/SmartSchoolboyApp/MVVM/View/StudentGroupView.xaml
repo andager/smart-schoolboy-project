@@ -66,7 +66,7 @@
                         </DataGridTextColumn.Header>
                     </DataGridTextColumn>
 
-                    <DataGridTemplateColumn Width="65">
+                    <DataGridTemplateColumn Width="85">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

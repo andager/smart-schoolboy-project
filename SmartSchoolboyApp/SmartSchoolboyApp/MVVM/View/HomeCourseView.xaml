@@ -71,7 +71,7 @@
                                         <fa:IconImage Icon="Edit" Style="{StaticResource dataGridButtonIcon}"/>
                                     </Button>
 
-                                    <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainHomeCourseView, Path=DataContext.RemoveCommand}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
+                                    <Button ToolTip="Удалить выбранного пользователя" Command="{Binding ElementName=MainHomeCourseView, Path=DataContext.RemoveControlPlaneCommnad}" CommandParameter="{Binding}" Tag="{StaticResource color4}" Style="{StaticResource dataGridButton}">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource dataGridButtonIcon}"/>
                                     </Button>
 

@@ -18,6 +18,8 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
     public class HomeCourseViewModel : ObservableObject
     {
         #region Fields
+        private List<Course> cccourses;
+        private int _id;
         private Course _course;
         private string _courseName;
         private string _teacherName;
@@ -56,7 +58,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     addEditControl.ShowDialog();
                     if (addEditControl.IsVisible == false && addEditControl.IsLoaded)
                         addEditControl.Close();
-                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -68,7 +69,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                 {
                     if (obj != null)
                         await App.ApiConnector.DeleteAsync("ControlThemePlanes", (obj as ControlThemePlane).id);
-                    ExecuteUpdateDataCommand(null);
                 });
             }
         }
@@ -83,7 +83,6 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
             ThemePlanes = _course.controlThemePlanes;
             UpdateDataCommand = new RelayCommand(ExecuteUpdateDataCommand);
             ExportExelCommand = new RelayCommand(ExecuteExportExelCommand, CanExecuteExportExelCommand);
-            ExecuteUpdateDataCommand(null);
         }
 
         private bool CanExecuteExportExelCommand(object obj)
@@ -123,16 +122,17 @@ namespace SmartSchoolboyApp.MVVM.ViewModel
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ErrorView errorView = new ErrorView($"Ошибка экспорта в Excel\n\n{ex.Message}");
+                errorView.ShowDialog();
             }
         }
 
         private async void ExecuteUpdateDataCommand(object obj)
         {
-            var c = await App.ApiConnector.GetTAsync<List<ControlThemePlane>>("ControlThemePlanes");
+            _course = await App.ApiConnector.SearchAsync<Course>("Courses", _id.ToString());
+            ThemePlanes = _course.controlThemePlanes;
 
         }
         #endregion
